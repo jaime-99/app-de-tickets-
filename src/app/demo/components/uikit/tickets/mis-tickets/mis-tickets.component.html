@@ -1,0 +1,256 @@
+
+<div class="flex flex-wrap align-items-center justify-content-center">
+
+    <p-progressSpinner *ngIf="loading" ariaLabel="loading" />
+</div>
+
+<p-tabView *ngIf="!loading">
+    <p-tabPanel header="Todos">
+<div *ngIf="!alert">
+<div class="card" *ngIf="!loading">
+
+    <p-table [value]="getTicketsByStatus() | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}"
+    
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-between flex-column sm:flex-row">
+                <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" ></button>
+                <span class="p-input-icon-left mb-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar Palabra" class="w-full"/>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th># </th>
+                <th>Titulo </th>
+                <th>Descripcion</th>        
+                <th>Fecha</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template  pTemplate="body" let-tickets let-i="rowIndex" >
+            <!-- <tr> -->
+                <tr *ngIf="!tickets.mensaje">
+
+                <td>
+                    {{i+1}}
+                </td>
+                <td>
+                    {{tickets.titulo}}
+                </td>
+                <td>
+                    {{tickets.descripcion}}
+                </td>
+                <td>
+                    {{tickets.fecha | date:'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    <p-tag [value]="tickets.estatus" [severity]="getSeverity(tickets.estatus)" >   </p-tag>
+                </td>
+                <td>
+                    <button pButton label="Ver" (click)="redirectTo(tickets.id)" > </button>
+                </td>
+            </tr>
+            <tr *ngIf="tickets.mensaje">
+                <td colspan="6" class="text-center">{{tickets.mensaje}} {{this.searchTerm}} </td>
+            </tr>
+        </ng-template>
+        
+    </p-table>
+</div>
+
+</div>
+</p-tabPanel>
+    <p-tabPanel header="Abierto">
+<div *ngIf="!alert">
+<div class="card" *ngIf="!loading">
+    <div *ngIf="!loading && getTicketsByStatus('abierto').length === 0"> 
+
+        <p>no hay tickets abiertos por el momento </p>
+    
+    </div>
+    <div *ngIf="!loading && getTicketsByStatus('abierto').length > 0">
+
+    <p-table [value]="getTicketsByStatus('abierto') | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-between flex-column sm:flex-row">
+                <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" ></button>
+                <span class="p-input-icon-left mb-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar Palabra" class="w-full"/>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr *ngIf="!tickets.mensaje">
+                <th># </th>
+                <th>Titulo </th>
+                <th>Descripcion</th>        
+                <th>Fecha</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template  pTemplate="body" let-tickets let-ticket let-i="rowIndex" >
+            <tr *ngIf="!tickets.mensaje">
+                <td>
+                    {{i+1}} 
+                </td>
+                <td>
+                    {{tickets.titulo}}
+                </td>
+                <td>
+                    {{tickets.descripcion}}
+                </td>
+                <td>
+                    {{tickets.fecha | date:'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    <p-tag [value]="tickets.estatus" [severity]="getSeverity(tickets.estatus)" >   </p-tag>
+                </td>
+                <td>
+                    <button pButton label="Ver" (click)="redirectTo(tickets.id)" > </button>
+                </td>
+            </tr>
+            <tr *ngIf="tickets.mensaje">
+                <td colspan="6" class="text-center">{{tickets.mensaje}} {{this.searchTerm}} </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
+</div>
+
+</div>
+</p-tabPanel>
+    <p-tabPanel header="En Progreso">
+<div *ngIf="!alert">
+<div class="card" *ngIf="!loading">
+    
+    <div *ngIf="!loading && getTicketsByStatus('en progreso').length === 0">
+        <p>no hay tickets en progreso por el momento</p>
+    </div>
+    <div *ngIf="!loading && getTicketsByStatus('en progreso').length > 0">
+    <p-table [value]="getTicketsByStatus('en progreso') | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-between flex-column sm:flex-row">
+                <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" ></button>
+                <span class="p-input-icon-left mb-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar Palabra" class="w-full"/>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th># </th>
+                <th>Titulo </th>
+                <th>Descripcion</th>        
+                <th>Fecha</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tickets let-ticket let-i="rowIndex" >
+            <tr *ngIf="!tickets.mensaje">
+                <td>
+                    {{i+1}}
+                </td>
+                <td>
+                    {{tickets.titulo}}
+                </td>
+                <td>
+                    {{tickets.descripcion}}
+                </td>
+                <td>
+                    {{tickets.fecha | date:'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    <p-tag [value]="tickets.estatus" [severity]="getSeverity(tickets.estatus)" >   </p-tag>
+                </td>
+                <td>
+                    <button pButton label="Ver" (click)="redirectTo(tickets.id)" > </button>
+                </td>
+            </tr>
+            <tr *ngIf="tickets.mensaje">
+                <td colspan="6" class="text-center">{{tickets.mensaje}} {{this.searchTerm}} </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
+</div>
+
+</div>
+</p-tabPanel>
+    <p-tabPanel header="Terminado">
+<div *ngIf="!alert">
+<div class="card" *ngIf="!loading">
+
+    <div *ngIf="!loading && getTicketsByStatus('terminado').length === 0">No hay tickets terminados</div>
+    <div *ngIf="!loading && getTicketsByStatus('terminado').length > 0">
+
+    <p-table [value]="getTicketsByStatus('terminado') | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-between flex-column sm:flex-row">
+                <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" ></button>
+                <span class="p-input-icon-left mb-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar Palabra" class="w-full"/>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th># </th>
+                <th>Titulo </th>
+                <th>Descripcion</th>        
+                <th>Fecha</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tickets let-ticket let-i="rowIndex" >
+            <tr *ngIf="!tickets.mensaje">
+                <td>
+                    {{i+1}}
+                </td>
+                <td>
+                    {{tickets.titulo}}
+                </td>
+                <td>
+                    {{tickets.descripcion}}
+                </td>
+                <td>
+                    {{tickets.fecha | date:'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    <p-tag [value]="tickets.estatus" [severity]="getSeverity(tickets.estatus)" >   </p-tag>
+                </td>
+                <td>
+                    <button pButton label="Ver" (click)="redirectTo(tickets.id)" > </button>
+                </td>
+            </tr>
+            <tr *ngIf="tickets.mensaje">
+                <td colspan="6" class="text-center">{{tickets.mensaje}} {{this.searchTerm}} </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
+</div>
+
+</div>
+</p-tabPanel>
+
+
+</p-tabView>
+
+    <div *ngIf="alert" class="card">
+        <p-messages [(value)]="messages" [enableService]="false" [closable]="false"  />
+    </div>
+
+

@@ -1,0 +1,59 @@
+
+<h2>tickets por seleccionar  (Solicitados)</h2>
+ 
+ <div class="flex flex-wrap align-items-center justify-content-center">
+
+    <p-progressSpinner *ngIf="loading" ariaLabel="loading" />
+</div> 
+
+<div *ngIf="!alert">
+<div class="card" *ngIf="!loading">
+    <p-table [value]="tickets" [tableStyle]="{'min-width': '50rem'}"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [paginator]="true"
+    [rows]="5"
+
+    >
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th># </th>
+                <th>Titulo </th>
+                <th>Descripcion</th>        
+                <th>Fecha</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tickets let-ticket let-i="rowIndex" >
+            <tr>
+                <td>
+                    {{i+1}}
+                </td>
+                <td>
+                    {{tickets.titulo}}
+                </td>
+                <td>
+                    {{tickets.descripcion}}
+                </td>
+                <td>
+                    {{tickets.fecha | date: 'dd/MM/yyyy '}}
+                </td>
+                <td>
+                    <p-tag [value]="tickets.estatus" [severity]="getSeverity(tickets.estatus)" ></p-tag>
+                </td>
+                <td>
+                    <button icon="pi pi-eye" pButton label="Ver" (click)="redirectTo(tickets.id)" > </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>
+
+
+
+    <div *ngIf="alert" class="card">
+        <p-messages [(value)]="messages" [enableService]="false" [closable]="false"  />
+    </div> 
+
+    

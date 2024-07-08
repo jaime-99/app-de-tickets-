@@ -1,0 +1,164 @@
+<h3 *ngIf="alert">renta de laptops</h3>
+
+<!-- <p-card header="renta de laptops">
+
+</p-card> -->
+
+<div *ngIf="!alert" class="grid">
+    <form [formGroup]="rentaLaptopForm">
+
+    <div class="col-12 xl:col-12">
+
+        <div class="grid">
+            <div class="col-12 xl:col-8">
+                <div class="card">
+
+                <div class="grid">
+                <div class="col-6 xl-col-6">
+                <!-- <input type="text"> Nombre -->
+                 <label for=""> Nombre Completo</label>
+                <input type="text" pInputText formControlName="nombre" />
+
+                </div>
+                <div class="col-6 xl:col-6">
+                    <!-- <input type="text" pInputText > -->
+                    
+                    <label for="">Numero de computadoras</label>
+                <p-dropdown
+                formControlName="numeroComputadoras"
+                [options]="laptops"
+                optionLabel="label"
+                optionValue="label"
+                >
+
+                </p-dropdown>
+
+                </div>
+                <div class="col-6 xl-col-6">
+                    <label for=""> del dia</label>
+                    <p-calendar formControlName="diaInicio" />
+
+                </div>
+                <div class="col-6 xl:col-6">
+                    <label for="">Al dia de</label>
+                    <p-calendar formControlName="diaFin" />
+                </div>
+                <div class="col-6 xl:col-3">
+                    <p><strong>  Programas </strong></p>
+                <div class="flex flex-column gap-2">
+                    <div *ngFor="let programa of programas" class="field-checkbox">
+                        <p-checkbox formControlName="programas"
+                            [label]="programa.name"
+                            name="group"
+                            [value]="programa.name"
+                            [binary]="true"
+                            (onChange)="addCheckBox($event, programa.name)"
+                            
+                             />
+                    </div>
+                </div>
+                </div>
+                <div class="col-6 xl:col-3">
+                    <p> <strong>  Mouse </strong></p>
+                    <div class="flex flex-column gap-2">
+
+                    <p-radioButton name="mouse" value="si" formControlName="mouse" inputId="si" label="Si"></p-radioButton>
+                    <p-radioButton name="mouse" value="no" formControlName="mouse" inputId="no" label="No"></p-radioButton>
+                    </div>
+
+                </div>
+                <div class="col-6 xl:col-3">
+                    <p><strong> Extensiones </strong></p>
+                    <div class="flex flex-column gap-2">
+                        <p-radioButton name="extensiones" value="si" formControlName="extensiones" inputId="si" label="Si"></p-radioButton>
+                        <p-radioButton name="extensiones" value="no" formControlName="extensiones" inputId="no" label="No"></p-radioButton>
+                    </div>
+                      
+                </div>
+                <div class="col-6 xl:col-3">
+                    <p><strong> Lugar </strong></p>
+                    <div class="flex flex-column gap-2">
+                        <p-radioButton name="lugar" value="no" formControlName="lugar" inputId="si" label="Oficinas de saltillo"   (onClick)="onRadioButtonChange('no')"></p-radioButton>
+                        <p-radioButton name="lugar" value="si" formControlName="lugar" inputId="no" label="otro"   (onClick)="onRadioButtonChange('si')"></p-radioButton>
+                        <span *ngIf="isOtherSelected">Donde   <input type="text" pInputText placeholder="EJ:stallantis" formControlName="ubicacion"/> </span>
+
+                    </div>
+                      
+                </div>
+                <div class="col-6">
+                    <label for="float-input">Comentarios (opcionales)</label>
+                    <textarea 
+                        rows="3" 
+                        cols="30" 
+                        pInputTextarea 
+                        formControlName="comentarios"
+                        placeholder="EJ: 3 laptops con mouse y las otras dos si mouse"
+                        >
+                    </textarea>
+
+
+                </div>
+                </div>
+                </div>
+
+                <div class="grid">
+                <div class="col-12 xl:col-6">
+                    <button pButton label="Rentar Laptop" (click)="confirm($event)" ></button>
+                </div>
+                <p-toast />
+                <p-confirmDialog  />
+
+                <!-- <div class="col-12 xl:col-6">
+                    <button pButton label="Generar Responsiva" ></button>
+                    
+                </div> -->
+                </div>
+
+            </div>
+
+            <div class="col-12 xl:col-4">
+                <div class="card">
+                    <p-timeline [value]="events">
+                        <!-- <ng-template pTemplate="opposite" let-event>
+                            {{ event.date }}
+                          </ng-template> -->
+                        <ng-template pTemplate="content" let-event>
+                            {{ event.status }}
+                        </ng-template>
+                        <ng-template pTemplate="marker" let-event>
+                            <span [ngClass]="getMarkerClass(event)"
+                             [style]="{ 'background-color': event.color }">
+                              <i [class]="event.icon"></i>
+                            </span>
+                            </ng-template>
+                    </p-timeline>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+    </form>
+
+    </div>
+
+
+    <div *ngIf="alert">
+        <div class="grid flex flex-column align-items-center">
+            <div class="flex justify-content-center align-items-center bg-green-500 border-circle" style="height:4rem; width:4rem;">
+                <i class="pi pi-fw pi-check-circle text-3xl text-white"></i>
+            </div>
+
+            <div class="m-4">
+            <p>Tu renta ha sido exitosa</p>
+            <p>Favor de esperar la confirmacion de parte de sistemas</p>
+            <button pButton pRipple icon="pi pi-arrow-left" label="Ir a mis rentas" class="p-button-text" [routerLink]="['/']"></button>
+
+            </div>
+        </div>
+        
+        </div>
+
+

@@ -1,0 +1,87 @@
+<div class="grid" *ngIf="!Message">
+	<div class="col-12">
+	  <div class="card">
+		<h5>Información del ticket</h5>
+		<form [formGroup]="ticketForm" (ngSubmit)="onSubmit()" class="p-fluid p-formgrid grid">
+		  <div class="field col-12 md:col-4">
+			<label for="title">Título</label>
+			<input pInputText  type="text" formControlName="titulo" />
+			<p-message *ngIf="isFieldInvalid('titulo')" severity="error" text="Título es requerido y debe tener al menos 5 caracteres."></p-message>
+		  </div>
+
+		  <div class="field col-12 md:col-4">
+			<label >Dirigido a </label>
+			<p-dropdown [options]="totalAreas" optionLabel="area" optionValue="IdArea" formControlName="para_area" (onChange)="updateCategoria2($event)"  ></p-dropdown>
+		  </div>
+		  <div class="field col-12 md:col-4" *ngIf="filteredCategorias.length > 0">
+			<label >Categoria</label>
+			<p-dropdown [options]="filteredCategorias" optionLabel="nombre" optionValue="IdCategoria" formControlName="IdCategoria"></p-dropdown>
+		  </div>
+
+		  <div class="field col-12 md:col-4">
+			<label for="email">Correo</label>
+			<input pInputText  type="text" [placeholder]="this.user.correo" disabled />
+			<p-message *ngIf="isFieldInvalid('correo')" severity="error" text="Correo es requerido y debe ser un correo válido."></p-message>
+		  </div>
+		  <div class="field col-12 md:col-6">
+			<label for="date">Fecha de hoy</label>
+			<input pInputText  [placeholder]="actuallyDay| date:'dd/MM/yyyy'" disabled />
+			<p-message *ngIf="isFieldInvalid('fecha')" severity="error" text="Fecha es requerida."></p-message>
+		  </div>
+		  <div class="field col-12 md:col-6">
+			<label >Descripción</label>
+			<textarea pInputTextarea rows="5" cols="30" formControlName="descripcion"></textarea>
+			<p-message *ngIf="isFieldInvalid('descripcion')" severity="error" text="Descripción es requerida y no debe exceder los 200 caracteres."></p-message>
+		  </div>
+		</form>
+	  </div>
+	</div>
+  
+	<div class="col-12">
+	  <div class="card">
+		<h5>Detalles de la persona</h5>
+		<form [formGroup]="ticketForm" (ngSubmit)="onSubmit()" class="p-fluid p-formgrid grid">
+		  <div class="field col-12 md:col-6">
+			<label for="firstname">Nombre</label>
+			<input pInputText type="text" [placeholder]="user.nombre" disabled />
+			<p-message *ngIf="isFieldInvalid('nombre')" severity="error" text="Nombre es requerido."></p-message>
+		  </div>
+		  <div class="field col-12 md:col-6">
+			<label for="lastname">Apellido</label>
+			<input pInputText id="apellido" type="text" disabled [placeholder]="user.apellido_paterno" />
+			<p-message *ngIf="isFieldInvalid('apellido')" severity="error" text="Apellido es requerido."></p-message>
+		  </div>
+		  <div class="field col-12 md:col-6">
+			<label for="lastname">Nombre Usuario</label>
+			<input pInputText  type="text" disabled [placeholder]="user.usuario" />
+			<p-message *ngIf="isFieldInvalid('nombre_usuario')" severity="error" text="Usuario es requerido."></p-message>
+		  </div>
+		  <div class="field col-12 md:col-3">
+			<label >Mi Área</label>
+			<input pInputText  disabled [placeholder]="user.area" />
+			<p-message *ngIf="isFieldInvalid('area')" severity="error" text="Área es requerida."></p-message>
+		  </div>
+		  <div class="field col-12">
+			<button type="submit" [disabled]="this.ticketForm.invalid"
+			 pButton pRipple label="Crear Ticket" class="p-button-success"></button>
+		  </div>
+		</form>
+	  </div>
+	</div>
+  </div>
+  
+  
+  <div *ngIf="Message">
+
+	<p-card header="Exito">
+	
+	<p class="m-0">
+		Tu ticket ha sido enviado con Exito
+	</p>
+
+	<button pButton [routerLink]="['/tickets/crearTicket/misTickets']">Ver mis Tickets</button>
+
+	</p-card>
+
+
+  </div>

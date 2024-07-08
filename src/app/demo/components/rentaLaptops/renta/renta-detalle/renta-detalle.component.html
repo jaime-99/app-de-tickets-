@@ -1,0 +1,67 @@
+<div *ngIf="!loading" class="flex flex-column">
+    <p-progressSpinner class="flex justify-content-center" *ngIf="!loading" ariaLabel="loading"  />
+    </div>
+<div *ngIf="loading">
+<div class="p-card">
+
+
+    <div class="flex flex-column p-1">
+        <h4 class="flex justify-content-center ">Detalles de la renta con el ID # {{renta.id}} </h4>
+    </div>
+
+    <div class="grid p-1">
+
+        <div class="col-12 xl:col-12">
+
+            <div class="flex flex-column">
+                    <p> <strong>  Nombre :  </strong>  {{renta.nombre}} </p>
+                    <p> <strong> Numero de Computadoras : </strong> {{renta.numeroComputadoras}} </p>
+                    <div class="grid">
+                        <div class="col-12 xl:col-4">
+                    <p> <strong>  fecha de inicio : </strong> {{renta.diaInicio | date:'dd/MM/yyyy'}} </p>
+                    </div>
+                        <div class="col-12 xl:col-6">
+                    <p> <strong> fecha de Fin : </strong>  {{renta.diaFin | date: 'dd/MM/yyyy'}} </p>
+                    </div>
+                    </div>
+                    <p> <strong>  Comentarios: {{renta.comentarios}}  </strong> </p>
+                    <p> <strong>  Programas: </strong> {{renta.programas}}  </p>
+                    <p> <strong>  Mouse :  </strong> {{renta.mouse}}  </p>
+                    <p> <strong>  Extensiones : </strong> {{renta.extensiones}}   </p>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<p-card class="p-1" header="Computadoras que se usaron">
+
+    <!-- <p-table 
+        [value]="products" 
+        styleClass="p-datatable-gridlines" 
+        [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{ product.code }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.quantity }}</td>
+                </tr>
+            </ng-template>
+    </p-table> -->
+
+</p-card>
+
+</div>

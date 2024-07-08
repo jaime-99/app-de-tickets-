@@ -1,0 +1,148 @@
+<!-- -->
+<h4>Tickets Trabajando y trabajados</h4>
+<div class="flex flex-wrap align-items-center justify-content-center">
+
+    <p-progressSpinner *ngIf="loading" ariaLabel="loading" />
+</div>
+
+  <div class="grid">
+    <div class="col-12 xl:col-6">
+  <span class="p-input-icon-left mb-2 flex flex-column " *ngIf="!loading">
+    <i class="pi pi-search"></i>
+    <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar por nombre, descripcion, area, etc..."/>
+  </span>
+  </div>
+  <div *ngIf="!loading" class="col-12 xl:col-6">
+    <p-dropdown 
+    [options]="estatus" 
+    optionLabel="name" 
+    optionValue="name"
+    [(ngModel)]="selectedStatus" 
+    (onChange)="filterEvent($event)"
+    placeholder="Selecionar estatus"/>
+  </div>
+  </div>
+<p-divider/>
+
+
+ <div *ngIf="!alert">
+
+
+<div class="grid" *ngIf="!loading">
+    <div  *ngFor="let tickets of filteredTickets  | pipeSearch:searchTerm" class="col-3 lg:col-6 xl:col-3" >
+      
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>   
+                    <span class="block text-500 font-medium mb-1"><strong>Nombre:</strong>{{tickets?.nombre}} </span>
+                    <span class="block text-500 font-medium mb-1"><strong>Fecha:</strong>{{tickets?.fecha | date:'dd/MM/yyyy' }} </span>
+                    <span class="block text-500 font-medium mb-1"><strong>Area:</strong>{{tickets?.area}} </span>
+                    <!-- <div class="text-900 font-medium text-xl">{{tickets?.estatus}} </div> -->
+                    <p-tag [value]="tickets.estatus" [severity]="getSeverity(tickets.estatus)" ></p-tag>
+                     <span class="block"> <button pButton icon="pi pi-eye" (click)="showDialog(tickets?.id)"> </button> </span>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-ticket text-blue-500 text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <ng-templeate *ngIf="filteredTickets?.length===0">
+      no se encontraron tickets
+
+    </ng-templeate>
+    </div>
+
+    <div *ngIf="alert" class="card">
+        <p-messages [(value)]="messages" [enableService]="false" [closable]="false"  />
+    </div>
+
+
+
+    <!-- Debo mandar el id al pop -->
+    <div class="card flex justify-content-center" *ngIf="visible">
+    <p-dialog 
+        header="Informacion del ticket" 
+        [modal]="true" 
+        [(visible)]="visible" 
+        [style]="{ width: '50rem' }" 
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+        [maximizable]="true">
+
+        
+      
+            <div class="grid bg-primary">
+
+                <div class="col-12 xl:col-6">
+                    <ul>
+                        <li>
+                          <span>  Nombre Completo: <strong> {{ticket?.nombre_completo}}  </strong> </span>
+                        </li>
+                        <li>
+                          <span>  Fecha: <strong> {{ticket?.fecha | date:'dd/MM/yyyy'}} </strong> </span>
+                        </li>
+                        <li>
+                          <span>  Descripcion   <strong>  {{ticket?.descripcion}} </strong>  </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 xl:col-6">
+                    <ul>
+                        <li>
+                          <span> Del Area: <strong>  {{ticket?.area}}  </strong> </span>
+                        </li>
+                        <li>
+                          <span>  Para el area de: <strong>  {{ticket?.paraAreaDe}}  </strong> </span>
+                        </li>
+                        <li>
+                          <span>  Trabajado Por el usuario: <strong>  {{ticket?.trabajadoPor}}  </strong> </span>
+                        </li>
+                        <li>
+                          <span>  Estatus       <strong> {{ticket?.estatus}}   </strong>   </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="flex flex-column  m-3">
+
+              <button [disabled]="ticket?.estatus==='terminado'" pButton class="p-button-success" (click)="openComment()" > Terminar Ticket</button>
+
+            </div>
+    </p-dialog>
+    
+    </div>
+
+
+
+    <div class="card flex justify-content-center" *ngIf="visible2">
+      <p-dialog 
+          header="Cerrar el ticket" 
+          [modal]="true" 
+          [(visible)]="visible2" 
+          [style]="{ width: '30rem' }"
+          [draggable]="false"
+          [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+          >
+
+          <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+
+          <div class="grid">
+
+            <div class="col-12 mx:col-12 ">
+              <label class="m-2" for="comentario2">agregar comentario de como terminaste el trabajo (opcional) </label>
+            <textarea rows="5" cols="50" pInputTextarea [autoResize]="true" formControlName="comentario">
+            </textarea>
+          </div>
+          <div class="col-12 xl:col-12">
+            <button  class="p-button-success"  pButton label="Finalizar ticket"></button>
+          </div>
+        </div>
+        </form>
+
+
+</p-dialog>
+</div>  

@@ -1,0 +1,170 @@
+
+<div *ngIf="!loading"  class="flex flex-wrap align-items-center justify-content-center">
+
+    <p-progressSpinner ariaLabel="loading" />
+
+</div>
+
+
+<div class="card" *ngIf="loading">
+    <div class="flex align-items-center justify-content-between mb-4">
+        <h5>Ticket con el numero de ID : {{this.tickets?.id}} </h5>
+    </div>
+
+    <span class="block text-600 font-medium mb-3">Detalles del ticket</span>
+    <ul class="p-0 mx-0 mt-0 mb-4 list-none">
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Nombre Completo:</strong> 
+        <span class="text-700"> {{this.tickets?.nombre_completo}}</span>
+    </span>
+        </li>
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Titulo:</strong> 
+        <span class="text-700"> {{this.tickets?.titulo}}</span>
+    </span>
+        </li>
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Fecha:</strong> 
+        <span class="text-700"> {{this.tickets?.fecha | date: 'dd/MM/yyyy'}}</span>
+    </span>
+        </li>
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Descripcion:</strong> 
+        <span class="text-700"> {{this.tickets?.descripcion}}</span>
+    </span>
+        </li>
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Estatus:</strong> 
+        <span class="text-700"> <p-tag [severity]="getSeverity(this.tickets?.estatus)"value=" {{this.tickets?.estatus}}"/></span>
+    </span>
+        </li>
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Trabajado por:</strong> 
+                {{ tickets?.trabajadoPor ? tickets.trabajadoPor : 'Aún nadie lo trabaja' }}
+    </span>
+        </li>
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Del Area:</strong> 
+                {{ tickets?.area }}
+    </span>
+        </li>
+    </ul>
+</div>
+
+
+<!-- todo pendiente de hacer -->
+ <div *ngIf="loading">
+<div class="card" *ngIf="!porTrabajar">
+
+    <h4>Su ticket se Soluciono?</h4>
+
+    <p *ngIf="tickets?.estatus == 'abierto' || tickets?.estatus === 'en progreso'">debe esperar a que acepten y terminen su ticket para seleccionar una opcion</p>
+    <div *ngIf="tickets?.solucionado===undefined">
+    <div class="grid">
+
+        <div class="col-12 xl:col-2">
+
+            <button (click)="look(1,tickets?.id)" [disabled]="tickets?.estatus == 'abierto' || tickets?.estatus === 'en progreso' " pButton  class="p-button-success">Si</button>
+        </div>
+        <div class="col-12 xl:col-2">
+            <button (click)="look(0,tickets?.id)" pButton [disabled]="tickets?.estatus == 'abierto' || tickets?.estatus === 'en progreso'"  class="p-button-danger">No</button>
+        </div>
+        </div>
+
+        <!-- <div class="col">
+            <button (click)="look()" pButton [disabled]="tickets?.estatus == 'abierto'"  class="p-button-primary">Otro</button>
+        </div> -->
+    </div>
+
+    <div *ngIf="tickets?.solucionado!==undefined">
+        Usted ya marco esta opcion
+    </div>
+
+    </div>
+    <form (ngSubmit)="onSubmit()">
+
+    <p-dialog header="Terminar Ticket" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+        <div *ngIf="!visibleFinish">
+        <span class="p-text-secondary block mb-5">Opcional.</span>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="username" class="font-semibold w-6rem">Comentarios</label>
+            <!-- <input pInputText id="username" class="flex-auto" autocomplete="off" /> -->
+            <textarea 
+            rows="5"
+            cols="50" 
+            pInputTextarea [formControl]="comentarios2" 
+            >
+        </textarea>
+        </div>
+        <div class="flex justify-content-end gap-2">
+            <p-button label="Cancelar" (click)="visible=false" severity="secondary" />
+            <p-button type="submit" label="Guardar" />
+        </div>
+
+        </div>
+        <div class="div" *ngIf="visibleFinish">
+            Has Cerrado el ticket , gracias por usar la app
+        </div>
+        
+    </p-dialog>
+    </form>
+</div>
+
+<div *ngIf="loading">
+<div class="card" *ngIf="porTrabajar">
+
+    <h4>Tomar ticket solicitado ?</h4>
+
+    
+    <div *ngIf="tickets.trabajadoPor">
+        <p>Este ticket ya se esta trabajando por : {{tickets.trabajadoPor}} </p>
+    </div>
+
+    <div class="grid">
+        <div class="col">
+                <!-- crear mensaje de alerta -->
+                <button  (click)="confirm1($event)" [disabled]="tickets.trabajadoPor" pButton  class="p-button-success">Si</button>
+        </div>
+        <div class="col">
+            <button severity="danger" 
+            [outlined]="true"   pButton [disabled]="tickets.trabajadoPor"  (click)="confirm2($event)"   class="p-button-danger">No</button>
+        </div>
+
+        <div class="col">
+            <button pButton [disabled]="tickets.trabajadoPor"  class="p-button-primary">Otro</button>
+        </div>
+    </div>
+    <p-confirmPopup />
+    <p-toast />
+
+</div>
+</div>
+

@@ -1,0 +1,44 @@
+<div *ngIf="!loading"  class="flex flex-wrap align-items-center justify-content-center">
+
+  <p-progressSpinner ariaLabel="loading" />
+
+</div>
+<!-- Cambiar las clases -->
+ <div *ngIf="loading">
+    <h2>Has aceptado el ticket de {{ ticket?.nombre_completo }}</h2>
+  </div>
+    <div class="grid" *ngIf="loading">
+        <div class="col-12 xl:col-12">
+      <p-card header="Informacion del ticket">
+        <div class="grid">
+          <div class="p-col-12 xl:col-4 ">
+           <span> <strong>Solicitado Por: </strong> {{ticket?.nombre_completo}} </span>
+          </div>
+          
+          <div class="col-12 xl:col-4 ">
+           <span> <strong>Fecha:</strong> {{ticket?.fecha | date:'dd/MM/yyyy'}} </span>
+          </div>
+
+          <div class="col-12 xl:col-4 ">
+           <span>  <strong>Area que solicito el ticket:</strong> {{ticket?.area}} </span>
+          </div>
+
+          <div class="col-12  xl:col-4">
+         <span>   <strong>Descripción:</strong> {{ticket?.descripcion}} </span>
+          </div>
+          <div class="col-12  xl:col-4">
+         <span>   <strong>estatus:</strong> {{ticket?.estatus}} </span>
+          </div>
+          <div class="col-12  xl:col-4">
+         <span>   <strong>Trabajado Por el usuario:</strong> {{ticket?.trabajadoPor}} </span>
+          </div>
+          
+        </div>
+    </p-card>
+    </div>
+    
+</div>
+
+<div class="flex flex-column" *ngIf="loading">
+<button pButton type="button" label="Ir a Tickets Aceptados" class="p-button-rounded p-button-success" (click)="backToMisTickets()"></button>
+</div>

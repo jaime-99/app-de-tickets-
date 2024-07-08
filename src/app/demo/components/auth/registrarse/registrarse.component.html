@@ -1,0 +1,84 @@
+
+<div class="grid p-3" *ngIf="!validTemplate">
+	<div class="col-6 md:col-6">
+	  <div class="card">
+		<h5>Registro</h5>
+		<form [formGroup]="registroForm" (ngSubmit)="addUser()" class="p-fluid p-formgrid grid">
+		  <div class="field col-12 md:col-6">
+			<label  >Nombre</label>
+			<input placeholder="Ej:Harry" pInputText id="nombre" type="text" formControlName="nombre" />
+		  </div>
+		  <div class="field col-12 md:col-6">
+			<label for="paterno">Apellido Paterno</label>
+			<input pInputText  placeholder="Ej:James" formControlName="apellido_paterno" />
+		  </div>
+		  <div class="field col-12 md:col-4">
+			<label for="materno">Apellido Materno</label>
+			<input pInputText placeholder="Ej:Potter" type="text" formControlName="apellido_materno" />
+		  </div>
+		  <div class="field col-12 md:col-4">
+			<label for="correo">Correo</label>
+			<input pInputText placeholder="Ej:James@cgpgroup.mx" type="text" formControlName="correo" />
+		  </div>
+		  <div class="field col-12 md:col-4">
+			<label for="correo">Ciudad</label>
+			<p-dropdown [options]="ciudades" id="ciudad" optionLabel="name" formControlName="ciudad"
+			(onChange)="updateCiudad(registroForm.value.ciudad.name)"
+			></p-dropdown>
+		  </div>
+		  <div class="field col-12 md:col-4">
+			<label for="usuario">usuario</label>
+			<input pInputText placeholder="Ej:zelda_1799" type="text" formControlName="usuario" />
+		  </div>
+			  <div class="field col-12 md:col-4">
+				<label for="password">Password</label>
+				<input pInputText placeholder="tu password" type="password" formControlName="contrasenia" />
+			  </div>
+			  <div class="field col-12 md:col-4">
+			<label for="area">Área</label>
+			<p-dropdown [options]="areas" id="area" optionLabel="name" formControlName="area"
+			(onChange)="updateArea(registroForm.value.area.name)"
+			></p-dropdown>
+		  </div>
+
+		  	<div class="field col-12 md:col-4">
+		<p-button [disabled]="registroForm.invalid" type="submit" label="Registrarse" />
+			</div>
+		</form>
+
+
+	  </div>
+	</div>
+
+	<div class="col-6 md:col-6">
+		<div class="card">
+
+			<img src="assets/Logo2.png" alt="">
+
+		</div>
+	</div>
+
+	</div>
+
+	<div *ngIf="validTemplate">
+
+		<div class="card">
+			<p-messages 
+				[(value)]="messages" 
+				[enableService]="false" 
+				[closable]="false" />
+			<div class="m-1">
+				<button 
+					pButton 
+					pRipple 
+					label="Ir a Iniciar Sesion" 
+					class="p-button-success"
+					routerLink="/auth/login">
+				</button>
+			</div>
+		</div>
+
+
+	</div>
+
+	

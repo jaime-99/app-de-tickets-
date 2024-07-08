@@ -1,0 +1,20 @@
+
+<ul class="layout-menu">
+    <li>
+        <!-- <span class=""> <img src="https://primefaces.org/cdn/primeng/images/landing/avatar.png" alt="">  </span> -->
+        <div class="flex flex-column">
+            <span class="font-bold mb-1">  {{user.usuario}} </span>
+            <span class="text-secondary mb-1">{{user.area}} </span>
+        </div>
+        
+    </li>
+    <ng-container *ngFor="let item of model; let i = index;">
+        <li app-menuitem *ngIf="!item.separator" [item]="item" [index]="i" [root]="true"></li>
+        <li *ngIf="item.separator" class="menu-separator"></li>
+    </ng-container>
+    <!-- <li>
+        <a href="https://www.primefaces.org/primeblocks-ng/#/">
+            <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'banner-primeblocks' : 'banner-primeblocks-dark'}}.png" alt="Prime Blocks" class="w-full mt-3"/>
+        </a>
+    </li> -->
+</ul>
