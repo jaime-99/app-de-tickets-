@@ -48,7 +48,7 @@ export class AppMenuComponent implements OnInit {
                             routerLink: ['/tickets/crearTicket/misTickets']
                         },
                         {
-                            label: 'Tickets Trabajados',
+                            label: 'Tickets Asignados',
                             icon: 'pi pi-ticket',
                             items: [
                                 {
@@ -104,7 +104,7 @@ export class AppMenuComponent implements OnInit {
                             routerLink: ['./renta/rentaLaptops']
                         },
                         {
-                            label: 'Historial',
+                            label: 'MI Historial',
                             icon: 'pi pi-desktop',
                             routerLink: ['./renta/rentaLaptops/miHistorial']
                         },

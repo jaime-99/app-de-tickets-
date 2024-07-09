@@ -13,8 +13,10 @@ import { delay } from 'rxjs';
 export class HistorialRentaComponent  implements OnInit{
   rentas:RentaLaptop[];
   user : any;
-  visible:boolean = false // es para que se muestre la minuta 
-  loading:boolean = false;
+  visible:boolean = false // es para que se muestre la responsiva
+  loading:boolean = false; // es para que cargue el spinner
+  rentaDetalles: RentaLaptop; // es el objeto de una sola renta
+  laptopsUsadas:[] = []; // es el arreglo de las laptops que se usaran
 
   constructor (private rentaService:rentaService, private authService:AuthService, private router:Router) { }
   ngOnInit(): void {
@@ -39,8 +41,41 @@ export class HistorialRentaComponent  implements OnInit{
 
   }
 
-  generarMinuta(){
+  // para que se vea la responsiva en cuadro
+  generarMinuta(id){
+
     this.visible = true;
+    this.laptopsUsadas = []
+    this.rentaService.getRentaForId(id).subscribe((res)=>{
+      this.rentaDetalles = res 
+      console.log(this.rentaDetalles)
+
+      if(this.rentaDetalles.EquiposParaRenta === undefined || null){
+        this.laptopsUsadas = []
+        return;
+        
+      }
+      const laptops = this.rentaDetalles.EquiposParaRenta;
+
+
+      const laptopArray = laptops.split(',').map((laptopString) => {
+        // Separar las propiedades de cada objeto usando '-' como separador
+        const parts = laptopString.split('-');
+        
+        // Crear un objeto con las propiedades extraídas
+        const laptopObject = {
+          marca: parts[0].replace('marca: ', '').trim(),
+          NSerie: parts[1].replace('N.serie: ', '').trim(),
+          equipo: parts[2].replace('#equipo: ', '').trim()
+        };
+    
+        return laptopObject;
+      });
+
+      this.laptopsUsadas = laptopArray;
+      // console.log(this.laptopsUsadas)
+      
+    })
 
   }
 

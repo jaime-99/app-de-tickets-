@@ -116,13 +116,13 @@ this.checkFormStatus()
     this.rentaLaptopForm.patchValue({programas:this.selectedPrograms})
     this.checkFormStatus();
 
-    console.log(this.rentaLaptopForm.value)
-    this.alert = true;
+    // console.log(this.rentaLaptopForm.value)
     // return;
     // return;
-    
+    //?checar esta parte
     if(this.rentaLaptopForm.valid){
       this.rentaService.PostRenta(this.rentaLaptopForm.value).subscribe((res)=>{
+        this.alert = true;
         // console.log(res)
       })
     }

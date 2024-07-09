@@ -21,12 +21,12 @@ export class rentaService {
 
     // devolvera una renta individal con el id que le pasaemos
     getRentaForId(id){
-        let url = `https://visualmanagment.com/AppCGP/apis/renta/getRentaForId.php?id=${id}`
+        let url = `https://visualmanagment.com/AppCGP/apis/renta/getRentaForId.php?id=${id}&timestamp=${new Date().getTime()}`
         return this.http.get<any>(url)
     }
 
     getAllRentas(){
-        let url = ` https://visualmanagment.com/AppCGP/apis/renta/AllRentas.php`;
+        let url = `https://visualmanagment.com/AppCGP/apis/renta/AllRentas.php&timestamp=${new Date().getTime()}`;
         return this.http.get<any>(url)
     }
 

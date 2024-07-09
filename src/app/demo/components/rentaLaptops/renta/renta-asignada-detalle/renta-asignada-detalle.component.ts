@@ -119,9 +119,5 @@ export class RentaAsignadaDetalleComponent implements OnInit {
       // console.error('faltan');
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Te faltan laptops de seleccionar' });
     }
-
-
-
-
   }
 }

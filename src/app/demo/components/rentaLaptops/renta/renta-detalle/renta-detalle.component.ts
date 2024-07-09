@@ -10,11 +10,12 @@ import { delay } from 'rxjs';
   styleUrl: './renta-detalle.component.scss'
 })
 export class RentaDetalleComponent implements OnInit {
+  laptopsUsadas: any;
 
   constructor ( private rentaService : rentaService, private activateRoute:ActivatedRoute) { }
   loading:boolean = false;
-  renta:RentaLaptop
-  rentaId:string;
+  renta:RentaLaptop // datos de la renta 
+  rentaId:string; // es el id de la renta
   ngOnInit(): void {
 
     this.activateRoute.paramMap.subscribe(params=>{
@@ -33,7 +34,32 @@ export class RentaDetalleComponent implements OnInit {
     this.renta = res
     // console.log(res)
     this.loading = true;
+    this.EquiposParaRenta()
   })
+  }
+
+  // aqui sera un arreglo de los equipos de venta que se usaran en la renta
+  EquiposParaRenta(){
+    const laptops = this.renta.EquiposParaRenta;
+    
+    const laptopArray = laptops.split(',').map((laptopString) => {
+      // Separar las propiedades de cada objeto usando '-' como separador
+      const parts = laptopString.split('-');
+      
+      // Crear un objeto con las propiedades extraídas
+      const laptopObject = {
+        marca: parts[0].replace('marca: ', '').trim(),
+        NSerie: parts[1].replace('N.serie: ', '').trim(),
+        equipo: parts[2].replace('#equipo: ', '').trim()
+      };
+  
+      return laptopObject;
+    });
+  
+    // console.log(laptopArray);
+    this.laptopsUsadas = laptopArray
+    
+    // return laptopArray;
   }
 
 

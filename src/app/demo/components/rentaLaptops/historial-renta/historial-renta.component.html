@@ -51,8 +51,8 @@
                 </td>
 
                 <td>
-                    <button icon="pi pi-eye" pButton label="Ver" (click)="redirectTo(renta.id)" > </button>
-                    <button icon="pi pi-eye" pButton label="Minuta" (click)="generarMinuta()" > </button>
+                    <button class="p-button-sm mr-1" icon="pi pi-eye" pButton label="Ver" (click)="redirectTo(renta.id)" > </button>
+                    <button class="p-button-sm" icon="pi pi-eye" [disabled]="renta.EquiposParaRenta ===null" pButton label="Responsiva" (click)="generarMinuta(renta.id)" > </button>
                 </td>
             </tr>
         </ng-template>
@@ -76,16 +76,11 @@
             [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
             [maximizable]="true">
                 <p>
-                    Se hace entrega de 6 equipos de cómputo (laptop) con un cable de conexión de carga, cable de toma corriente, 6 mouses funcionales con su  mousepad a la compañera. Mitzy Natali Esquivel González, a petición de ella y haciéndose responsable del equipo, para uso personal con un tiempo estimado de entrega indefinido del presente año, quedando bajo su resguardo debiéndolo regresar a la empresa en las mismas condiciones que se le fue entregado.
+                    Se hace entrega de {{laptopsUsadas?.length}} equipos de cómputo (laptop) con un cable de conexión de carga, cable de toma corriente, {{laptopsUsadas?.length}} mouses funcionales con su  mousepad a la persona.<strong> {{rentaDetalles?.nombre}}</strong>, haciéndose responsable del equipo, para uso personal con un tiempo estimado de entrega indefinido del presente año, quedando bajo su resguardo debiéndolo regresar a la empresa en las mismas condiciones que se le fue entregado.
                 Equipos: </p>
                 <br>
-                <ul>
-                    <li> 1.	HP 174 Número de serie: CNU30293NQ </li>
-                    <li>2.	HP 169 Número de serie: TRTD401 </li>
-                    <li>   3.	HP 173 Número de serie: CNO247CGND </li>
-                    <li>   4.	Dell 08 Número de serie: BKV7CS1 </li>
-                    <li>  5.	Dell 02 Número de serie: HVM23R1 </li>
-                    <li>   6.	Dell 13 Numero de serie:  </li>
+                <ul *ngFor="let lap of laptopsUsadas let i = index">
+                    <li > {{i+1}}.Marca:  {{lap?.marca}} - N.Serie: {{lap?.NSerie}} - Equipo: {{lap?.equipo}} </li>
                 </ul>
 
 
@@ -93,12 +88,12 @@
                     <div class="col-6 xl:col-6">
                         Entrega
                         ----------------
-                        <p>jaime gonzalez flores</p>
+                        <p>JOSE JAIME GONZALEZ FLORES</p>
                     </div>
                     <div class="col-6 xl:col-6">
                         Recibe Equipo
                         ----------------
-                        <p>Mitzy ....</p>
+                        <p> {{rentaDetalles?.nombre}} </p>
                     </div>
                 </div>
 

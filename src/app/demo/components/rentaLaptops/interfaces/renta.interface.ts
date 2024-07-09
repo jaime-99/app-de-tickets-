@@ -11,6 +11,7 @@ export interface RentaLaptop {
     ubicacion?: string | null;
     rentaUsuario?: string | null;
     estatus?:string;
+    EquiposParaRenta?:any
 }
 
 export interface Computadora {

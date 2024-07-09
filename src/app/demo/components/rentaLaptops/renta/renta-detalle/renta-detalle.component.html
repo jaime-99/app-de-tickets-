@@ -26,8 +26,8 @@
                     </div>
                     <p> <strong>  Comentarios: {{renta.comentarios}}  </strong> </p>
                     <p> <strong>  Programas: </strong> {{renta.programas}}  </p>
-                    <p> <strong>  Mouse :  </strong> {{renta.mouse}}  </p>
-                    <p> <strong>  Extensiones : </strong> {{renta.extensiones}}   </p>
+                    <p> <strong>  Mouse :  </strong> {{renta.mouse | changeBoolean:renta.mouse}}  </p>
+                    <p> <strong>  Extensiones : </strong> {{renta.extensiones | changeBoolean:renta.extensiones}}   </p>
 
 
             </div>
@@ -40,28 +40,33 @@
 
 <p-card class="p-1" header="Computadoras que se usaron">
 
-    <!-- <p-table 
-        [value]="products" 
+    <div *ngIf="!renta.EquiposParaRenta">
+        <p>Aun no se han seleccioando las laptops que se usaran </p>
+    </div>
+
+    <div *ngIf="renta.EquiposParaRenta">
+     <p-table 
+        [value]="laptopsUsadas" 
         styleClass="p-datatable-gridlines" 
         [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Quantity</th>
+                    <th>Marca</th>
+                    <th>N.Serie</th>
+                    <th>#Equipo </th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-product>
+            <ng-template pTemplate="body" let-r>
                 <tr>
-                    <td>{{ product.code }}</td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.category }}</td>
-                    <td>{{ product.quantity }}</td>
+                    <td>{{ r.marca }}</td>
+                    <td>{{ r.NSerie }}</td>
+                    <td>{{ r.equipo }}</td>
                 </tr>
             </ng-template>
-    </p-table> -->
+    </p-table> 
+    <!-- </div> -->
 
-</p-card>
 
-</div>
+<!-- </p-card> -->
+
+<!-- </div> -->
