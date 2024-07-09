@@ -34,7 +34,16 @@ export class rentaService {
     getComputadoras(){
         let url = `https://visualmanagment.com/AppCGP/apis/renta/getAllComputadoras.php`;
         return this.http.get<any>(url)
-    }   
+    } 
+    
+    // sera un put a la tabla de renta para agregar al campo de computadoras que se usaran
+    putComputersUse(id,EquiposParaRenta){
+        let url = `https://visualmanagment.com/AppCGP/apis/renta/putRentaComputadorasUsaran.php`;
+        const body = JSON.stringify({ id, EquiposParaRenta }); // convierte un objeto en cadena
+        return this.http.put(url,body)
+
+
+    }
 }
 
 

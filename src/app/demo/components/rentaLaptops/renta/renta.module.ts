@@ -26,6 +26,8 @@ import { CardModule } from 'primeng/card';
 import { RentaAsignadaComponent } from './renta-asignada/renta-asignada.component';
 import { RentaAsignadaDetalleComponent } from './renta-asignada-detalle/renta-asignada-detalle.component';
 import { SearchRentaPipe } from './pipes/search-renta.pipe';
+import { DividerModule } from 'primeng/divider';
+import { changeBoolean } from './pipes/changueBoolean.pipe';
 
 @NgModule({
     imports: [
@@ -50,10 +52,12 @@ import { SearchRentaPipe } from './pipes/search-renta.pipe';
         DialogModule,
         ProgressSpinnerModule,
         CardModule,
+        DividerModule,
         
 
         //pipes 
-        SearchRentaPipe
+        SearchRentaPipe,
+        changeBoolean
         
     ],
     exports: [],

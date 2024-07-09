@@ -1,7 +1,30 @@
 
 <p-card  header="Asignar Laptops">
     <p>Asignar laptops a la renta con el numero id: {{this.rentaDetail?.id}} </p>
-    <p>numero de laptops a rentar :  {{this.rentaDetail?.numeroComputadoras}} </p>
+    <div class="flex justify-content-center">
+    <strong class="m-2">Datos de la renta: </strong>
+    </div>
+    <div class="grid">
+        <div class="col-12 xl:col-3">
+            <div class="flex flex-column">
+            <p>numero de laptops a rentar :  {{this.rentaDetail?.numeroComputadoras}} </p>
+            <p>programas :  {{this.rentaDetail?.programas}} </p>
+            </div>
+        </div>
+        <div class="col-12 xl:col-3">
+            <p>Nombre Completo: {{this.rentaDetail?.nombre}}  </p>
+            <p>Comentarios: {{this.rentaDetail?.comentarios}}  </p>
+        </div>
+        <div class="col-12 xl:col-3">
+            <p>Fecha Inicio: {{this.rentaDetail?.diaInicio  | date:'dd/MM/yyyy'}}  </p>
+            <p>Ubicacion: {{this.rentaDetail?.ubicacion}}  </p>
+        </div>
+        <div class="col-12 xl:col-3">
+            <p>Fecha Inicio: {{this.rentaDetail?.diaFin | date:'dd/MM/yyyy'}}  </p>
+            <p>Extensiones: {{this.rentaDetail?.extensiones | changeBoolean:this.rentaDetail?.extensiones}}  </p>
+        </div>
+    </div>
+    <p-divider></p-divider>
 
     <div class="grid">
         <div class="col-12 xl:col-6" *ngFor="let i of computerArray; let index = index ">
@@ -21,7 +44,8 @@
         </div>
     </div>
 
-    <button pButton label="Asignar Laptops"> </button>
+    <button pButton (click)="sendEquipos()" label="Asignar Laptops"> </button>
+    <p-toast></p-toast>
 
 
 
