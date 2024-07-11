@@ -112,8 +112,8 @@ export class RentaAsignadaDetalleComponent implements OnInit {
   sendEquipos(){
 
     if(this.validateDropdowns()){
-      this.rentaService.putComputersUse(this.rentaId,this.selcciones).subscribe((res)=>{
-        // this.router.navigateByUrl('renta/rentaLaptops/Asignadas')
+      this.rentaService.putComputersUse(this.rentaId,this.selcciones,'Cerrado').subscribe((res)=>{
+        this.router.navigateByUrl('renta/rentaLaptops/Asignadas')
       })
     }else{
       // console.error('faltan');

@@ -9,6 +9,13 @@
         <h4 class="flex justify-content-center ">Detalles de la renta con el ID # {{renta.id}} </h4>
     </div>
 
+    <div *ngIf="renta.EquiposParaRenta" class="flex justify-content-end">
+
+        <!-- <button class="m-2" pButton label="Responsiva" [dataFromParent]="renta" ></button> -->
+         <app-responsiva [dataFromParent]="renta" [laptopsUsadas]="laptopsUsadas"></app-responsiva>
+        
+    </div>
+
     <div class="grid p-1">
 
         <div class="col-12 xl:col-12">
@@ -29,7 +36,7 @@
                     <p> <strong>  Mouse :  </strong> {{renta.mouse | changeBoolean:renta.mouse}}  </p>
                     <p> <strong>  Extensiones : </strong> {{renta.extensiones | changeBoolean:renta.extensiones}}   </p>
 
-
+                    
             </div>
 
         </div>

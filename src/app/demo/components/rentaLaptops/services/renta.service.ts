@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class rentaService {
@@ -26,7 +27,7 @@ export class rentaService {
     }
 
     getAllRentas(){
-        let url = `https://visualmanagment.com/AppCGP/apis/renta/AllRentas.php&timestamp=${new Date().getTime()}`;
+        let url = `https://visualmanagment.com/AppCGP/apis/renta/AllRentas.php?timestamp=${new Date().getTime()}`;
         return this.http.get<any>(url)
     }
 
@@ -37,13 +38,21 @@ export class rentaService {
     } 
     
     // sera un put a la tabla de renta para agregar al campo de computadoras que se usaran
-    putComputersUse(id,EquiposParaRenta){
+    putComputersUse(id,EquiposParaRenta,estatus):Observable<any>{
         let url = `https://visualmanagment.com/AppCGP/apis/renta/putRentaComputadorasUsaran.php`;
-        const body = JSON.stringify({ id, EquiposParaRenta }); // convierte un objeto en cadena
-        return this.http.put(url,body)
-
-
+        const body = JSON.stringify({ id, EquiposParaRenta,estatus }); // convierte un objeto en cadena
+        return this.http.put(url,body).pipe(
+            catchError(error =>{
+                return throwError(error)
+            })
+        )
     }
+
+    sendEmail(data){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        const apiUrl = 'https://visualmanagment.com/AppCGP/apis/emails/send_test_email.php'
+        return this.http.post<any>(apiUrl, data, {headers})
+      }
 }
 
 

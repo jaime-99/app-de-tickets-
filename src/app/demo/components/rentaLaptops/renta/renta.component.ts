@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { rentaService } from '../services/renta.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { AuthService } from '../../auth/auth.service';
+import { ConnectableObservable, Subject } from 'rxjs';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-renta',
@@ -11,9 +14,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class RentaComponent  implements OnInit{
   selectedPrograms: any[] = [];
   alert: boolean;
+  user: any; // para saber el usuario y datos
 
   constructor (private rentaService:rentaService, private fb: FormBuilder, private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService, private authService: AuthService
   ) { 
 
   }
@@ -25,10 +29,13 @@ export class RentaComponent  implements OnInit{
   rentaLaptopForm: FormGroup;
 
   isOtherSelected: boolean = false; // es para cuando se selecciona otra en la casilla de lugar
-  selectedOption:string = 'ejemplo'
+  selectedOption:string = 'aaaaa'
+
+
 
 
   ngOnInit(): void {
+  this.user = this.authService.getUser()
 
     this.events = [
       { status: 'Nombre', date: '15/10/2020 10:30', icon: 'pi pi-check', color: '#9C27B0', image: 'game-controller.jpg' },
@@ -61,7 +68,7 @@ this.rentaLaptopForm = this.fb.group({
   extensiones: [],
   lugar:[],
   ubicacion:['Oficinas De Saltillo'],
-  rentaUsuario:[],
+  rentaUsuario:[this.user.usuario],
   estatus:['abierto'],
 
 });
@@ -106,7 +113,7 @@ this.checkFormStatus()
   })}
 
   onSubmit(){
-
+    
     if(this.rentaLaptopForm.invalid){
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Te faltan datos, intenta de nuevo' });
       // return;
@@ -123,6 +130,8 @@ this.checkFormStatus()
     if(this.rentaLaptopForm.valid){
       this.rentaService.PostRenta(this.rentaLaptopForm.value).subscribe((res)=>{
         this.alert = true;
+        
+        // this.sendEmail();
         // console.log(res)
       })
     }
@@ -146,7 +155,7 @@ this.checkFormStatus()
 
   checkFormStatus(): void {
     // Aquí es donde puedes actualizar los estados de los iconos del timeline según los valores de los form controls
-    // Por ejemplo:
+    // Por aaaaa:
     const mouseValue = this.rentaLaptopForm.get('mouse')?.value;
     const lugarValue = this.rentaLaptopForm.get('lugar')?.value;
 
@@ -162,6 +171,49 @@ this.checkFormStatus()
     return event.color === 'green' ? 'complete' : 'incomplete';
   }
 
+  // enviar el correo de parte del que hace la renta
+  sendEmail(){
+
+
+    const nombre = this.rentaLaptopForm.get('nombre').value;
+    const fechaInicio = this.rentaLaptopForm.get('diaInicio').value;
+    const soloFecha = format(new Date(fechaInicio), 'dd/MM/yyyy');
+
+    const fechaFin = this.rentaLaptopForm.get('diaFin').value;
+    const soloFecha2 = format(new Date(fechaFin), 'dd/MM/yyyy');
+
+    const email = {
+      to: 'sistemas@cgpgroup.mx',
+      subject: `Renta de laptop(s)`,
+      body : `${nombre}  ha mandado una renta de laptop del dia : ${soloFecha} 
+      para el dia ${soloFecha2}` 
+    }
+
+    this.rentaService.sendEmail(email).subscribe((res)=>{
+      // console.log(res)
+      this.sendEmailMe();
+    })
+  }
+
+  // se envia un correo al que hizo pidio la renta 
+  sendEmailMe(){
+
+
+    const emailFor = this.user.correo;
+    // console.log(emailFor)
+
+    const email = {
+      to: emailFor,
+      subject: 'Renta exitosa',
+      body: 'Tu renta ha sido exitosa, ahora espera solo la confirmacion, que te llegara por este medio.'
+    }
+
+    this.rentaService.sendEmail(email).subscribe();
+
+  
+
+  }
   
 
 }
+

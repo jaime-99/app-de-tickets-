@@ -1,7 +1,14 @@
-<div class="card">
+
+<div *ngIf="!loading" class="flex justify-content-center" >
+
+    <p-progressSpinner></p-progressSpinner>
+
+</div>
+
+<div class="card" *ngIf="loading">
 
     <div class="flex justify-content-end">
-    <input class="" type="text"   pInputText placeholder="Buscar palabra clave">
+    <input class="" type="text"  pInputText placeholder="Buscar palabra clave">
     </div>
 
     <p-tabView>
@@ -34,12 +41,15 @@
                     <td>{{ renta?.numeroComputadoras }}</td>
                     <td>{{ renta?.diaInicio | date : 'dd/MM/yyyy' }}</td>
                     <td>{{ renta?.diaFin | date:'dd/MM/yyyy' }} </td>
-                    <td>{{ renta?.estatus }}</td>
+                    <td>
+                        <p-tag  [value]="renta?.estatus" [severity]="getSeverity(renta?.estatus)" >  </p-tag>
+                    </td>
                     <td> 
                         <p-buttonGroup>
 
                         <button class="p-1 m-1" (click)="goToDetail(renta?.id)" pButton label="Asignar"></button> 
-                        <button class="p-1 m-1"  pButton label="Ver"></button>  
+                        <button class="p-1 m-1" (click)="goToDetail2(renta?.id)"  pButton label="Ver"></button>  
+                        <!-- <app-responsiva [dataFromParent]="renta" > </app-responsiva> -->
                         <!-- todo colocar para ver detalles solamente en linea de arriba -->
                         </p-buttonGroup>
                      </td>
@@ -48,7 +58,17 @@
     </p-table>
         </p-tabPanel>
         <p-tabPanel header="Abiertos">
-            <p-table 
+
+            <div *ngIf="rentaAbiertos?.length===0">
+                <!-- <p>No hay tickets abiertos</p> -->
+                    <p-messages severity="error">
+                        <ng-template pTemplate>
+                            <div class="ml-2">No hay tickets <strong>ABIERTOS </strong> por el momento.</div>
+                        </ng-template>
+                    </p-messages>
+                </div>
+        
+            <p-table *ngIf="rentaAbiertos?.length>0"
         [value]="rentaAbiertos" 
         styleClass="p-datatable-gridlines" 
         [tableStyle]="{ 'min-width': '50rem' }">
@@ -68,14 +88,26 @@
                     <td>{{ renta.numeroComputadoras }}</td>
                     <td>{{ renta.diaInicio | date : 'dd/MM/yyyy' }}</td>
                     <td>{{ renta.diaFin | date:'dd/MM/yyyy' }} </td>
-                    <td>{{ renta.estatus }}</td>
+                    <td>
+                        <p-tag  [value]="renta?.estatus" [severity]="getSeverity(renta?.estatus)" >  </p-tag>
+
+                    </td>
                     <td> <button pButton label="Ver"></button>  </td>
                 </tr>
             </ng-template>
     </p-table>
         </p-tabPanel>
         <p-tabPanel header="Cerrados">
-            <p-table 
+
+            <div *ngIf="rentaCerrados?.length===0">
+                <!-- <p>No hay tickets abiertos</p> -->
+                    <p-messages severity="error">
+                        <ng-template pTemplate>
+                            <div class="ml-2">No hay tickets  <strong> CERRADOS </strong> por el momento.</div>
+                        </ng-template>
+                    </p-messages>
+                </div>
+            <p-table *ngIf="rentaCerrados.length>0"
         [value]="rentas" 
         styleClass="p-datatable-gridlines" 
         [tableStyle]="{ 'min-width': '50rem' }">
@@ -95,7 +127,9 @@
                     <td>{{ renta.numeroComputadoras }}</td>
                     <td>{{ renta.diaInicio | date : 'dd/MM/yyyy' }}</td>
                     <td>{{ renta.diaFin | date:'dd/MM/yyyy' }} </td>
-                    <td>{{ renta.estatus }}</td>
+                    <td>
+                        <p-tag  [value]="renta?.estatus" [severity]="getSeverity(renta?.estatus)" >  </p-tag>
+                    </td>
                     <td> <button pButton label="Ver"></button>  </td>
                 </tr>
             </ng-template>

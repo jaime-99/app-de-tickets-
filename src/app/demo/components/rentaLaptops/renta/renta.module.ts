@@ -28,6 +28,9 @@ import { RentaAsignadaDetalleComponent } from './renta-asignada-detalle/renta-as
 import { SearchRentaPipe } from './pipes/search-renta.pipe';
 import { DividerModule } from 'primeng/divider';
 import { changeBoolean } from './pipes/changueBoolean.pipe';
+import { TagModule } from 'primeng/tag';
+import { MessagesModule } from 'primeng/messages';
+import { ResponsivaComponent } from '../responsiva/responsiva.component';
 
 @NgModule({
     imports: [
@@ -53,7 +56,8 @@ import { changeBoolean } from './pipes/changueBoolean.pipe';
         ProgressSpinnerModule,
         CardModule,
         DividerModule,
-        
+        TagModule,
+        MessagesModule,
 
         //pipes 
         SearchRentaPipe,
@@ -66,7 +70,10 @@ import { changeBoolean } from './pipes/changueBoolean.pipe';
         HistorialRentaComponent,
         RentaDetalleComponent,
         RentaAsignadaComponent,
-        RentaAsignadaDetalleComponent
+        RentaAsignadaDetalleComponent,
+
+        //inputs y outputs
+        ResponsivaComponent
     ],
     providers: [ConfirmationService,MessageService],
 })
