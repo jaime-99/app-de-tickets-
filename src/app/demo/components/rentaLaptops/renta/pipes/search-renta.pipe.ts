@@ -9,6 +9,11 @@ export class SearchRentaPipe implements PipeTransform {
 
   transform(laptopsRenta:RentaLaptop[],searchTerm): any {
 
+    
+    if (!searchTerm) {
+      return laptopsRenta;
+    }
+
     const filteredLaptop = laptopsRenta.filter(laptop =>
       laptop.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
       laptop.numeroComputadoras.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -17,7 +22,7 @@ export class SearchRentaPipe implements PipeTransform {
     );
 
     if (filteredLaptop.length === 0) {
-      return [{ mensaje: 'No se encontraron resultados con' }];
+      return [{ mensaje: `No se encontraron resultados con  ${searchTerm}`  }];
     }
 
     return filteredLaptop

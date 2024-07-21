@@ -22,7 +22,9 @@
       "lib": [
         "ES2022",
         "dom"
-      ]
+      ],
+      "allowSyntheticDefaultImports": true, // para el import de printJS
+
     },
     "exclude": ["node_modules", "**/node_modules/*"],
     "angularCompilerOptions": {
@@ -31,5 +33,6 @@
       "strictInputAccessModifiers": false,
       "strictTemplates": false
     }
+    
   }
   

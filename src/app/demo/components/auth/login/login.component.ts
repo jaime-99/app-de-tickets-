@@ -60,12 +60,12 @@ export class LoginComponent implements OnInit {
 
         this.authService.login2(username,password).subscribe((res)=>{
             if(res && res.usuario){
-            this.messageService.add({ severity: 'success', summary: 'Warn', detail: 'Inicio de sesion con exito' });
+            this.messageService.add({ severity: 'success', summary: 'Exitoso', detail: 'Inicio de sesion con exito' });
             this.router.navigate(['/dashboard'])
             this.authService.saveUser(res); // Guardar la información del usuario en localStorage
 
             }else{
-                this.messageService.add({ severity: 'warn', summary: 'Warn', detail: 'Error en inicio de sesion' });
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Contraseña o Usuario incorrectos' });
             }
         })
       }

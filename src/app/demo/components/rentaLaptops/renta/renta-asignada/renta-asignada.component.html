@@ -5,27 +5,107 @@
 
 </div>
 
-<div class="card" *ngIf="loading">
+<h2>Rentas Asignadas</h2>
+
+    
+    <p-messages *ngIf="alert" severity="error">
+        <ng-template pTemplate>
+            <div class="ml-2">No hay tickets <strong> </strong> por el momento.</div>
+        </ng-template>
+    </p-messages>
+
+<div class="card" *ngIf="loading && !alert">
 
     <div class="flex justify-content-end">
-    <input class="" type="text"  pInputText placeholder="Buscar palabra clave">
+    <input class="" type="text" [formControl]="searchControl"  pInputText placeholder="Buscar palabra clave">
     </div>
 
     <p-tabView>
 
         <p-tabPanel header="Todos">
+
+            <div *ngIf="(rentas | searchRenta: searchControl.value).length === 1 && (rentas | searchRenta: searchControl.value)[0].mensaje">
+                <p>{{ (rentas | searchRenta: searchControl.value)[0].mensaje }}</p>
+            </div>
             <!-- <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p> -->
-            <p-table 
-        [value]="rentas" 
-        styleClass="p-datatable-gridlines"
-        [tableStyle]="{ 'min-width': '50rem' }">
+            <p-table *ngIf="(rentas | searchRenta: searchControl.value).length > 0 && !(rentas | searchRenta: searchControl.value)[0].mensaje" 
+                [value]="rentas | searchRenta: searchControl.value" styleClass="p-datatable-gridlines"
+                [rowsPerPageOptions]="[5, 10, 20]"
+    [paginator]="true"
+    [rows]="5"
+    >
             <ng-template pTemplate="header">
                 <tr>
 
                     <th>ID</th>
+                    <!-- <th>Registro</th> -->
+                    <th pSortableColumn="fecha">Fecha Registro <p-sortIcon field="fecha"></p-sortIcon></th>
+                    <th>Nombre</th>
+                    <th>Numero de computadoras</th>
+                    <!-- <th>Fecha Inicio </th> -->
+                    <th pSortableColumn="diaInicio">Fecha Inicio <p-sortIcon field="diaInicio"></p-sortIcon></th>
+
+                    <th>Fecha Fin </th>
+                    <th>Estatus </th>
+                    <th>Acciones </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-renta>
+                <tr>
+                    <td>{{ renta?.id }}</td>
+                    <td>{{ renta?.fecha | date: 'dd/MM/yyyy' }}</td>
+                    <!-- <th pSortableColumn="fecha">Fecha Inicio <p-sortIcon field="fecha"></p-sortIcon></th> -->
+                    <td>{{ renta?.nombre }}</td>
+                    <td>{{ renta?.numeroComputadoras }}</td>
+                    <td>{{ renta?.diaInicio | date : 'dd/MM/yyyy' }}</td>
+                    <!-- <th pSortableColumn="diaInicio">Fecha Inicio <p-sortIcon field="diaInicio"></p-sortIcon></th> -->
+
+                    <td>{{ renta?.diaFin | date:'dd/MM/yyyy' }} </td>
+                    <td>
+                        <p-tag  [value]="renta?.estatus" [severity]="getSeverity(renta?.estatus)" >  </p-tag>
+                    </td>
+                    <td> 
+                        <p-buttonGroup>
+
+                        <button class="p-1 m-1" (click)="goToDetail(renta?.id)" [disabled]="renta.EquiposParaRenta" pButton label="Asignar"></button> 
+                        <button class="p-1 m-1" (click)="goToDetail2(renta?.id)"  pButton label="Ver"></button>  
+                        <!-- <app-responsiva [dataFromParent]="renta" > </app-responsiva> -->
+                        <!-- todo colocar para ver detalles solamente en linea de arriba -->
+                        </p-buttonGroup>
+                     </td>
+                </tr>
+
+                <tr *ngIf="renta.mensaje">
+                    <td colspan="4">{{ renta.mensaje }}</td>
+                </tr>
+            </ng-template>
+    </p-table>
+        </p-tabPanel>
+        <p-tabPanel header="Abiertos">
+            <div *ngIf="(rentaAbiertos | searchRenta: searchControl.value).length === 1 && (rentaAbiertos | searchRenta: searchControl.value)[0].mensaje">
+                <p>{{ (rentaAbiertos | searchRenta: searchControl.value)[0].mensaje }}</p>
+            </div>
+            
+
+            <div *ngIf="rentaAbiertos?.length===0">
+                <!-- <p>No hay tickets abiertos</p> -->
+                    <p-messages severity="error">
+                        <ng-template pTemplate>
+                            <div class="ml-2">No hay tickets <strong>ABIERTOS </strong> por el momento.</div>
+                        </ng-template>
+                    </p-messages>
+                </div>
+                
+        
+            <p-table  *ngIf="(rentaAbiertos | searchRenta: searchControl.value).length > 0 && !(rentaAbiertos | searchRenta: searchControl.value)[0].mensaje" 
+                [value]="rentaAbiertos | searchRenta: searchControl.value" styleClass="p-datatable-gridlines">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>Registro</th>
                     <th>Nombre</th>
                     <th>Numero de computadoras</th>
                     <th>Fecha Inicio </th>
@@ -37,6 +117,60 @@
             <ng-template pTemplate="body" let-renta>
                 <tr>
                     <td>{{ renta?.id }}</td>
+                    <td>{{ renta?.fecha | date : 'dd/MM/yyyy' }}</td>
+                    <td>{{ renta?.nombre }}</td>
+                    <td>{{ renta?.numeroComputadoras }}</td>
+                    <td>{{ renta?.diaInicio | date : 'dd/MM/yyyy' }}</td>
+                    <td>{{ renta?.diaFin | date:'dd/MM/yyyy' }} </td>
+                    <td>
+                        <p-tag  [value]="renta?.estatus" [severity]="getSeverity(renta?.estatus)" >  </p-tag>
+
+                    </td>
+                    <td >
+                        <p-buttonGroup>
+
+                            <button class="p-1 m-1" (click)="goToDetail(renta?.id)" [disabled]="renta.EquiposParaRenta" pButton label="Asignar"></button> 
+                            <button class="p-1 m-1" (click)="goToDetail2(renta?.id)"  pButton label="Ver"></button>  
+                            <!-- <app-responsiva [dataFromParent]="renta" > </app-responsiva> -->
+                            <!-- todo colocar para ver detalles solamente en linea de arriba -->
+                            </p-buttonGroup>
+                    </td>
+                </tr>
+            </ng-template>
+    </p-table>
+        </p-tabPanel>
+        <p-tabPanel header="Cerrados">
+
+            <div *ngIf="(rentaCerrados | searchRenta: searchControl.value).length === 1 && (rentaCerrados | searchRenta: searchControl.value)[0].mensaje">
+                 <p>{{ (rentaCerrados | searchRenta: searchControl.value)[0].mensaje }}</p>
+            </div>
+
+            <div *ngIf="rentaCerrados?.length===0">
+                <!-- <p>No hay tickets abiertos</p> -->
+                    <p-messages severity="error">
+                        <ng-template pTemplate>
+                            <div class="ml-2">No hay tickets  <strong> CERRADOS </strong> por el momento.</div>
+                        </ng-template>
+                    </p-messages>
+                </div>
+            <p-table *ngIf="(rentaCerrados | searchRenta: searchControl.value).length > 0 && !(rentaCerrados | searchRenta: searchControl.value)[0].mensaje" 
+                [value]="rentaCerrados | searchRenta: searchControl.value" styleClass="p-datatable-gridlines">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>Registro</th>
+                    <th>Nombre</th>
+                    <th>Numero de computadoras</th>
+                    <th>Fecha Inicio </th>
+                    <th>Fecha Fin </th>
+                    <th>Estatus </th>
+                    <th>Acciones </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-renta>
+                <tr>
+                    <td>{{ renta?.id }}</td>
+                    <td>{{ renta?.fecha | date:'dd/MM/yyyy' }}</td>
                     <td>{{ renta?.nombre }}</td>
                     <td>{{ renta?.numeroComputadoras }}</td>
                     <td>{{ renta?.diaInicio | date : 'dd/MM/yyyy' }}</td>
@@ -47,90 +181,12 @@
                     <td> 
                         <p-buttonGroup>
 
-                        <button class="p-1 m-1" (click)="goToDetail(renta?.id)" pButton label="Asignar"></button> 
-                        <button class="p-1 m-1" (click)="goToDetail2(renta?.id)"  pButton label="Ver"></button>  
-                        <!-- <app-responsiva [dataFromParent]="renta" > </app-responsiva> -->
-                        <!-- todo colocar para ver detalles solamente en linea de arriba -->
+                            <button class="p-1 m-1" (click)="goToDetail(renta?.id)" [disabled]="renta.EquiposParaRenta" pButton label="Asignar"></button> 
+                            <button class="p-1 m-1" (click)="goToDetail2(renta?.id)"  pButton label="Ver"></button>  
+                            <!-- <app-responsiva [dataFromParent]="renta" > </app-responsiva> -->
+                            <!-- todo colocar para ver detalles solamente en linea de arriba -->
                         </p-buttonGroup>
-                     </td>
-                </tr>
-            </ng-template>
-    </p-table>
-        </p-tabPanel>
-        <p-tabPanel header="Abiertos">
-
-            <div *ngIf="rentaAbiertos?.length===0">
-                <!-- <p>No hay tickets abiertos</p> -->
-                    <p-messages severity="error">
-                        <ng-template pTemplate>
-                            <div class="ml-2">No hay tickets <strong>ABIERTOS </strong> por el momento.</div>
-                        </ng-template>
-                    </p-messages>
-                </div>
-        
-            <p-table *ngIf="rentaAbiertos?.length>0"
-        [value]="rentaAbiertos" 
-        styleClass="p-datatable-gridlines" 
-        [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Numero de computadoras</th>
-                    <th>Fecha Inicio </th>
-                    <th>Fecha Fin </th>
-                    <th>Estatus </th>
-                    <th>Acciones </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-renta>
-                <tr>
-                    <td>{{ renta.nombre }}</td>
-                    <td>{{ renta.numeroComputadoras }}</td>
-                    <td>{{ renta.diaInicio | date : 'dd/MM/yyyy' }}</td>
-                    <td>{{ renta.diaFin | date:'dd/MM/yyyy' }} </td>
-                    <td>
-                        <p-tag  [value]="renta?.estatus" [severity]="getSeverity(renta?.estatus)" >  </p-tag>
-
                     </td>
-                    <td> <button pButton label="Ver"></button>  </td>
-                </tr>
-            </ng-template>
-    </p-table>
-        </p-tabPanel>
-        <p-tabPanel header="Cerrados">
-
-            <div *ngIf="rentaCerrados?.length===0">
-                <!-- <p>No hay tickets abiertos</p> -->
-                    <p-messages severity="error">
-                        <ng-template pTemplate>
-                            <div class="ml-2">No hay tickets  <strong> CERRADOS </strong> por el momento.</div>
-                        </ng-template>
-                    </p-messages>
-                </div>
-            <p-table *ngIf="rentaCerrados.length>0"
-        [value]="rentas" 
-        styleClass="p-datatable-gridlines" 
-        [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Numero de computadoras</th>
-                    <th>Fecha Inicio </th>
-                    <th>Fecha Fin </th>
-                    <th>Estatus </th>
-                    <th>Acciones </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-renta>
-                <tr>
-                    <td>{{ renta.nombre }}</td>
-                    <td>{{ renta.numeroComputadoras }}</td>
-                    <td>{{ renta.diaInicio | date : 'dd/MM/yyyy' }}</td>
-                    <td>{{ renta.diaFin | date:'dd/MM/yyyy' }} </td>
-                    <td>
-                        <p-tag  [value]="renta?.estatus" [severity]="getSeverity(renta?.estatus)" >  </p-tag>
-                    </td>
-                    <td> <button pButton label="Ver"></button>  </td>
                 </tr>
             </ng-template>
     </p-table>

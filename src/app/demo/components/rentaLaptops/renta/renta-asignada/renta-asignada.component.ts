@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { rentaService } from '../../services/renta.service';
 import { RentaLaptop } from '../../interfaces/renta.interface';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-renta-asignada',
@@ -11,9 +13,15 @@ import { Router } from '@angular/router';
 export class RentaAsignadaComponent implements OnInit {
   rentaAbiertos: RentaLaptop[];
   rentaCerrados: RentaLaptop[];
+  alert: boolean = false; // para manejar el control de visibilidad si no hay rentas
   constructor (private rentaService:rentaService, private router:Router ) { }
-  rentas:RentaLaptop[]
+  rentas:RentaLaptop[] = []
   loading:boolean = false;
+  
+  searchControl = new FormControl('');
+
+
+
   ngOnInit(): void {
     this.getRentas();
   }
@@ -22,10 +30,23 @@ export class RentaAsignadaComponent implements OnInit {
   getRentas(){
 
     // this.rentaService.getAllRentas().subscribe(res=> this.rentas = res );
-
-    this.rentaService.getAllRentas().subscribe((res)=>{
+    
+    this.rentaService.getAllRentas().pipe(  
+      catchError((error)=>{
+        console.error('error al obtener las rentas', error);
+        return of([]);
+      })
+    )
+    .subscribe((res)=>{
       this.rentas = res
-      // console.log(this.rentas)
+      // console.log(res)
+      // console.log(res.length)
+     
+      if (res.hasOwnProperty('message')){
+        this.loading = true;
+        this.alert = true;
+        return;
+      }
       this.getRentaAbierto()
       this.loading = true;
     })
@@ -37,11 +58,11 @@ export class RentaAsignadaComponent implements OnInit {
     
     const rentaAbierto = this.rentas.filter(renta => renta.estatus === 'abierto');
 
-    const rentaCerrados = this.rentas.filter(renta => renta.estatus==='cerrado');
+    const rentaCerrados = this.rentas.filter(renta => renta.estatus==='Cerrado');
 
     this.rentaCerrados = rentaCerrados;
     this.rentaAbiertos = rentaAbierto
-    console.log(rentaAbierto)
+    // console.log(rentaAbierto)
   }
 
   goToDetail(id){
@@ -57,11 +78,13 @@ export class RentaAsignadaComponent implements OnInit {
 
   getSeverity(estatus){
 
-    if(estatus==='Abierto') {
+    if(estatus==='abierto') {
       return 'success'
     }else{
       return 'danger'
     }
   }
+
+  
 
 }

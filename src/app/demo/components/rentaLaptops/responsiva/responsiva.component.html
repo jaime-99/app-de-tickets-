@@ -4,13 +4,19 @@
 <button class="m-2" pButton label="Responsiva" (click)="look()"></button>
 
 
+
     <p-dialog 
         header="Responsiva" 
         [modal]="true" 
         [(visible)]="visible" 
         [style]="{ width: '50rem' }" 
         [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
-        [maximizable]="true">
+        [maximizable]="true"
+        contentStyleClass="dialog-content">
+        <div id="print-section" class="dialog-background">
+
+            <!-- <img src="assets\fotosCGP\logo_3.jpg" alt="Logo CGP" class="mb-5 w-6rem flex-shrink-0">                 -->
+
             <p>
                 Se hace entrega de {{laptopsUsadas?.length}} equipos de cómputo (laptop) con un cable de conexión de carga, cable de toma corriente, {{laptopsUsadas?.length}} mouses funcionales con su  mousepad a la persona.<strong> {{dataFromParent?.nombre}}</strong>, haciéndose responsable del equipo, para uso personal con un tiempo estimado de entrega indefinido del presente año, quedando bajo su resguardo debiéndolo regresar a la empresa en las mismas condiciones que se le fue entregado.
             Equipos: </p>
@@ -32,6 +38,9 @@
                     <p> {{dataFromParent?.nombre}} </p>
                 </div>
             </div>
+</div>
+
+<button class="m-2" pButton label="Imprimir" (click)="downloadPDF()"></button>
 
     </p-dialog>
 <!-- </div> -->
