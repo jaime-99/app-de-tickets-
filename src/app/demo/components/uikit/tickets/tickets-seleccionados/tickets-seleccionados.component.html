@@ -6,13 +6,13 @@
 </div>
 
   <div class="grid">
-    <div class="col-12 xl:col-6">
+    <div class="col-12 xl:col-3">
   <span class="p-input-icon-left mb-2 flex flex-column " *ngIf="!loading">
     <i class="pi pi-search"></i>
     <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar por nombre, descripcion, area, etc..."/>
   </span>
   </div>
-  <div *ngIf="!loading" class="col-12 xl:col-6">
+  <div *ngIf="!loading" class="col-12 xl:col-3">
     <p-dropdown 
     [options]="estatus" 
     optionLabel="name" 
@@ -20,6 +20,17 @@
     [(ngModel)]="selectedStatus" 
     (onChange)="filterEvent($event)"
     placeholder="Selecionar estatus"/>
+  </div>
+  <div *ngIf="!loading" class="col-12 xl:col-3">
+
+    <button pButton label="descargar en excel"></button>
+  </div>
+  <div *ngIf="!loading" class="col-12 xl:col-3">
+
+    <button (click)="toggleSortOrder()" pButton label="ordenar por fecha">
+      <i class="pi" [ngClass]="sortAscending ? 'pi-angle-up' : 'pi-angle-down'"></i>
+
+    </button>
   </div>
   </div>
 <p-divider/>
@@ -29,18 +40,19 @@
 
 
 <div class="grid" *ngIf="!loading">
-    <div  *ngFor="let tickets of filteredTickets  | pipeSearch:searchTerm" class="col-3 lg:col-6 xl:col-3" >
+    <div  *ngFor="let tickets of paginatedTickets  | pipeSearch:searchTerm let i = index" class="col-3 lg:col-6 xl:col-3" >
       
-        <div class="card mb-0">
+        <div class="card mb-0" >
             <div class="flex justify-content-between mb-3">
                 <div>   
+                    <span class="block text-500 font-medium mb-1"> {{i+1}} </span>
                     <span class="block text-500 font-medium mb-1"><strong>Nombre:</strong>{{tickets?.nombre}} </span>
                     <span class="block text-500 font-medium mb-1"><strong>Fecha:</strong>{{tickets?.fecha | date:'dd/MM/yyyy' }} </span>
                     <span class="block text-500 font-medium mb-1"><strong>Area:</strong>{{tickets?.area}} </span>
                     <!-- <div class="text-900 font-medium text-xl">{{tickets?.estatus}} </div> -->
                     <p-tag [value]="tickets.estatus" [severity]="getSeverity(tickets.estatus)" ></p-tag>
                      <span class="block"> <button pButton icon="pi pi-eye" (click)="showDialog(tickets?.id)"> </button> </span>
-                </div>
+                </div>  
                 <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-ticket text-blue-500 text-xl"></i>
                 </div>
@@ -48,6 +60,14 @@
         </div>
     </div>
     </div>
+    <div class="card flex justify-content-center">
+      <p-paginator 
+          (onPageChange)="onPageChange($event)" 
+          [first]="first"
+          [rows]="rows" 
+          [totalRecords]="filteredTickets?.length" 
+           />
+  </div>
 
     <ng-templeate *ngIf="filteredTickets?.length===0">
       no se encontraron tickets

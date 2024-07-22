@@ -1,5 +1,13 @@
 
-<p-card  header="Asignar Laptops">
+
+
+    <div *ngIf="!loading" class="flex justify-content-center" >
+
+        <p-progressSpinner></p-progressSpinner>
+    
+    </div>
+
+<p-card *ngIf="loading"  header="Asignar Laptops">
     <p>Asignar laptops a la renta con el numero id: {{this.rentaDetail?.id}} </p>
     <div class="flex justify-content-center">
     <strong class="m-2">Datos de la renta: </strong>

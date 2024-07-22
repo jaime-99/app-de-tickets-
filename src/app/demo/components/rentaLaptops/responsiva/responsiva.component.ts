@@ -28,25 +28,13 @@ export class ResponsivaComponent  implements OnInit{
   }
 
 
-  // printContent() {
-  //   printJS({
-  //     printable: 'print-section', // ID del elemento que deseas imprimir
-  //     type: 'html',               // Tipo de contenido
-  //     header: null,               // Opcional: encabezado de la impresión
-  //     style: `
-  //       .dialog-content {
-  //         position: relative;
-  //       }
-  //       .dialog-background {
-  //         background: url('https://visualmanagment.com/AppCGP/imagenes/logo_3.jpg') no-repeat center center;
-  //         background-size: contain;
-  //         padding: 100px;
-  //         height: 100%;
-  //         width: 100%;
-  //       }
-  //     ` // Agrega tus estilos aquí
-  //   });
-
+  printContent() {
+    printJS({
+      printable: 'print-section', // ID del elemento que deseas imprimir
+      type: 'html',               // Tipo de contenido
+      header: null,               // Opcional: encabezado de la impresión
+    });
+  }
   downloadPDF() {
     const printSection = document.getElementById('print-section');
   

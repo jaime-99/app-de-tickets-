@@ -11,7 +11,7 @@
         [(visible)]="visible" 
         [style]="{ width: '50rem' }" 
         [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
-        [maximizable]="true"
+        [maximizable]="false"
         contentStyleClass="dialog-content">
         <div id="print-section" class="dialog-background">
 
@@ -40,7 +40,9 @@
             </div>
 </div>
 
-<button class="m-2" pButton label="Imprimir" (click)="downloadPDF()"></button>
-
+<div class="flex align-content-between">
+<button class="m-2" pButton label="descargar PDF" (click)="downloadPDF()"></button>
+<!-- <button class="m-2" pButton label="Imprimir" (click)="printContent()"></button> -->
+</div>
     </p-dialog>
 <!-- </div> -->

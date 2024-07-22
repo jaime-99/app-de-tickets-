@@ -4,18 +4,19 @@
 <div class="flex flex-column">
 <p-progressSpinner class="flex justify-content-center" *ngIf="!loading" ariaLabel="loading"  />
 </div>
- <!-- <div class="flex flex-wrap align-items-center justify-content-center">
 
-    <p-progressSpinner *ngIf="loading" ariaLabel="loading" />
-</div>  -->
+<p-messages *ngIf="this.alert"severity="error">
+    <ng-template pTemplate>
+        <div class="ml-2">No hay rentas <strong> </strong> por el momento.</div>
+    </ng-template>
+</p-messages>
 
 <!-- <div *ngIf="!alert"> -->
-<div class="card" *ngIf="loading" >
+<div class="card" *ngIf="loading && this.rentas?.length>1" >
     <p-table [value]="rentas" [tableStyle]="{'min-width': '50rem'}"
     [rowsPerPageOptions]="[5, 10, 20]"
     [paginator]="true"
     [rows]="5"
-
     >
     
         <ng-template pTemplate="header" let-columns>

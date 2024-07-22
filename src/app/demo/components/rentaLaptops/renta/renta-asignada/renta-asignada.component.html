@@ -5,12 +5,12 @@
 
 </div>
 
-<h2>Rentas Asignadas</h2>
+<h2 *ngIf="loading && !alert">Rentas Asignadas</h2>
 
     
     <p-messages *ngIf="alert" severity="error">
         <ng-template pTemplate>
-            <div class="ml-2">No hay tickets <strong> </strong> por el momento.</div>
+            <div class="ml-2">No hay rentas <strong> </strong> por el momento.</div>
         </ng-template>
     </p-messages>
 

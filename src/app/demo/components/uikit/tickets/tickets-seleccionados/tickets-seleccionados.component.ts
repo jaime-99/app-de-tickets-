@@ -33,6 +33,12 @@ loading:boolean = true;
 visible = false; // es para que se vea los detalles del ticket en un pop
 ticket:any; // ticket individual
 
+sortAscending: boolean = true; // Variable para controlar el orden de la ordenación
+
+paginatedTickets: any[] = [];
+  first: number = 0;
+  rows: number = 4;
+
   ngOnInit(): void {
 
     this.estatus = [
@@ -85,6 +91,7 @@ ticket:any; // ticket individual
       if (Array.isArray(res)) {
         this.tickets = res;
         this.filterTickets()
+        // this.paginateTickets();
         // console.log('tickets',this.tickets)
       } else if (res && typeof res === 'object') {
         this.tickets = []  // Con
@@ -93,6 +100,38 @@ ticket:any; // ticket individual
     this.loading = false;
     return;
   })
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.paginateTickets();
+  }
+
+  paginateTickets() {
+    const tickets = [
+      {
+          id: 68,
+          titulo: "servidor",
+          estatus: "terminado",
+          fecha: "2024-07-03",
+          nombre: "Melisa",
+          apellido: "Garcia",
+          correo: "generalistarh@cgpgroup.mx",
+          descripcion: "el servidor no me funciona",
+          nombre_usuario: "Melisa123",
+          para_area: "1",
+          area: "RH",
+          IdCategoria: 5,
+          trabajadoPor: "jaime"
+      }
+  ];
+  
+    const start = this.first;
+    const end = this.first + this.rows;
+    console.log(this.tickets)
+    this.paginatedTickets = this.filteredTickets.slice(start, end);
+    console.log(this.paginatedTickets)
 
   }
 
@@ -145,9 +184,31 @@ ticket:any; // ticket individual
         this.filteredTickets = this.tickets;
       }
     } else {
-      this.filteredTickets = [...this.tickets];
+      // this.filteredTickets = [...this.tickets];
+      this.filteredTickets = this.tickets
+      // this.paginateTickets();
+      console.log('esta opcion se escoge')
     }
+
+    this.paginateTickets();
   }
+
+
+  toggleSortOrder() {
+    this.sortAscending = !this.sortAscending;
+    this.sortTicketsByDate();
+    this.paginateTickets();
+    // this.filteredTickets = [...this.tickets]; // Asegúrate de que filteredTickets refleje el orden actualizado
+
+}
+
+sortTicketsByDate() {
+    this.tickets.sort((a, b) => {
+        const dateA = new Date(a.fecha);
+        const dateB = new Date(b.fecha);
+        return this.sortAscending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+    });
+}
 }
 
 

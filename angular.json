@@ -20,6 +20,10 @@
                         "outputPath": "dist/sakai-ng",
                         "index": "src/index.html",
                         "main": "src/main.ts",
+                        "allowedCommonJsDependencies": [
+                             "html2canvas",
+                              "print-js"
+                        ],
                         "polyfills": [
                             "zone.js"
                         ],

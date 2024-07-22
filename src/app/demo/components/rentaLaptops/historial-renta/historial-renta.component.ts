@@ -17,6 +17,7 @@ export class HistorialRentaComponent  implements OnInit{
   loading:boolean = false; // es para que cargue el spinner
   rentaDetalles: RentaLaptop; // es el objeto de una sola renta
   laptopsUsadas:[] = []; // es el arreglo de las laptops que se usaran
+  alert : boolean = false;
 
   constructor (private rentaService:rentaService, private authService:AuthService, private router:Router) { }
   ngOnInit(): void {
@@ -28,9 +29,15 @@ export class HistorialRentaComponent  implements OnInit{
     this.rentaService.getRentaForUser(this.user.usuario).pipe(
       delay(1000)
     ).subscribe((res)=>{
-      this.rentas = res
       this.loading = true;
-      // console.log(res)
+
+      if(Array.isArray(res)){
+        this.rentas = res
+      }else{
+        this.alert = true;
+      }
+
+        console.log(res)
     })
 
   }

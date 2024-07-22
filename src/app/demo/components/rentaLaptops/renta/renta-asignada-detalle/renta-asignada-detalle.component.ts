@@ -4,6 +4,7 @@ import { rentaService } from '../../services/renta.service';
 import { Computadora, RentaLaptop } from '../../interfaces/renta.interface';
 import { FormControl } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { debounceTime, delay } from 'rxjs';
 
 @Component({
   selector: 'app-renta-asignada-detalle',
@@ -19,6 +20,7 @@ export class RentaAsignadaDetalleComponent implements OnInit {
   numLaptops: any; // es el numero de laptops que escogio 
   selectLaptops: FormControl[]  = [];
   selcciones = []
+  loading:boolean = false;
 
   constructor ( private activateRoute :ActivatedRoute, private rentaService:rentaService, private messageService: MessageService,
     private router:Router
@@ -46,7 +48,10 @@ export class RentaAsignadaDetalleComponent implements OnInit {
       return;
     }
 
-    this.rentaService.getRentaForId(this.rentaId).subscribe((res)=>{
+    this.rentaService.getRentaForId(this.rentaId).pipe(
+      delay(1000),
+    ).subscribe((res)=>{
+      this.loading = true;
       // console.log( 'renta', res)
       this.rentaDetail = res
       this.numLaptops = this.rentaDetail.numeroComputadoras
