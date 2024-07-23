@@ -6,28 +6,118 @@
     <p-progressSpinner *ngIf="loading" ariaLabel="loading" />
 </div> 
 
+<p-tabView *ngIf="!loading">
+    <p-tabPanel header="Todos">
+         
+
 <div *ngIf="!alert">
 <div class="card" *ngIf="!loading">
-    <p-table [value]="tickets" [tableStyle]="{'min-width': '50rem'}"
+    <p-table [value]="ticketsByEstatus() | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}"
     [rowsPerPageOptions]="[5, 10, 20]"
     [paginator]="true"
     [rows]="5"
 
     >
+    <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+            <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" ></button>
+            <span class="p-input-icon-left mb-2">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar por nombre" class="w-full"/>
+            </span>
+        </div>
+    </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th># </th>
+                <th>Nombre </th>
                 <th>Titulo </th>
                 <th>Descripcion</th>        
-                <th>Fecha</th>
+                <!-- <th>Fecha</th> -->
+                <th pSortableColumn="fecha">Fecha Registro <p-sortIcon field="fecha"></p-sortIcon></th>
                 <th>Estatus</th>
                 <th>Acciones</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-tickets let-ticket let-i="rowIndex" >
-            <tr>
+            <tr *ngIf="!tickets.mensaje">
                 <td>
                     {{i+1}}
+                </td>
+                <td>
+                    {{tickets?.nombre}}
+                </td>
+                <td>
+                    {{tickets.titulo}}
+                </td>
+                <td>
+                    {{tickets.descripcion}}
+                </td>
+                <td>
+                    {{tickets.fecha | date: 'dd/MM/yyyy '}}
+                </td>
+                <td>
+                    <p-tag [value]="tickets.estatus" [severity]="getSeverity(tickets.estatus)" ></p-tag>
+                </td>
+                
+                <td>
+                    <button icon="pi pi-eye" pButton label="Ver" (click)="redirectTo(tickets.id)" > </button>
+                </td>
+            </tr>
+            <tr *ngIf="tickets.mensaje">
+                <td colspan="6" class="text-center">{{tickets.mensaje}} {{this.searchTerm}} </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>
+</p-tabPanel>
+    <p-tabPanel header="Abiertos">
+       
+
+<div *ngIf="!alert">
+    
+    <p-messages *ngIf="!loading && ticketsByEstatus('abierto').length === 0" severity="error">
+        <ng-template pTemplate>
+            <div class="ml-2">No hay tickets <strong> </strong> abiertos.</div>
+        </ng-template>
+    </p-messages>
+    
+<div class="card" *ngIf="!loading">
+    <p-table *ngIf="ticketsByEstatus('abierto').length!==0" [value]="ticketsByEstatus('abierto') | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [paginator]="true"
+    [rows]="5"
+    >
+    <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+            <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" ></button>
+            <span class="p-input-icon-left mb-2">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar Palabra" class="w-full"/>
+            </span>
+        </div>
+    </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th># </th>
+                <th>Nombre </th>
+                <th>Titulo </th>
+                <th>Descripcion</th>        
+                <!-- <th>Fecha</th> -->
+                <th pSortableColumn="fecha">Fecha Registro <p-sortIcon field="fecha"></p-sortIcon></th>
+
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tickets let-ticket let-i="rowIndex" >
+            <tr *ngIf="!tickets.mensaje">
+                <td>
+                    {{i+1}}
+                </td>
+                <td>
+                    {{tickets?.nombre}}
                 </td>
                 <td>
                     {{tickets.titulo}}
@@ -45,10 +135,157 @@
                     <button icon="pi pi-eye" pButton label="Ver" (click)="redirectTo(tickets.id)" > </button>
                 </td>
             </tr>
+            <tr *ngIf="tickets.mensaje">
+                <td colspan="6" class="text-center">{{tickets.mensaje}} {{this.searchTerm}} </td>
+            </tr>
         </ng-template>
     </p-table>
 </div>
 </div>
+</p-tabPanel>
+    <p-tabPanel header="En progreso">
+       
+
+<div *ngIf="!alert">
+
+    <div *ngIf="!loading && ticketsByEstatus('en progreso').length === 0"> 
+
+        <p>no hay tickets en progreso por el momento </p>
+    
+    </div>
+
+    
+<div class="card" *ngIf="!loading">
+    <p-table *ngIf="ticketsByEstatus('en progreso').length!==0" [value]="ticketsByEstatus('en progreso') 
+    | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [paginator]="true"
+    [rows]="5"
+    >
+    <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+            <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" ></button>
+            <span class="p-input-icon-left mb-2">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar por nombre" class="w-full"/>
+            </span>
+        </div>
+    </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th># </th>
+                <th>Nombre</th>
+                <th>Titulo </th>
+                <th>Descripcion</th>        
+                <!-- <th>Fecha</th> -->
+                <th pSortableColumn="fecha">Fecha Registro <p-sortIcon field="fecha"></p-sortIcon></th>
+
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tickets let-ticket let-i="rowIndex" >
+            <tr *ngIf="!tickets.mensaje">
+                <td>
+                    {{i+1}}
+                </td>
+                <td>
+                    {{tickets.nombre}}
+                </td>
+                <td>
+                    {{tickets.titulo}}
+                </td>
+                <td>
+                    {{tickets.descripcion}}
+                </td>
+                <td>
+                    {{tickets.fecha | date: 'dd/MM/yyyy '}}
+                </td>
+                <td>
+                    <p-tag [value]="tickets.estatus" [severity]="getSeverity(tickets.estatus)" ></p-tag>
+                </td>
+                <td>
+                    <button icon="pi pi-eye" pButton label="Ver" (click)="redirectTo(tickets.id)" > </button>
+                </td>
+            </tr>
+            <tr *ngIf="tickets.mensaje">
+                <td colspan="6" class="text-center">{{tickets.mensaje}} {{this.searchTerm}} </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>
+</p-tabPanel>
+    <p-tabPanel header="Terminados">
+       
+
+<div *ngIf="!alert">
+    <div *ngIf="!loading && ticketsByEstatus('terminado').length === 0"> 
+
+        <p>no hay tickets abiertos por el momento </p>
+    
+    </div>
+<div class="card" *ngIf="!loading">
+    <p-table *ngIf="ticketsByEstatus('terminado').length!==0" [value]="ticketsByEstatus('terminado') | pipeSearch:searchTerm"  [tableStyle]="{'min-width': '50rem'}"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [paginator]="true"
+    [rows]="5"
+    >
+    <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+            <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" ></button>
+            <span class="p-input-icon-left mb-2">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar por nombre" class="w-full"/>
+            </span>
+        </div>
+    </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th># </th>
+                <th>Nombre </th>
+                <th>Titulo </th>
+                <th>Descripcion</th>        
+                <!-- <th>Fecha</th> -->
+                <th pSortableColumn="fecha">Fecha Registro <p-sortIcon field="fecha"></p-sortIcon></th>
+
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tickets let-ticket let-i="rowIndex" >
+            <tr *ngIf="!tickets.mensaje">
+                <td>
+                    {{i+1}}
+                </td>
+                <td>
+                    {{tickets.nombre}}
+                </td>
+                <td>
+                    {{tickets.titulo}}
+                </td>
+                <td>
+                    {{tickets.descripcion}}
+                </td>
+                <td>
+                    {{tickets.fecha | date: 'dd/MM/yyyy '}}
+                </td>
+                <td>
+                    <p-tag [value]="tickets.estatus" [severity]="getSeverity(tickets.estatus)" ></p-tag>
+                </td>
+                <td>
+                    <button icon="pi pi-eye" pButton label="Ver" (click)="redirectTo(tickets.id)" > </button>
+                </td>
+            </tr>
+            <tr *ngIf="tickets.mensaje">
+                <td colspan="6" class="text-center">{{tickets.mensaje}} {{this.searchTerm}} </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>
+</p-tabPanel>
+</p-tabView>
 
 
 

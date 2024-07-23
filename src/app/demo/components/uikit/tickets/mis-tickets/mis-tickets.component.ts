@@ -114,7 +114,7 @@ getTicketsByStatus(status?: string) {
   if(!status){
     return this.tickets;
   }
-  console.log(status)
+  // console.log(status)
   const ticketsFilter = (this.tickets.filter(ticket => ticket.estatus === status));
   console.log(ticketsFilter.length)
   return this.tickets.filter(ticket => ticket.estatus === status);

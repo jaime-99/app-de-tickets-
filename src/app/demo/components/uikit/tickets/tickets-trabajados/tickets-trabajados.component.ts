@@ -13,6 +13,7 @@ import { Message } from 'primeng/api';
 })
 export class TicketsTrabajadosComponent implements OnInit {
   messages: { severity: string; detail: string; }[];
+  tabs: { title: string; content: string; }[];
 
   constructor ( private ticketsService:TicketsServiceService, private authServcie: AuthService,  private route: Router ) { }
   areas : any;
@@ -22,7 +23,18 @@ export class TicketsTrabajadosComponent implements OnInit {
   loading:boolean = true ;
   alert:boolean = false;
   porTrabajar = 1; // si es 1 es que se ira con el parametro de que puede seleccionar para trabajarlo
+
+  searchTerm: string = ''; // para buscar
+
   ngOnInit(): void {
+
+    this.tabs = [
+      { title: 'Todos', content: 'Tab 1 Content' },
+      { title: 'Abierto', content: 'Tab 2 Content' },
+      { title: 'En progreso', content: 'Tab 3 Content' },
+      { title: 'Terminado', content: 'Tab 3 Content' }
+  ];
+
     this.user = this.authServcie.getUser()
     this.getAreas()
 
@@ -80,12 +92,12 @@ export class TicketsTrabajadosComponent implements OnInit {
   // }
   getTickets() {
     this.ticketsService.getTicketForAreaId(this.para_area).subscribe((res) => {
-      console.log(res);  // Verificar la estructura de la respuesta
+      // console.log(res);  // Verificar la estructura de la respuesta
       if (Array.isArray(res)) {
         this.tickets = res;
       } else if (res && typeof res === 'object') {
         this.tickets = Object.values(res);  // Convertir el objeto en un array de valores
-        console.log('no tiene nada')
+        // console.log('no tiene nada')
         this.alert = true;
       } else {
         this.tickets = [];
@@ -93,8 +105,18 @@ export class TicketsTrabajadosComponent implements OnInit {
       this.loading = false;
       if (!this.tickets.length) {
       }
-      console.log(this.tickets);  // Verificar el array transformado
+      // console.log(this.tickets);  // Verificar el array transformado
     });
+  }
+
+  ticketsByEstatus(status?){
+    if(!status){
+      return this.tickets;
+    }
+    // console.log(status)
+    // const ticketsFilter = (this.tickets.filter(ticket => ticket.estatus === status));
+    // console.log(this.tickets)
+    return this.tickets.filter(ticket => ticket.estatus === status);
   }
   
 

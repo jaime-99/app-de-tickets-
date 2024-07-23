@@ -156,7 +156,7 @@ paginatedTickets: any[] = [];
 
   onSubmit(){
     //esta funcion es para enviar los datos de detalles el ticket cuando se termina el ticket
-    location.reload() // refrescar pagina
+    // location.reload() // refrescar pagina
     if(this.ticketForm.valid){
       
       this.ticketsService.postTicketDetalle(this.ticketForm.value).subscribe((res)=>{
@@ -164,7 +164,10 @@ paginatedTickets: any[] = [];
         if(res){
         const ticketIdValue = this.ticketForm.get('idTicket').value;
 
-        this.ticketsService.putTicketEstatus(ticketIdValue, 'terminado').subscribe()
+        this.ticketsService.putTicketEstatus(ticketIdValue, 'terminado').subscribe(()=>{
+          location.reload();
+        });
+        
         }
       })
 
