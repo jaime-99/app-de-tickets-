@@ -6,7 +6,10 @@ import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs'
 import { Message } from 'primeng/api';
-import { UndoIcon } from 'primeng/icons/undo';
+
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
 
 interface PageEvent {
   first: number;
@@ -118,6 +121,7 @@ getTicketsByStatus(status?: string) {
   const ticketsFilter = (this.tickets.filter(ticket => ticket.estatus === status));
   // console.log(ticketsFilter.length)
   return this.tickets.filter(ticket => ticket.estatus === status);
+
 }
 
 messageDiferent(message){
@@ -130,6 +134,29 @@ messageDiferent(message){
   }
   
 }
+
+exportToExcel(estatus?): void {
+  const ticketFiltered = this.getTicketsByStatus(estatus)
+  // Define los datos a exportar
+  const ticketData = ticketFiltered.map(ticket => ({
+      'ID': ticket.id,
+      'Título': ticket.titulo,
+      'Descripción': ticket.descripcion,
+      'Fecha': new Date(ticket.fecha).toLocaleDateString(),
+      'Estatus': ticket.estatus
+  }));
+
+  // Crea una hoja de trabajo (worksheet) y un libro de trabajo (workbook)
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(ticketData);
+  const wb: XLSX.WorkBook = { Sheets: { 'Tickets': ws }, SheetNames: ['Tickets'] };
+
+  // Convierte el libro de trabajo a un archivo de tipo Excel
+  const wbout: ArrayBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+  // Guarda el archivo
+  saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'tickets.xlsx');
+}
+
 
 
 

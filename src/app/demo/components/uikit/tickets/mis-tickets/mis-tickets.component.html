@@ -17,7 +17,7 @@
     >
         <ng-template pTemplate="caption">
             <div class="flex justify-content-between flex-column sm:flex-row">
-                <button pButton label="Excel" class="p-button-success" icon="pi pi-download" ></button>
+                <button pButton label="Excel" (click)="exportToExcel()" class="p-button-success" icon="pi pi-download" ></button>
                 <span class="p-input-icon-left mb-2">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar Palabra" class="w-full"/>
@@ -81,7 +81,7 @@
     <p-table [value]="getTicketsByStatus('abierto') | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="caption">
             <div class="flex justify-content-between flex-column sm:flex-row">
-                <button pButton label="Excel" class="p-button-success mb-2" icon="pi pi-download" ></button>
+                <button pButton label="Excel" (click)="exportToExcel('abierto')" class="p-button-success mb-2" icon="pi pi-download" ></button>
                 <span class="p-input-icon-left mb-2">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar por nombre" class="w-full"/>
@@ -93,7 +93,8 @@
                 <th># </th>
                 <th>Titulo </th>
                 <th>Descripcion</th>        
-                <th>Fecha</th>
+                <!-- <th>Fecha</th> -->
+                <th pSortableColumn="fecha">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>
                 <th>Estatus</th>
                 <th>Acciones</th>
             </tr>
@@ -140,7 +141,7 @@
     <p-table [value]="getTicketsByStatus('en progreso') | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="caption">
             <div class="flex justify-content-between flex-column sm:flex-row">
-                <button pButton label="Excel" class="p-button-success mb-2" icon="pi pi-download" ></button>
+                <button pButton label="Excel" (click)="exportToExcel('en progreso')" class="p-button-success mb-2" icon="pi pi-download" ></button>
                 <span class="p-input-icon-left mb-2">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar Palabra" class="w-full"/>
@@ -151,8 +152,8 @@
             <tr>
                 <th># </th>
                 <th>Titulo </th>
-                <th>Descripcion</th>        
-                <th>Fecha</th>
+                <th>Descripcion</th>
+                <th pSortableColumn="fecha">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>        
                 <th>Estatus</th>
                 <th>Acciones</th>
             </tr>
@@ -198,7 +199,7 @@
     <p-table [value]="getTicketsByStatus('terminado') | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="caption">
             <div class="flex justify-content-between flex-column sm:flex-row">
-                <button pButton label="Excel" class="p-button-success mb-2" icon="pi pi-download" ></button>
+                <button pButton label="Excel" (click)="exportToExcel('terminado')" class="p-button-success mb-2" icon="pi pi-download" ></button>
                 <span class="p-input-icon-left mb-2">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" [(ngModel)]="searchTerm" placeholder="Buscar Palabra" class="w-full"/>
@@ -209,8 +210,8 @@
             <tr>
                 <th># </th>
                 <th>Titulo </th>
-                <th>Descripcion</th>        
-                <th>Fecha</th>
+                <th>Descripcion</th>
+                <th pSortableColumn="fecha">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>        
                 <th>Estatus</th>
                 <th>Acciones</th>
             </tr>

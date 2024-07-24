@@ -102,7 +102,16 @@ export class TicketsServiceService {
     let url = `https://visualmanagment.com/AppCGP/apis/crearTickets/putTicketCerrado.php`;
     const body = JSON.stringify({ id, comentario2,solucionado}); // convierte un objeto en cadena
     return this.http.put(url, body);
-
-
   }
+
+  //?empieza notificaciones
+  addNotification(data){
+    const url = 'https://visualmanagment.com/AppCGP/apis/crearTickets/addNotification.php';
+    return this.http.post<any>(url,data);
+  }
+  getusuariosForArea(area):Observable<any>{
+    return this.http.get<any>(`https://visualmanagment.com/AppCGP/apis/usuario/getUsersForArea.php?area=${area}&timestamp=${new Date().getTime()}`)
+  }
+
+  //?termina notificaciones
 }

@@ -1,5 +1,3 @@
-
-
 .dialog-content {
     position: relative;
 }
@@ -7,10 +5,11 @@
 .dialog-background {
     // background: url('https://visualmanagment.com/AppCGP/imagenes/logo_3.jpg') no-repeat center center;
     background: url("../../../../../assets/fotosCGP/logo_3.jpg") no-repeat center center;
-    background-size: contain;
-    padding:100px;
+    background-size: 460px;
+    background-repeat: no-repeat;
+    padding:105px;
+    
     // min-height: 500px; /* Ajusta esto según sea necesario */
-
     // height: 100%;
     // width: 100%;
 }

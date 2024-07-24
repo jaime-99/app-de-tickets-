@@ -12,7 +12,7 @@
 </p-messages>
 
 <!-- <div *ngIf="!alert"> -->
-<div class="card" *ngIf="loading && this.rentas?.length>1" >
+<div class="card" *ngIf="loading && this.rentas?.length>0" >
     <p-table [value]="rentas" [tableStyle]="{'min-width': '50rem'}"
     [rowsPerPageOptions]="[5, 10, 20]"
     [paginator]="true"

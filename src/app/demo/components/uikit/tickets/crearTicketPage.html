@@ -1,6 +1,7 @@
 <div class="grid" *ngIf="!Message">
 	<div class="col-12">
 	  <div class="card">
+		<!-- <button pButton (click)="addNotification()"></button> -->
 		<h5>Información del ticket</h5>
 		<form [formGroup]="ticketForm" (ngSubmit)="onSubmit()" class="p-fluid p-formgrid grid">
 		  <div class="field col-12 md:col-4">
@@ -69,6 +70,8 @@
 	  </div>
 	</div>
   </div>
+
+
   
   
   <div *ngIf="Message">

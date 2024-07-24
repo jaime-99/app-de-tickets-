@@ -28,6 +28,7 @@ export class CrearTicketPage implements OnInit {
     IdArea2:any
     emailSend = []; // arreglo de todos los correos a enviar el ticket
     emailSendAlone:string;
+    usuariosNotification:any; // son los usuarios a los que se le mandara la notificacion
 
     
     
@@ -106,8 +107,9 @@ export class CrearTicketPage implements OnInit {
         })
       }
 
+      // esto cambia las categorias dependiendo del evento 
       updateCategoria2(event) {
-        // console.log(event.value)
+        console.log(event.value)
         
         //todo validar esto */ if(event.value===this.user) 
         const selectedArea = event.value;
@@ -119,6 +121,7 @@ export class CrearTicketPage implements OnInit {
       //obtener el idArea
       sendEmail(){
         // console.log(this.IdArea2)
+
         let sendEmail = ''
         if(this.IdArea2==='1'){
           sendEmail = 'Sistemas'
@@ -133,6 +136,7 @@ export class CrearTicketPage implements OnInit {
         }else if(this.IdArea2 ==='6'){
           sendEmail = 'Materiales'
         }
+        this.getUsuariosForArea(sendEmail)
 
         this.ticketsService.getEmailsForArea(sendEmail).subscribe((res)=>{
 
@@ -173,7 +177,7 @@ export class CrearTicketPage implements OnInit {
         const data = {
           to: email,
           subject : 'Recibo de Ticket',
-          body: `Te ha enviado un ticket la persona con el nombre -   ${this.user.nombre}. Da click Aqui para acpetar el ticket` 
+          body: `Te ha enviado un ticket la persona con el nombre -   ${this.user.nombre}. Da click Aqui para acepetar el ticket` 
         }
 
         this.ticketsService.sendEmails(data).subscribe((res)=>{
@@ -200,4 +204,28 @@ export class CrearTicketPage implements OnInit {
         })
         
       }
+
+
+      getUsuariosForArea(sendEmail?){
+        this.ticketsService.getusuariosForArea(sendEmail).subscribe((res)=>{
+          this.usuariosNotification = res
+        });
+      }
+      addNotification() {
+        this.usuariosNotification.forEach(usuario => {
+          let data = {
+            user_id: usuario.id,
+            usuario: usuario,
+            message: `ticket enviado por ${this.user.usuario}`,
+          };
+    
+          this.ticketsService.addNotification(data).subscribe((res) => {
+            console.log(`Notificación enviada a ${usuario.usuario}:`, res);
+          });
+        });
+      }
+    
+
+      
+
 }
