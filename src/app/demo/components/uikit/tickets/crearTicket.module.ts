@@ -23,6 +23,7 @@ import { ChipModule } from 'primeng/chip';
 import { ToastModule } from 'primeng/toast';
 import { DividerModule } from 'primeng/divider';
 import { PaginatorModule } from 'primeng/paginator';
+import { AccordionModule } from 'primeng/accordion';
 
 //componentes 
 import { MisTicketsComponent } from './mis-tickets/mis-tickets.component';
@@ -69,7 +70,8 @@ import { TabViewModule } from 'primeng/tabview';
 		DialogModule,
 		TabViewModule ,
 		DividerModule,
-		PaginatorModule
+		PaginatorModule,
+		AccordionModule
 		
 		
 	],

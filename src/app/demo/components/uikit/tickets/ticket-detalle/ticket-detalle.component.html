@@ -7,8 +7,13 @@
 
 
 <div class="card" *ngIf="loading">
-    <div class="flex align-items-center justify-content-between mb-4">
+    <div class="grid">
+        <div class="col-12 xl:col-4">
         <h5>Ticket con el numero de ID : {{this.tickets?.id}} </h5>
+        </div>
+        <div class="col-12 xl:col-3">
+            <button pButton label="Descargar PDF"></button>
+        </div>
     </div>
 
     <span class="block text-600 font-medium mb-3">Detalles del ticket</span>
@@ -65,8 +70,12 @@
             <span class="text-900 line-height-3">
                 <strong>Trabajado por:</strong> 
                 {{ tickets?.trabajadoPor ? tickets.trabajadoPor : 'Aún nadie lo trabaja' }}
-    </span>
+            </span>
+            <!-- todo colocar que son mas detalles -->
         </li>
+        <p-accordion [activeIndex]="0">
+            <p-accordionTab header="Mas detalles">
+        
         <li class="flex align-items-center py-2 border-bottom-1 surface-border">
             <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
                 <i class="pi pi-angle-right text-xl text-blue-500"></i>
@@ -74,8 +83,48 @@
             <span class="text-900 line-height-3">
                 <strong>Del Area:</strong> 
                 {{ tickets?.area }}
-    </span>
+            </span>
         </li>
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Comentarios de quien tomo el ticket:</strong> 
+                {{ tickets?.comentario }}
+            </span>
+        </li>
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Comentarios de quien trabajo el ticket:</strong> 
+                {{ tickets?.comentario }}
+            </span>
+        </li>
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Comentarios de quien solicito el ticket:</strong> 
+                {{ tickets?.comentario2 }}
+            </span>
+        </li>
+        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                <i class="pi pi-angle-right text-xl text-blue-500"></i>
+            </div>
+            <span class="text-900 line-height-3">
+                <strong>Solucionado:</strong> 
+                <span>
+                    {{ tickets?.solucionado === 1 ? 'Sí' : 'No' }}
+                </span>
+            </span>
+        </li>
+        </p-accordionTab>
+        </p-accordion>
     </ul>
 </div>
 
@@ -87,7 +136,7 @@
     <h4>Su ticket se Soluciono?</h4>
 
     <p *ngIf="tickets?.estatus == 'abierto' || tickets?.estatus === 'en progreso'">debe esperar a que acepten y terminen su ticket para seleccionar una opcion</p>
-    <div *ngIf="tickets?.solucionado===undefined">
+    <div *ngIf="tickets?.solucionado===null">
     <div class="grid">
 
         <div class="col-12 xl:col-2">
@@ -104,14 +153,16 @@
         </div> -->
     </div>
 
-    <div *ngIf="tickets?.solucionado!==undefined">
+    <div *ngIf="tickets?.solucionado!==null">
         Usted ya marco esta opcion
     </div>
 
     </div>
     <form (ngSubmit)="onSubmit()">
 
-    <p-dialog header="Terminar Ticket" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+    <p-dialog header="Terminar Ticket" [modal]="true" [(visible)]="visible"
+        [closable]="false"
+    [style]="{ width: '25rem' }">
         <div *ngIf="!visibleFinish">
         <span class="p-text-secondary block mb-5">Opcional.</span>
         <div class="flex align-items-center gap-3 mb-3">
@@ -132,6 +183,7 @@
         </div>
         <div class="div" *ngIf="visibleFinish">
             Has Cerrado el ticket , gracias por usar la app
+            <button pButton label="ir a inicio" onclick="goInicio()"></button>
         </div>
         
     </p-dialog>

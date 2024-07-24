@@ -58,7 +58,6 @@ export class TicketDetalleComponent implements OnInit{
       .subscribe((res) => {
         this.tickets = res;
         this.loading = false
-        // console.log(this.tickets);
         // console.log(this.tickets?.area);
       });
   }
@@ -66,6 +65,7 @@ export class TicketDetalleComponent implements OnInit{
     this.ticketService.getTicketForId(this.ticketId).subscribe((res)=>{
       this.tickets = res 
       this.loading = true;
+      console.log(this.tickets)
 })
   }
 
@@ -157,12 +157,15 @@ onSubmit(){
       solucionado :this.solucionado
     }
     this.ticketService.putTicketCerrar(data.id,data.comentario2,data.solucionado).subscribe((res)=>{
-      console.log(res)
+      // console.log(res)
+      // location.reload();
     })
-
-
-
   }
+
+}
+
+goInicio(){
+  this.route.navigateByUrl('/tickets')
 
 }
 

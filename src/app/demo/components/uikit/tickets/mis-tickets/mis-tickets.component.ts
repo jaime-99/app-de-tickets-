@@ -116,7 +116,7 @@ getTicketsByStatus(status?: string) {
   }
   // console.log(status)
   const ticketsFilter = (this.tickets.filter(ticket => ticket.estatus === status));
-  console.log(ticketsFilter.length)
+  // console.log(ticketsFilter.length)
   return this.tickets.filter(ticket => ticket.estatus === status);
 }
 
@@ -127,9 +127,12 @@ messageDiferent(message){
     this.messagge2 = [
       {severity:'info', detail:'no hay tickets abiertos aun '}
     ]
-
   }
   
 }
+
+
+
+
 
 }
