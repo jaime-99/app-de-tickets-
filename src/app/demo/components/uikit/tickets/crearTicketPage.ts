@@ -88,6 +88,8 @@ export class CrearTicketPage implements OnInit {
         this.ticketsService.ticketCreated()
         this.ticketsService.insertTickets(this.ticketForm.value).subscribe((res)=>{
           // console.log(res)
+          //mandar la notificacion 
+          this.addNotification()
           })
         } else {
             // console.log('Formulario inválido, datos:', this.ticketForm.value);
@@ -109,7 +111,7 @@ export class CrearTicketPage implements OnInit {
 
       // esto cambia las categorias dependiendo del evento 
       updateCategoria2(event) {
-        console.log(event.value)
+        // console.log(event.value)
         
         //todo validar esto */ if(event.value===this.user) 
         const selectedArea = event.value;
@@ -217,10 +219,12 @@ export class CrearTicketPage implements OnInit {
             user_id: usuario.id,
             usuario: usuario,
             message: `ticket enviado por ${this.user.usuario}`,
+            tipo:1
           };
     
           this.ticketsService.addNotification(data).subscribe((res) => {
-            console.log(`Notificación enviada a ${usuario.usuario}:`, res);
+            // console.log(`Notificación enviada a ${usuario.usuario}:`, res);
+            
           });
         });
       }

@@ -113,5 +113,15 @@ export class TicketsServiceService {
     return this.http.get<any>(`https://visualmanagment.com/AppCGP/apis/usuario/getUsersForArea.php?area=${area}&timestamp=${new Date().getTime()}`)
   }
 
+  getNotificatiosForUser(usuario):Observable<any>{
+    return this.http.get<any>(`https://visualmanagment.com/AppCGP/apis/crearTickets/getNotificationsForUser.php?usuario=${usuario}&timestamp=${new Date().getTime()}`)
+  }
+
+  putNotification(id,read_at):Observable<any>{
+    let url = 'https://visualmanagment.com/AppCGP/apis/crearTickets/putNotificationRead.php'
+    let body = {id,read_at}
+    return this.http.put<any>(url,body)
+  }
+
   //?termina notificaciones
 }

@@ -2,6 +2,8 @@ import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
 import { AuthService } from '../demo/components/auth/auth.service';
+import { TicketsServiceService } from '../demo/components/uikit/services/tickets-service.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
     selector: 'app-menu',
@@ -11,13 +13,49 @@ export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
     user: any; // usuario actual
+    notifications: any; // son las notificaciones
+    badge1: any; // notificaciones de tipo 1 
+    badge2: any; // notificaciones de tipo 2
+    badge3: any; // notificaciones de tipo 3
 
-    constructor(public layoutService: LayoutService,private authService:AuthService) { }
+    constructor(public layoutService: LayoutService,private authService:AuthService,
+        private ticketService:TicketsServiceService
+    ) { }
     
 
     ngOnInit() {
 
-        this.user = this.authService.getUser()
+        this.user = this.authService.getUser();
+        this.ticketService.getNotificatiosForUser(this.user.usuario).subscribe((res)=>{
+            if (Array.isArray(res)) {
+                this.notifications = res;
+                console.log(res)
+            } else {
+                console.warn('Received response is not an array, setting notifications to an empty array.');
+                this.notifications = [];
+            }
+            this.updateBadgeCount()
+            this.menu()
+            
+        });
+    }
+    updateBadgeCount() {
+
+            // if (!this.notifications) {
+            //     console.warn('No notifications available to update badges.');
+            //     this.badge1 = [];
+            //     this.badge2 = [];
+            //     this.badge3 = [];
+            //     // return;
+            // }
+        this.badge1 = this.notifications?.filter(notification => notification.tipo === "1" && !notification.read_at);
+        this.badge2 = this.notifications?.filter(notification => notification.tipo === "2");
+        this.badge3 = this.notifications?.filter(notification => notification.tipo === "3");
+        
+      }
+        menu(){
+            // console.log(this.notifications?.length)
+
         this.model = [
             // {
             //     label: 'Usuario Actual',
@@ -45,11 +83,13 @@ export class AppMenuComponent implements OnInit {
                         {
                             label: 'Mis Tickets',
                             icon: 'pi pi-plus',
-                            routerLink: ['/tickets/crearTicket/misTickets']
+                            routerLink: ['/tickets/crearTicket/misTickets'],
+                            badge:[this.notifications?.length]
                         },
                         {
                             label: 'Tickets Asignados',
                             icon: 'pi pi-ticket',
+                            badge: this.badge1?.length,
                             items: [
                                 {
                                     label: 'Por seleccionar',
@@ -60,7 +100,7 @@ export class AppMenuComponent implements OnInit {
                                     label: 'seleccionados',
                                     icon: 'pi pi-plus',
                                     routerLink: ['/tickets/crearTicket/ticketsSeleccionados']
-
+                                    
                                 }
 
                             ]

@@ -73,7 +73,7 @@
             </span>
             <!-- todo colocar que son mas detalles -->
         </li>
-        <p-accordion [activeIndex]="0">
+        <p-accordion [activeIndex]="-1">
             <p-accordionTab header="Mas detalles">
         
         <li class="flex align-items-center py-2 border-bottom-1 surface-border">
@@ -91,15 +91,6 @@
             </div>
             <span class="text-900 line-height-3">
                 <strong>Comentarios de quien tomo el ticket:</strong> 
-                {{ tickets?.comentario }}
-            </span>
-        </li>
-        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
-            <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
-                <i class="pi pi-angle-right text-xl text-blue-500"></i>
-            </div>
-            <span class="text-900 line-height-3">
-                <strong>Comentarios de quien trabajo el ticket:</strong> 
                 {{ tickets?.comentario }}
             </span>
         </li>
