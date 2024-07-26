@@ -1,5 +1,10 @@
 
-<ul class="layout-menu">
+
+<div  class="flex flex-column">
+    <p-progressSpinner class="flex justify-content-center" *ngIf="!loading"  ariaLabel="loading"  />
+    </div>
+
+<ul class="layout-menu" *ngIf="loading">
     <li>
         <!-- <span class=""> <img src="https://primefaces.org/cdn/primeng/images/landing/avatar.png" alt="">  </span> -->
         <div class="flex flex-column">

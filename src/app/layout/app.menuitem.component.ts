@@ -136,7 +136,8 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
                     this.notificationsTipo1 = res.filter(notification => notification.tipo === '1' && notification.read_at===null).map(notification => notification.id)
                     this.notificationsTipo1.forEach(id => {
                         this.ticketsService.putNotification(id, this.getCurrentDateTime()).subscribe((response)=>{
-                            console.log('ejemplo put',response)
+                            // console.log('ejemplo put',response)
+                            
                         })
                       });
                 } else {

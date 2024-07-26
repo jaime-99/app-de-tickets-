@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { ChangeDetectorRef, OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
 import { AuthService } from '../demo/components/auth/auth.service';
@@ -18,6 +18,8 @@ export class AppMenuComponent implements OnInit {
     badge2: any; // notificaciones de tipo 2
     badge3: any; // notificaciones de tipo 3
 
+    loading:boolean = false; // para el uso de notificacion
+
     constructor(public layoutService: LayoutService,private authService:AuthService,
         private ticketService:TicketsServiceService
     ) { }
@@ -26,28 +28,32 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
 
         this.user = this.authService.getUser();
-        this.ticketService.getNotificatiosForUser(this.user.usuario).subscribe((res)=>{
+        this.ticketService.getNotificatiosForUser(this.user.usuario).pipe(
+            
+        ).subscribe((res)=>{
             if (Array.isArray(res)) {
                 this.notifications = res;
-                console.log(res)
+                this.loading = true;
+                // console.log(res)
             } else {
-                console.warn('Received response is not an array, setting notifications to an empty array.');
+                // console.warn('Received response is not an array, setting notifications to an empty array.');
                 this.notifications = [];
             }
             this.updateBadgeCount()
-            this.menu()
+            this.menu();
+            
             
         });
     }
     updateBadgeCount() {
 
-            // if (!this.notifications) {
-            //     console.warn('No notifications available to update badges.');
-            //     this.badge1 = [];
-            //     this.badge2 = [];
-            //     this.badge3 = [];
-            //     // return;
-            // }
+            if (!this.notifications) {
+                console.warn('No notifications available to update badges.');
+                this.badge1 = [];
+                this.badge2 = [];
+                this.badge3 = [];
+                // return;
+            }
         this.badge1 = this.notifications?.filter(notification => notification.tipo === "1" && !notification.read_at);
         this.badge2 = this.notifications?.filter(notification => notification.tipo === "2");
         this.badge3 = this.notifications?.filter(notification => notification.tipo === "3");
