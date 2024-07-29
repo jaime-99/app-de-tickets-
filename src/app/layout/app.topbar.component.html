@@ -1,3 +1,6 @@
+
+
+
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="">
         <img src="assets/demo/images/cgpgroup/Logo-Azul-CGP.png" alt="logo">
@@ -11,18 +14,19 @@
         <i class="pi pi-ellipsis-v"></i>
     </button>
 
-    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
+    
+    <div #topbarmenu  class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        <button class="p-link layout-topbar-button" [routerLink]="'/notifications'">
+            <i  pBadge value="2" class="pi pi-bell"></i>
+            <span class="hide">Notificaciones </span>
         </button>
         <button class="p-link layout-topbar-button">
             <i class="pi pi-user"></i>
-            <span>Profile</span>
+            <span class="hide">Perfil</span>
         </button>
         <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
             <i class="pi pi-cog"></i>
-            <span>Settings</span>
+            <span class="hide">Configuracion</span>
         </button>
     </div>
 </div>

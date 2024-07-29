@@ -1,0 +1,38 @@
+
+<p-table 
+    [value]="notificaciones" 
+    styleClass="p-datatable-gridlines" 
+    [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="caption">
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                <h5 class="m-0">Notificaciones</h5>
+                <span class="block mt-2 md:mt-0 p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="search(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                </span>
+            </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn>Mensaje</th>
+                <th pSortableColumn>tipo</th>
+                <th pSortableColumn>Fecha entrega</th>
+                <th pSortableColumn>Leido</th>
+                <th pSortableColumn>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-notificacion>
+            <tr>
+                <td>{{ notificacion?.message }}</td>
+                <td>{{ notificacion?.tipo }}</td>
+                <td>{{ notificacion?.created_at }}</td>
+                <!-- <td>{{ notificacion?.created_at }}</td> -->
+                 <td>pendiente</td>
+                 <div class="flex">
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="readMessage(notificacion)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteMessage(notificacion)"></button>
+                </div>
+            </tr>
+        </ng-template>
+</p-table>
