@@ -20,9 +20,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 //componentes
 import { NotificationsComponent } from './notifications.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -46,12 +48,12 @@ import { NotificationsComponent } from './notifications.component';
     DropdownModule,
     RadioButtonModule,
     DialogModule,
-    InputNumberModule
-
-
-
-
-
+    InputNumberModule,
+    ConfirmDialogModule
+  ],
+  providers: [
+    ConfirmationService,
+    MessageService
   ]
 })
 export class NotificationsModule { }

@@ -130,23 +130,23 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
         }
         
 
-        if(this.item.label === 'Tickets Asignados'){
-            this.ticketsService.getNotificatiosForUser(this.user.usuario).subscribe((res)=>{
-                if (Array.isArray(res)) {
-                    this.notificationsTipo1 = res.filter(notification => notification.tipo === '1' && notification.read_at===null).map(notification => notification.id)
-                    this.notificationsTipo1.forEach(id => {
-                        this.ticketsService.putNotification(id, this.getCurrentDateTime()).subscribe((response)=>{
-                            // console.log('ejemplo put',response)
+        // if(this.item.label === 'Tickets Asignados'){
+        //     this.ticketsService.getNotificatiosForUser(this.user.usuario).subscribe((res)=>{
+        //         if (Array.isArray(res)) {
+        //             this.notificationsTipo1 = res.filter(notification => notification.tipo === '1' && notification.read_at===null).map(notification => notification.id)
+        //             this.notificationsTipo1.forEach(id => {
+        //                 this.ticketsService.putNotification(id, this.getCurrentDateTime()).subscribe((response)=>{
+        //                     // console.log('ejemplo put',response)
                             
-                        })
-                      });
-                } else {
-                    return;
-                    this.notifications = [];
-                }
+        //                 })
+        //               });
+        //         } else {
+        //             return;
+        //             this.notifications = [];
+        //         }
                 
-                });
-              }
+        //         });
+        //       }
             // return;
             // if(this.item.badge>0){
             //    this.ticketsService.putNotification('2',2).subscribe((res)=>{

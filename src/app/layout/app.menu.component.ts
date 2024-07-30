@@ -38,6 +38,7 @@ export class AppMenuComponent implements OnInit {
             } else {
                 // console.warn('Received response is not an array, setting notifications to an empty array.');
                 this.notifications = [];
+                this.loading = true;
             }
             this.updateBadgeCount()
             this.menu();

@@ -19,7 +19,7 @@ export class AppTopBarComponent implements OnInit {
     @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
 
     @ViewChild('topbarmenu') menu!: ElementRef;
-    notification :any; // notificaciones del usuario
+    notification = []; // notificaciones del usuario
 
     // se implementa el servicio de tickets en un lugar fuera de tickets,(checarlo)
     constructor(public layoutService: LayoutService, private tickets:TicketsServiceService, private authService:AuthService) { }
@@ -34,7 +34,13 @@ export class AppTopBarComponent implements OnInit {
 
     notifications(){
         this.tickets.getNotificatiosForUser(this.user.usuario).subscribe((res)=>{
-            this.notification = res.length
-        })
+            if (Array.isArray(res)) {
+                // console.log('tiene datos')
+                this.notification = res.filter(notification => notification.read_at === null);
+              } else {
+                // console.log('no tiene datos')
+                this.notification = []; // Asignar un arreglo vacío si res no es un arreglo
+              }
+            });
     }
 }
