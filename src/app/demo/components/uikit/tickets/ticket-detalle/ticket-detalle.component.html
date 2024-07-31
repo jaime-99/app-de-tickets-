@@ -194,7 +194,7 @@
     <div class="grid">
         <div class="col">
                 <!-- crear mensaje de alerta -->
-                <button  (click)="confirm1($event)" [disabled]="tickets.trabajadoPor" pButton  class="p-button-success">Si</button>
+                <button  (click)="confirm1($event, tickets)" [disabled]="tickets.trabajadoPor" pButton  class="p-button-success">Si</button>
         </div>
         <div class="col">
             <button severity="danger" 

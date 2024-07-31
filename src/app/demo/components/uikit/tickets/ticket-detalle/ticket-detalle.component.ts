@@ -90,15 +90,18 @@ export class TicketDetalleComponent implements OnInit{
   }
 
 
-  confirm1(event: Event) {
+  confirm1(event: Event, ticket:any) {
     this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Seguro(a) que quieres aceptar el ticket?',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+          
             this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'has aceptado el ticket ', life: 3000 });
             this.selectTicket()
             this.getTicketsForId()
+            //todo se colocara para enviar notificacion
+            // this.sendNotification(ticket);
             this.aceptlocationTicket(this.ticketId)
         },
         reject: () => {
@@ -106,6 +109,22 @@ export class TicketDetalleComponent implements OnInit{
 
         }
     });
+}
+sendNotification(ticket){
+  // se enviara notificacion a la persona , cuando acepte el ticket ese ticket aceptado se le enviara a la persona que lo mando 
+
+  const data = {
+    user_id: ticket.usuarioId,
+    usuario: ticket.usuario,
+    message: `tu ticket a sido tomado por ${this.user.nombre}` ,
+    tipo:2,
+  }
+
+  this.ticketService.addNotification(data).subscribe(()=>{
+
+  })
+
+
 }
 
 confirm2(event: Event) {

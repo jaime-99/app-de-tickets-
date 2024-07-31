@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TicketsServiceService } from '../uikit/services/tickets-service.service';
 import { AuthService } from '../auth/auth.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-notifications',
@@ -60,8 +61,8 @@ export class NotificationsComponent implements OnInit {
   }
 
 
-  search(){
-    
+  search(table: Table, event: Event){
+      table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
 
