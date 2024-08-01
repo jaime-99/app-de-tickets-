@@ -79,7 +79,7 @@ export class CrearTicketPage implements OnInit {
         
     onSubmit() {
       // this.sendEmailToMe()
-      // this.sendEmailFinally()
+      this.sendEmailFinally()
       // return;
       this.Message = true;
       if (this.ticketForm.valid) {

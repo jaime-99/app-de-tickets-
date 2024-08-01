@@ -49,7 +49,8 @@ export interface Ticket3 {
     IdCategoria: number;
     trabajadoPor: string | null;
     detalleId:string;
-    solucionado?:boolean
+    solucionado?:boolean;
+    paraAreaDe?:string;
   }
   
 

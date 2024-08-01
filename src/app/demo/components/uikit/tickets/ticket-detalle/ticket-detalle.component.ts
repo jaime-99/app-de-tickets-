@@ -58,6 +58,7 @@ export class TicketDetalleComponent implements OnInit{
       .subscribe((res) => {
         this.tickets = res;
         this.loading = false
+
         // console.log(this.tickets?.area);
       });
   }
@@ -65,7 +66,9 @@ export class TicketDetalleComponent implements OnInit{
     this.ticketService.getTicketForId(this.ticketId).subscribe((res)=>{
       this.tickets = res 
       this.loading = true;
-      console.log(this.tickets)
+      // console.log(this.tickets)
+      // this.getUsuarioForArea()
+
 })
   }
 
@@ -103,6 +106,8 @@ export class TicketDetalleComponent implements OnInit{
             //todo se colocara para enviar notificacion
             this.sendNotification(ticket);
             this.aceptlocationTicket(this.ticketId)
+
+            this.getUsuarioForArea()
         },
         reject: () => {
           return;
@@ -113,17 +118,19 @@ export class TicketDetalleComponent implements OnInit{
 sendNotification(ticket?){
   // se enviara notificacion a la persona , cuando acepte el ticket ese ticket aceptado se le enviara a la persona que lo mando 
 
-  console.log(this.tickets)
+  // console.log(this.tickets)
   const data = {
     user_id: ticket.usuarioId,
     usuario: ticket.nombre_usuario,
     message: `tu ticket a sido tomado por ${this.user.nombre}` ,
     tipo:2,
   }
-  console.log(data)
+
+  // console.log(data)
   //todo ver porque no sale el data los datos
 
   this.ticketService.addNotification(data).subscribe(()=>{
+
 
   })
 
@@ -167,7 +174,7 @@ aceptlocationTicket(idTicket){
 // es para decir si se soluciono el ticket o no y enviar comentarios 2
 onSubmit(){
 
-  console.log(this.tickets)
+  // console.log(this.tickets)
   // return;
   this.visibleFinish = true
   // console.log(this.comentarios2.value)
@@ -188,7 +195,48 @@ onSubmit(){
 
 goInicio(){
   this.route.navigateByUrl('/tickets')
+}
+
+getUsuarioForArea(){
+// es para ver los usuaros del mismo area que no aceptaron el ticket para que se les envie notificacion
+  let area = this.tickets?.paraAreaDe;
+  let usuariosArea = []
+  console.log(this.tickets)
+
+  this.ticketService.getusuariosForArea(area).subscribe((res)=>{
+    usuariosArea = res.map((usuario) => usuario.usuario);
+
+   let  usuarios = usuariosArea.filter((usuario) => usuario !== this.tickets?.trabajadoPor);
+
+   this.addNotification2(usuarios)
+
+  })
+  //sera otra notificacion que se les notificara cuando uno del mismo area ya alla aceptado el ticket
 
 }
+
+
+addNotification2(usuarios){
+  //para enviar notificacion cuando alguien lo acepte , se les envie a los que no aceptaron del mismo area
+  usuarios.forEach((usuario) => {
+
+  let data = {
+    user_id: '31',
+    usuario: usuario,
+    message: `el ticket con el id ${this.ticketId} ha sido aceptado por el usuario  ${this.user.usuario}`,
+    tipo: 4,
+    
+  }
+
+  this.ticketService.addNotification(data).subscribe(()=>{
+
+  })
+
+})
+
+}
+
+
+
 
 }
