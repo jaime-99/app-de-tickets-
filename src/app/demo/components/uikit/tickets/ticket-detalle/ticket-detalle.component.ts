@@ -101,7 +101,7 @@ export class TicketDetalleComponent implements OnInit{
             this.selectTicket()
             this.getTicketsForId()
             //todo se colocara para enviar notificacion
-            // this.sendNotification(ticket);
+            this.sendNotification(ticket);
             this.aceptlocationTicket(this.ticketId)
         },
         reject: () => {
@@ -110,15 +110,18 @@ export class TicketDetalleComponent implements OnInit{
         }
     });
 }
-sendNotification(ticket){
+sendNotification(ticket?){
   // se enviara notificacion a la persona , cuando acepte el ticket ese ticket aceptado se le enviara a la persona que lo mando 
 
+  console.log(this.tickets)
   const data = {
     user_id: ticket.usuarioId,
-    usuario: ticket.usuario,
+    usuario: ticket.nombre_usuario,
     message: `tu ticket a sido tomado por ${this.user.nombre}` ,
     tipo:2,
   }
+  console.log(data)
+  //todo ver porque no sale el data los datos
 
   this.ticketService.addNotification(data).subscribe(()=>{
 

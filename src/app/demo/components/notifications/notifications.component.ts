@@ -49,13 +49,15 @@ export class NotificationsComponent implements OnInit {
           accept: () => {
             this.ticketService.putNotification(notificacion.id,this.getFormattedCurrentDate()).subscribe(()=>{
               // console.log(res)
-
-            })
+              
               this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'mensaje dado por visto' });
+              this.getNotifications()
+            })
 
           },
           reject: () => {
               // this.messageService.add({ severity: 'error', summary: 'Rechazado', detail: '', life: 3000 });
+              return;
           }
       });
   }
@@ -77,5 +79,9 @@ export class NotificationsComponent implements OnInit {
     const seconds = String(now.getSeconds()).padStart(2, '0');
     
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  deleteMessage(notificacion?){
+
   }
 }

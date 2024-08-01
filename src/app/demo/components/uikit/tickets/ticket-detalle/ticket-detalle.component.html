@@ -41,7 +41,7 @@
                 <i class="pi pi-angle-right text-xl text-blue-500"></i>
             </div>
             <span class="text-900 line-height-3">
-                <strong>Fecha:</strong> 
+                <strong>Fecha envio de ticket:</strong> 
         <span class="text-700"> {{this.tickets?.fecha | date: 'dd/MM/yyyy'}}</span>
     </span>
         </li>
@@ -91,7 +91,7 @@
             </div>
             <span class="text-900 line-height-3">
                 <strong>Comentarios de quien tomo el ticket:</strong> 
-                {{ tickets?.comentario }}
+                {{ tickets?.comentario === null ? 'Aun no se escribe comentario por parte de quien tomo el ticket': (tickets?.comentario)}}
             </span>
         </li>
         <li class="flex align-items-center py-2 border-bottom-1 surface-border">
@@ -100,7 +100,7 @@
             </div>
             <span class="text-900 line-height-3">
                 <strong>Comentarios de quien solicito el ticket:</strong> 
-                {{ tickets?.comentario2 }}
+                {{ tickets?.comentario2 === null ? 'aun no se escribe comentario': (tickets?.comentario2)  }}
             </span>
         </li>
         <li class="flex align-items-center py-2 border-bottom-1 surface-border">
@@ -110,7 +110,8 @@
             <span class="text-900 line-height-3">
                 <strong>Solucionado:</strong> 
                 <span>
-                    {{ tickets?.solucionado === 1 ? 'Sí' : 'No' }}
+                    {{ tickets?.solucionado === 1 ? 'Sí' : (tickets?.solucionado === 0 ? 'No' : 'Aún no escoge la opción') }}
+
                 </span>
             </span>
         </li>
@@ -201,12 +202,13 @@
             [outlined]="true"   pButton [disabled]="tickets.trabajadoPor"  (click)="confirm2($event)"   class="p-button-danger">No</button>
         </div>
 
-        <div class="col">
-            <button pButton [disabled]="tickets.trabajadoPor"  class="p-button-primary">Otro</button>
-        </div>
+        <!-- <div class="col">
+            <button pButton [disabled]="tickets.trabajadoPor" (click)="sendNotification()"  class="p-button-primary">Otro</button>
+        </div> -->
     </div>
     <p-confirmPopup />
     <p-toast />
+
 
 </div>
 </div>

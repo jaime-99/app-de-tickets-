@@ -56,8 +56,9 @@ export class AppMenuComponent implements OnInit {
                 // return;
             }
         this.badge1 = this.notifications?.filter(notification => notification.tipo === "1" && !notification.read_at);
-        this.badge2 = this.notifications?.filter(notification => notification.tipo === "2");
+        this.badge2 = this.notifications?.filter(notification => notification.tipo === "2" && !notification.read_at);
         this.badge3 = this.notifications?.filter(notification => notification.tipo === "3");
+
         
       }
         menu(){
@@ -91,7 +92,7 @@ export class AppMenuComponent implements OnInit {
                             label: 'Mis Tickets',
                             icon: 'pi pi-plus',
                             routerLink: ['/tickets/crearTicket/misTickets'],
-                            badge:[this.notifications?.length]
+                            badge:this.badge2?.length
                         },
                         {
                             label: 'Tickets Asignados',

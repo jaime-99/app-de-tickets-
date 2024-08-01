@@ -30,6 +30,8 @@ import { AuthService } from '../demo/components/auth/auth.service';
                [attr.target]="item.target" tabindex="0" pRipple>
 				<i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
 				<span class="layout-menuitem-text">{{item.label}}</span>
+                <p-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge" />
+
 				<i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items"></i>
 			</a>
 
