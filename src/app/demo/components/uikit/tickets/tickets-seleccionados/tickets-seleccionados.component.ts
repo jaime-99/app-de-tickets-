@@ -5,6 +5,7 @@ import { AuthService } from '../../../auth/auth.service';
 import { delay } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tick } from '@angular/core/testing';
+import { dA } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-tickets-seleccionados',
@@ -140,13 +141,26 @@ paginatedTickets: any[] = [];
     this.ticketsService.getTicketForId(id).subscribe((res)=>{
       this.ticket = res
       console.log('ticket individual',this.ticket)
+      //todo aqui llamare a notificaciones tipo 3
     })
     this.visible = true;
 
     this.ticketForm.patchValue({idTicket:id});
     this.ticketForm.patchValue({fechaFin:this.fechaHoy});
 
+  }
 
+  addNotification3(ticket){
+    const data = {
+      user_id:ticket.usuarioId,
+      usuario: ticket.nombre_usuario,
+      message: `el ticket con el id ${ticket.id} ha cambiado de estatus a TERMINADO`,
+      tipo: '3',
+    }
+
+    this.ticketsService.addNotification(data).subscribe((res)=>{
+      //todo hacer algo despues
+    })
   }
 
   openComment(){
@@ -166,6 +180,8 @@ paginatedTickets: any[] = [];
 
         this.ticketsService.putTicketEstatus(ticketIdValue, 'terminado').subscribe(()=>{
           location.reload();
+            this.addNotification3(this.ticket)
+
         });
         
         }

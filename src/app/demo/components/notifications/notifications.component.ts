@@ -3,6 +3,7 @@ import { TicketsServiceService } from '../uikit/services/tickets-service.service
 import { AuthService } from '../auth/auth.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { NotificationService } from './services/notificationUpdate.service';
 
 @Component({
   selector: 'app-notifications',
@@ -15,7 +16,8 @@ export class NotificationsComponent implements OnInit {
   notificaciones: any;
 
   constructor (private ticketService:TicketsServiceService, private authService:AuthService,
-    private confirmationService: ConfirmationService, private messageService: MessageService
+    private confirmationService: ConfirmationService, private messageService: MessageService,
+    private notificationsService:NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -52,6 +54,8 @@ export class NotificationsComponent implements OnInit {
               
               this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'mensaje dado por visto' });
               this.getNotifications()
+              this.notificationsService.triggerUpdate(); // Notificar a otros componentes
+
             })
 
           },
