@@ -26,6 +26,7 @@ export class TicketDetalleComponent implements OnInit{
   comentarios2: FormControl; // es para comentarios al cerrar el ticket
   solucionado:boolean;
   visibleFinish:boolean  = false;
+  updateTickets: boolean = false;
 
 
   constructor (private ticketService:TicketsServiceService, private activatedRoute:ActivatedRoute, private authService:AuthService,
@@ -41,6 +42,8 @@ export class TicketDetalleComponent implements OnInit{
     this.ticketId = this.activatedRoute.snapshot.paramMap.get('id');
     this.porTrabajar = this.activatedRoute.snapshot.paramMap.get('T');
     this.getTicketsForId()
+
+
 
     // if(this.tickets.estatus === 'abierto'){
 
@@ -66,10 +69,10 @@ export class TicketDetalleComponent implements OnInit{
     this.ticketService.getTicketForId(this.ticketId).subscribe((res)=>{
       this.tickets = res 
       this.loading = true;
-      // console.log(this.tickets)
+      console.log(this.tickets)
+      if(this.updateTickets) this.getUsuarioForArea();
       // this.getUsuarioForArea()
-
-})
+    })
   }
 
   getSeverity(estatus){
@@ -86,11 +89,26 @@ export class TicketDetalleComponent implements OnInit{
   }
 
   //selecciona el ticket para que cambie el estatus a proceso y para el campo de trabajadoPor
-  selectTicket(){ 
-    this.ticketService.putTicket(this.ticketId,this.user.usuario).subscribe((res)=>{
-      this.ticketService.putTicketEstatus(this.ticketId,'en progreso').subscribe()
-    })
+  selectTicket(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.ticketService.putTicket(this.ticketId, this.user.usuario).subscribe({
+        next: (res) => {
+          this.ticketService.putTicketEstatus(this.ticketId, 'en progreso').subscribe({
+            next: () => {
+              resolve(); // Resolver la promesa cuando ambas llamadas hayan finalizado
+            },
+            error: (err) => {
+              reject(err); // Rechazar la promesa en caso de error
+            }
+          });
+        },
+        error: (err) => {
+          reject(err); // Rechazar la promesa en caso de error
+        }
+      });
+    });
   }
+  
 
 
   confirm1(event: Event, ticket:any) {
@@ -101,13 +119,18 @@ export class TicketDetalleComponent implements OnInit{
         accept: () => {
           
             this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'has aceptado el ticket ', life: 3000 });
-            this.selectTicket()
-            this.getTicketsForId()
-            //todo se colocara para enviar notificacion
-            this.sendNotification(ticket);
-            this.aceptlocationTicket(this.ticketId)
+            this.selectTicket().then(() => {
+              this.updateTickets= true;
+              this.getTicketsForId();
+              // console.log('tickets actualizados con trabajadoPor',this.tickets)
+              // return;
+              this.sendNotification(ticket);
+              this.aceptlocationTicket(this.ticketId);
+          }).catch(error => {
+              console.error("Error actualizando el ticket:", error);
+          });
 
-            this.getUsuarioForArea()
+
         },
         reject: () => {
           return;
@@ -130,6 +153,8 @@ sendNotification(ticket?){
   //todo ver porque no sale el data los datos
 
   this.ticketService.addNotification(data).subscribe(()=>{
+
+    // this.getUsuarioForArea() // ver si aqui se llama correcto
 
 
   })
@@ -197,16 +222,23 @@ goInicio(){
   this.route.navigateByUrl('/tickets')
 }
 
-getUsuarioForArea(){
+getUsuarioForArea(){  
 // es para ver los usuaros del mismo area que no aceptaron el ticket para que se les envie notificacion
+this.updateTickets= false;
   let area = this.tickets?.paraAreaDe;
   let usuariosArea = []
   console.log(this.tickets)
+  // return;
 
   this.ticketService.getusuariosForArea(area).subscribe((res)=>{
-    usuariosArea = res.map((usuario) => usuario.usuario);
+    // usuariosArea = res.map((usuario) => usuario.usuario);
+    let usuariosArea = res.map((usuario) => ({ usuario: usuario.usuario, id: usuario.id }));
 
-   let  usuarios = usuariosArea.filter((usuario) => usuario !== this.tickets?.trabajadoPor);
+    let usuarios = usuariosArea.filter((u) => u.usuario !== this.tickets?.trabajadoPor);
+
+
+  //  let  usuarios = usuariosArea.filter((usuario) => usuario !== this.tickets?.trabajadoPor);
+    console.log(usuarios)
 
    this.addNotification2(usuarios)
 
@@ -216,20 +248,22 @@ getUsuarioForArea(){
 }
 
 
-addNotification2(usuarios){
+addNotification2(usuarios:{usuario:string,id:number}[]){
   //para enviar notificacion cuando alguien lo acepte , se les envie a los que no aceptaron del mismo area
   usuarios.forEach((usuario) => {
 
   let data = {
-    user_id: '31',
-    usuario: usuario,
-    message: `el ticket con el id ${this.ticketId} ha sido aceptado por el usuario  ${this.user.usuario}`,
+    user_id: usuario.id, //todo pendiente ver que se mande tambien el id desde la funcion getUsuarioForArea() 
+    usuario: usuario.usuario,
+    message: `el ticket con el id ${this.ticketId} que se mando a su area de ${this.tickets.paraAreaDe} ha sido aceptado por el usuario  ${this.user.usuario}`,
     tipo: 4,
     
   }
 
-  this.ticketService.addNotification(data).subscribe(()=>{
+  console.log(data)
 
+  this.ticketService.addNotification(data).subscribe((res)=>{
+    // console.log('aviso para enviar a los que no aceptaron el ticket')
   })
 
 })
