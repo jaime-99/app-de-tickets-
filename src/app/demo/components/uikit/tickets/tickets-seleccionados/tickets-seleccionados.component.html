@@ -134,7 +134,7 @@
 
             <div class="flex flex-column  m-3">
 
-              <button [disabled]="ticket?.estatus==='terminado'" pButton class="p-button-success" (click)="openComment()" > Terminar Ticket</button>
+              <button [disabled]="ticket?.estatus==='terminado' || 'cerrado'" pButton class="p-button-success" (click)="openComment()" > Terminar Ticket</button>
 
             </div>
     </p-dialog>

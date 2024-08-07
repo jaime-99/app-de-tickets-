@@ -68,7 +68,7 @@
                 <i class="pi pi-angle-right text-xl text-blue-500"></i>
             </div>
             <span class="text-900 line-height-3">
-                <strong>Trabajado por:</strong> 
+                <strong>Trabajado por el usuario {{tickets?.trabajadoPor}}</strong> 
                 {{ tickets?.trabajadoPor ? tickets.trabajadoPor : 'Aún nadie lo trabaja' }}
             </span>
             <!-- todo colocar que son mas detalles -->
@@ -108,7 +108,7 @@
                 <i class="pi pi-angle-right text-xl text-blue-500"></i>
             </div>
             <span class="text-900 line-height-3">
-                <strong>Solucionado:</strong> 
+                <strong>Solucionado(opcion de quien solicito el ticket):</strong> 
                 <span>
                     {{ tickets?.solucionado === 1 ? 'Sí' : (tickets?.solucionado === 0 ? 'No' : 'Aún no escoge la opción') }}
 
@@ -189,7 +189,7 @@
 
     
     <div *ngIf="tickets.trabajadoPor">
-        <p>Este ticket ya se esta trabajando por : {{tickets.trabajadoPor}} </p>
+        <p>Este ticket ya se esta trabajando por el usuario : {{tickets.trabajadoPor}} </p>
     </div>
 
     <div class="grid">

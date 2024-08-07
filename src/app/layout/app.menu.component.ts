@@ -25,6 +25,8 @@ export class AppMenuComponent implements OnInit {
     loading:boolean = false; // para el uso de notificacion
     badge5: any;
     badgeSum: any;
+    badgeSum2: any;
+    badge6: any;
 
     constructor(public layoutService: LayoutService,private authService:AuthService,
         private ticketService:TicketsServiceService, private notificationService: NotificationService
@@ -87,11 +89,11 @@ export class AppMenuComponent implements OnInit {
         this.badge2 = this.notifications?.filter(notification => notification.tipo === "2" && !notification.read_at);
         this.badge3 = this.notifications?.filter(notification => notification.tipo === "3" && !notification.read_at);
         this.badge5 = this.notifications?.filter(notification => notification.tipo === "5" && !notification.read_at);
+        this.badge6 = this.notifications?.filter(notification => notification.tipo === "6" && !notification.read_at);
             // se suman los dos badges para que sea uno solo
-        this.badgeSum = this.badge2.length + this.badge5.length
+        this.badgeSum = this.badge2.length + this.badge5.length; // estas notificaciones son para el usuario que manda el ticket
+        this.badgeSum2 = this.badge1.length + this.badge6.length; // estas notificaciones son para el administrador del ticket
         
-        console.log('es el badge dos',this.badge2)
-        console.log('es el badge tres',this.badge5)
         console.log(this.badgeSum);
         
       }
@@ -131,7 +133,7 @@ export class AppMenuComponent implements OnInit {
                         {
                             label: 'Tickets Asignados',
                             icon: 'pi pi-ticket',
-                            badge: this.badge1?.length,
+                            badge: this.badgeSum2,
                             items: [
                                 {
                                     label: 'Por seleccionar',

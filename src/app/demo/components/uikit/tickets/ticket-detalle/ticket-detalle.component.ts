@@ -210,11 +210,11 @@ onSubmit(){
       comentario2 : this.comentarios2.value,
       solucionado :this.solucionado
     }
-    console.log(data)
+    // console.log(data)
     this.ticketService.putTicketCerrar(data.id,data.comentario2,data.solucionado).subscribe((res)=>{
-      console.log(res)
+      // console.log(res)
       // location.reload();
-      // this.sendNotification6();
+      this.sendNotification6();
     })
   }
 }
@@ -228,7 +228,13 @@ sendNotification6(){
   }
 
   this.ticketService.addNotification(data).subscribe((res)=>{
-    console.log('notificacion tipo 6',res)
+    // console.log('notificacion tipo 6',res)
+    this.putEstatusToCerrado(this.tickets?.id)
+  })
+}
+putEstatusToCerrado(id){
+  this.ticketService.putTicketEstatus(id, 'cerrado').subscribe((res)=>{
+    // console.log(res)
   })
 }
 

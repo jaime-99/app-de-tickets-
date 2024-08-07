@@ -143,7 +143,15 @@ exportToExcel(estatus?): void {
       'Título': ticket.titulo,
       'Descripción': ticket.descripcion,
       'Fecha': new Date(ticket.fecha).toLocaleDateString(),
-      'Estatus': ticket.estatus
+      'fechaFin':ticket.fechaFin,
+      'Estatus': ticket.estatus,
+      'Nombre': ticket.nombre_completo,
+      'correo':ticket.correo,
+      'descripcion': ticket.descripcion,
+      'trabajadoPor': ticket.trabajadoPor,
+      'paraAreaDe': ticket.paraAreaDe,
+      'comentario de solicitante': ticket.comentario2,
+      'comentario de quien lo trabajo': ticket.comentario
   }));
 
   // Crea una hoja de trabajo (worksheet) y un libro de trabajo (workbook)
