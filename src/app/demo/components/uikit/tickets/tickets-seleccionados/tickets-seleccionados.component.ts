@@ -154,12 +154,14 @@ paginatedTickets: any[] = [];
     const data = {
       user_id:ticket.usuarioId,
       usuario: ticket.nombre_usuario,
-      message: `el ticket con el id ${ticket.id} ha cambiado de estatus a TERMINADO`,
-      tipo: '3',
+      message: `el ticket con el id ${ticket?.id} que trabajo el usuario ${ticket?.trabajadoPor} ha cambiado de estatus a TERMINADO
+      ya puedes CERRAR el ticket`,
+      tipo: '5',
     }
 
     this.ticketsService.addNotification(data).subscribe((res)=>{
       //todo hacer algo despues
+      console.log('se agrega la notificacion de terminado', res)
     })
   }
 
@@ -179,15 +181,31 @@ paginatedTickets: any[] = [];
         const ticketIdValue = this.ticketForm.get('idTicket').value;
 
         this.ticketsService.putTicketEstatus(ticketIdValue, 'terminado').subscribe(()=>{
-          location.reload();
-            this.addNotification3(this.ticket)
-
+          this.addNotification3(this.ticket);
+          // location.reload();
+          setTimeout(() => {
+            location.reload();
+          }, 3000); // 3000 ms = 3 segundos
+          
         });
         
         }
       })
 
     }
+  }
+
+  sendNotification(){// esto no se esta usando 
+    const data = {
+      user_id: this.ticket.usuarioId,
+      usuario: this.ticket.nombre_usuario,
+      message: `el usuario ${this.user.usuario} del area ${this.ticket?.paraAreaDe} ha terminado tu ticket`,
+      tipo: '5',
+    }
+
+    this.ticketsService.addNotification(data).subscribe(()=>{
+
+    })
   }
 
 

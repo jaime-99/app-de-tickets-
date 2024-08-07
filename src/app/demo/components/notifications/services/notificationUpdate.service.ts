@@ -11,6 +11,7 @@ export class NotificationService {
 
 
 
+  // hace que llame a get notifications en otros componentes y se actualice
   triggerUpdate() {
     this.updateSubject.next();
   }

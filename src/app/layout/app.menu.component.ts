@@ -3,13 +3,17 @@ import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
 import { AuthService } from '../demo/components/auth/auth.service';
 import { TicketsServiceService } from '../demo/components/uikit/services/tickets-service.service';
-import { catchError, of } from 'rxjs';
+import { catchError, of, Subscription } from 'rxjs';
+import { NotificationService } from '../demo/components/notifications/services/notificationUpdate.service';
 
 @Component({
     selector: 'app-menu',
     templateUrl: './app.menu.component.html'
 })
 export class AppMenuComponent implements OnInit {
+
+    private updateSubscription: Subscription;
+
 
     model: any[] = [];
     user: any; // usuario actual
@@ -19,9 +23,11 @@ export class AppMenuComponent implements OnInit {
     badge3: any; // notificaciones de tipo 3
 
     loading:boolean = false; // para el uso de notificacion
+    badge5: any;
+    badgeSum: any;
 
     constructor(public layoutService: LayoutService,private authService:AuthService,
-        private ticketService:TicketsServiceService
+        private ticketService:TicketsServiceService, private notificationService: NotificationService
     ) { }
     
 
@@ -45,6 +51,28 @@ export class AppMenuComponent implements OnInit {
             
             
         });
+
+        this.updateSubscription = this.notificationService.updateObservable$.subscribe(() => {
+            this.user = this.authService.getUser();
+            this.ticketService.getNotificatiosForUser(this.user.usuario).pipe(
+                
+            ).subscribe((res)=>{
+                if (Array.isArray(res)) {
+                    this.notifications = res;
+                    this.loading = true;
+                    // console.log(res)
+                } else {
+                    // console.warn('Received response is not an array, setting notifications to an empty array.');
+                    this.notifications = [];
+                    this.loading = true;
+                }
+                this.updateBadgeCount()
+                this.menu();
+                
+                
+            });
+
+          });
     }
     updateBadgeCount() {
 
@@ -57,8 +85,14 @@ export class AppMenuComponent implements OnInit {
             }
         this.badge1 = this.notifications?.filter(notification => notification.tipo === "1" && !notification.read_at);
         this.badge2 = this.notifications?.filter(notification => notification.tipo === "2" && !notification.read_at);
-        this.badge3 = this.notifications?.filter(notification => notification.tipo === "3");
-
+        this.badge3 = this.notifications?.filter(notification => notification.tipo === "3" && !notification.read_at);
+        this.badge5 = this.notifications?.filter(notification => notification.tipo === "5" && !notification.read_at);
+            // se suman los dos badges para que sea uno solo
+        this.badgeSum = this.badge2.length + this.badge5.length
+        
+        console.log('es el badge dos',this.badge2)
+        console.log('es el badge tres',this.badge5)
+        console.log(this.badgeSum);
         
       }
         menu(){
@@ -92,7 +126,7 @@ export class AppMenuComponent implements OnInit {
                             label: 'Mis Tickets',
                             icon: 'pi pi-plus',
                             routerLink: ['/tickets/crearTicket/misTickets'],
-                            badge:this.badge2?.length
+                            badge:this.badgeSum
                         },
                         {
                             label: 'Tickets Asignados',

@@ -69,7 +69,7 @@ export class TicketDetalleComponent implements OnInit{
     this.ticketService.getTicketForId(this.ticketId).subscribe((res)=>{
       this.tickets = res 
       this.loading = true;
-      console.log(this.tickets)
+      // console.log(this.tickets)
       if(this.updateTickets) this.getUsuarioForArea();
       // this.getUsuarioForArea()
     })
@@ -206,20 +206,34 @@ onSubmit(){
   if(this.comentarios2.valid){
 
     const data = {
-      id:this.tickets.detalleId, // debe ir el id de la tabla y no el id del ticket (resolver)
+      id:this.tickets.idTicket, // debe ir el id de la tabla del detalleTicket y no el id del ticket (resolver)
       comentario2 : this.comentarios2.value,
       solucionado :this.solucionado
     }
+    console.log(data)
     this.ticketService.putTicketCerrar(data.id,data.comentario2,data.solucionado).subscribe((res)=>{
-      // console.log(res)
+      console.log(res)
       // location.reload();
+      // this.sendNotification6();
     })
   }
+}
+sendNotification6(){
+  // es para mandar la notificacion de tipo 6
+  const data = {
+    user_id:this.tickets.usuarioId,
+    usuario:this.tickets.trabajadoPor,
+    message: `El ticket con el id ${this.tickets.id} del usuario ${this.tickets.nombre_usuario} ha sido CERRADO`,
+    tipo: '6'
+  }
 
+  this.ticketService.addNotification(data).subscribe((res)=>{
+    console.log('notificacion tipo 6',res)
+  })
 }
 
 goInicio(){
-  this.route.navigateByUrl('/tickets')
+  this.route.navigateByUrl('/tickets/crearTicket/misTickets')
 }
 
 getUsuarioForArea(){  
@@ -227,7 +241,7 @@ getUsuarioForArea(){
 this.updateTickets= false;
   let area = this.tickets?.paraAreaDe;
   let usuariosArea = []
-  console.log(this.tickets)
+  // console.log(this.tickets)
   // return;
 
   this.ticketService.getusuariosForArea(area).subscribe((res)=>{
@@ -238,7 +252,7 @@ this.updateTickets= false;
 
 
   //  let  usuarios = usuariosArea.filter((usuario) => usuario !== this.tickets?.trabajadoPor);
-    console.log(usuarios)
+    // console.log(usuarios)
 
    this.addNotification2(usuarios)
 
@@ -260,7 +274,6 @@ addNotification2(usuarios:{usuario:string,id:number}[]){
     
   }
 
-  console.log(data)
 
   this.ticketService.addNotification(data).subscribe((res)=>{
     // console.log('aviso para enviar a los que no aceptaron el ticket')

@@ -175,7 +175,7 @@
         </div>
         <div class="div" *ngIf="visibleFinish">
             Has Cerrado el ticket , gracias por usar la app
-            <button pButton label="ir a inicio" onclick="goInicio()"></button>
+            <button pButton label="ir a inicio" (click)="goInicio()"></button>
         </div>
         
     </p-dialog>

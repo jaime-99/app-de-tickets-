@@ -51,6 +51,8 @@ export interface Ticket3 {
     detalleId:string;
     solucionado?:boolean;
     paraAreaDe?:string;
+    usuarioId?:number;
+    idTicket:number; // es el id de detalles ticket
   }
   
 
