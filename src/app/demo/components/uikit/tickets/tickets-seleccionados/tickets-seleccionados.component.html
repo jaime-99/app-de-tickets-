@@ -99,7 +99,7 @@
 
 
     <!-- Debo mandar el id al pop -->
-    <div class="card flex justify-content-center" *ngIf="visible">
+    <div   class="card flex justify-content-center" *ngIf="visible">
     <p-dialog 
         header="Informacion del ticket" 
         [modal]="true" 
@@ -108,9 +108,10 @@
         [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
         [maximizable]="true">
 
+        <button class="p-button-primary" (click)="exportToPDF(ticket?.id)" pButton>descargar en PDF</button>
         
       
-            <div class="grid bg-primary">
+            <div id="print-section" class="grid bg-primary m-2">
 
                 <div class="col-12 xl:col-6">
                     <ul>

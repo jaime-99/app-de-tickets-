@@ -8,6 +8,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import printJS from 'print-js';
+ 
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-tickets-seleccionados',
@@ -271,7 +275,6 @@ exportToExcel(){
     // 'comentario de quien lo trabajo': ticket.comentario
 }),
 
-console.log(this.tickets)
 );
 
 const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(ticketData);
@@ -283,8 +286,42 @@ const wbout: ArrayBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
 // Guarda el archivo
 saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'ticketsSeleccionados.xlsx');
 
-
 }
+
+exportToPDF() {
+  const printContent = document.getElementById('print-section');
+  const WindowPrt = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+  if (printContent && WindowPrt) {
+      WindowPrt.document.write(`
+          <html>
+              <head>  
+                  <title>informacion de ticket</title>
+                  <style>
+                      body {
+                          font-family: Arial, sans-serif;
+                          margin: 20px;
+                      }
+                      ul {
+                          list-style-type: none;
+                          padding: 0;
+                      }
+                      li {
+                          margin-bottom: 10px;
+                      }
+                  </style>
+              </head>
+              <body>
+                  ${printContent.innerHTML}
+              </body>
+          </html>
+      `);
+      WindowPrt.document.close();
+      WindowPrt.focus();
+      WindowPrt.print();
+      WindowPrt.close();
+  }
+}
+
 }
 
 

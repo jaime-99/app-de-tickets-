@@ -10,6 +10,10 @@ export class PipeSearchPipe implements PipeTransform {
       return tickets;
     }
 
+    //ignora los espacios en blanco
+    searchTerm = searchTerm.trim();
+
+
     const filteredTickets = tickets.filter(ticket =>
       ticket.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
       ticket.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) ||
