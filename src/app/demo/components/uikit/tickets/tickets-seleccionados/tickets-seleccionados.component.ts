@@ -4,8 +4,10 @@ import { tickets } from 'src/app/demo/interfaces/interfacesLocales';
 import { AuthService } from '../../../auth/auth.service';
 import { delay } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { tick } from '@angular/core/testing';
-import { dA } from '@fullcalendar/core/internal-common';
+
+
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-tickets-seleccionados',
@@ -41,6 +43,8 @@ paginatedTickets: any[] = [];
   rows: number = 4;
 
   ngOnInit(): void {
+
+
 
     this.estatus = [
       { name: 'en progreso', code: 'NY' },
@@ -245,6 +249,41 @@ sortTicketsByDate() {
         const dateB = new Date(b.fecha);
         return this.sortAscending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
     });
+}
+
+exportToExcel(){
+  //exportaremos los datos de este componente de todos los tickets
+
+  const ticketData = this.filteredTickets.map(ticket => ({
+    'ID': ticket.id,
+    'Título': ticket.titulo,
+    'Descripción': ticket.descripcion,
+    'Fecha': new Date(ticket.fecha).toLocaleDateString(),
+    'Estatus': ticket.estatus,
+    'Nombre': ticket.nombre,
+    'correo':ticket.correo,
+    'nombreUsuario':ticket.nombre_usuario,
+    'trabajadoPor': ticket.trabajadoPor
+    // 'descripcion': ticket.descripcion,
+    // 'trabajadoPor': ticket.trabajadoPor,
+    // 'paraAreaDe': ticket.paraAreaDe,
+    // 'comentario de solicitante': ticket.comentario2,
+    // 'comentario de quien lo trabajo': ticket.comentario
+}),
+
+console.log(this.tickets)
+);
+
+const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(ticketData);
+const wb: XLSX.WorkBook = { Sheets: { 'Tickets': ws }, SheetNames: ['Tickets'] };
+
+// Convierte el libro de trabajo a un archivo de tipo Excel
+const wbout: ArrayBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+// Guarda el archivo
+saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'ticketsSeleccionados.xlsx');
+
+
 }
 }
 

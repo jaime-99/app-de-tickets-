@@ -145,14 +145,19 @@ exportToExcel(estatus?): void {
       'Fecha': new Date(ticket.fecha).toLocaleDateString(),
       'fechaFin':ticket.fechaFin,
       'Estatus': ticket.estatus,
-      'Nombre': ticket.nombre_completo,
+      'Nombre': ticket.nombre,
       'correo':ticket.correo,
-      'descripcion': ticket.descripcion,
-      'trabajadoPor': ticket.trabajadoPor,
-      'paraAreaDe': ticket.paraAreaDe,
-      'comentario de solicitante': ticket.comentario2,
-      'comentario de quien lo trabajo': ticket.comentario
-  }));
+      'nombreUsuario':ticket.nombre_usuario,
+      'trabajadoPor': ticket.trabajadoPor
+      // 'descripcion': ticket.descripcion,
+      // 'trabajadoPor': ticket.trabajadoPor,
+      // 'paraAreaDe': ticket.paraAreaDe,
+      // 'comentario de solicitante': ticket.comentario2,
+      // 'comentario de quien lo trabajo': ticket.comentario
+  }),
+
+  console.log(this.tickets)
+);
 
   // Crea una hoja de trabajo (worksheet) y un libro de trabajo (workbook)
   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(ticketData);

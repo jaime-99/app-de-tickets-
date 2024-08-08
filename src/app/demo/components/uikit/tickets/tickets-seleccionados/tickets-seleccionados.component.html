@@ -1,5 +1,7 @@
 <!-- -->
 <h4>Tickets Trabajando y trabajados</h4>
+
+
 <div class="flex flex-wrap align-items-center justify-content-center">
 
     <p-progressSpinner *ngIf="loading" ariaLabel="loading" />
@@ -23,7 +25,7 @@
   </div>
   <div *ngIf="!loading" class="col-12 xl:col-3">
 
-    <button pButton label="descargar en excel"></button>
+    <button [disabled]="this.filteredTickets.length<1" class="p-button-success" pButton label="descargar en excel" (click)="exportToExcel()"></button>
   </div>
   <div *ngIf="!loading" class="col-12 xl:col-3">
 
@@ -42,8 +44,8 @@
 <div class="grid" *ngIf="!loading">
     <div  *ngFor="let tickets of paginatedTickets  | pipeSearch:searchTerm let i = index" class="col-3 lg:col-6 xl:col-3" >
       
-        <div class="card mb-0" >
-            <div class="flex justify-content-between mb-3">
+        <div *ngIf="!tickets.mensaje" class="card mb-0" >
+            <div  class="flex justify-content-between mb-3">
                 <div>   
                     <!-- <span class="block text-500 font-medium mb-1"> {{i+1}} </span> -->
                     <span class="block text-500 font-medium mb-1"><strong>Nombre:</strong>{{tickets?.nombre}} </span>
@@ -56,8 +58,18 @@
                 <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-ticket text-blue-500 text-xl"></i>
                 </div>
+
+              </div>
+              
+              
             </div>
-        </div>
+            <div *ngIf="tickets.mensaje">
+              <p-messages severity="info">
+                <ng-template pTemplate>
+                    <div class="ml-2"> {{tickets.mensaje}} {{this.searchTerm}}   </div>
+                </ng-template>
+              </p-messages>
+            </div>
     </div>
     </div>
     <div class="card flex justify-content-center">
@@ -129,12 +141,21 @@
                         </li>
                     </ul>
                 </div>
+                <div class="p-2"> 
+                  Mas detalles
+                  <ul>
+                    <li>Comentario de parte del usuario <strong> {{ticket?.trabajadoPor}} </strong>: {{ticket?.comentario}} </li>
+                    <li>Comentario de parte del usuario <strong> {{ticket?.nombre_usuario}}: </strong> {{ticket?.comentario2}} </li>
+                    <li>solucionado  {{ticket?.solucionado===1 ?'Si': 'No'}}</li>
+                    <li>fecha donde se cerro el ticket <strong> {{ticket?.fechafin | date:'dd/MM/yyyy' }} </strong></li>
+                  </ul>
+                </div>
             </div>
 
 
             <div class="flex flex-column  m-3">
 
-              <button [disabled]="ticket?.estatus==='terminado' || 'cerrado'" pButton class="p-button-success" (click)="openComment()" > Terminar Ticket</button>
+              <button [disabled]="ticket?.estatus==='terminado' || ticket?.estatus==='cerrado'" pButton class="p-button-success" (click)="openComment()" > Terminar Ticket</button>
 
             </div>
     </p-dialog>
