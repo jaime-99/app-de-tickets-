@@ -63,7 +63,6 @@ export class LoginComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Exitoso', detail: 'Inicio de sesion con exito' });
             this.router.navigate(['/dashboard'])
             this.authService.saveUser(res); // Guardar la información del usuario en localStorage
-
             }else{
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Contraseña o Usuario incorrectos' });
             }

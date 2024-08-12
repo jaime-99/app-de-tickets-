@@ -289,6 +289,39 @@ addNotification2(usuarios:{usuario:string,id:number}[]){
 
 }
 
+exportToPDF(){
+  const printContent = document.getElementById('print-section');
+  const WindowPrt = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+  if (printContent && WindowPrt) {
+      WindowPrt.document.write(`
+          <html>
+              <head>  
+                  <title>informacion de ticket</title>
+                  <style>
+                      body {
+                          font-family: Arial, sans-serif;
+                          margin: 20px;
+                      }
+                      ul {
+                          list-style-type: none;
+                          padding: 0;
+                      }
+                      li {
+                          margin-bottom: 10px;
+                      }
+                  </style>
+              </head>
+              <body>
+                  ${printContent.innerHTML}
+              </body>
+          </html>
+      `);
+      WindowPrt.document.close();
+      WindowPrt.focus();
+      WindowPrt.print();
+      WindowPrt.close();
+  }
+}
 
 
 

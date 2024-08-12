@@ -22,6 +22,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     numTickets:any;
     numTicketsArea:any;
     para_area: number;
+    ticketsEnviados: any; // es para ver los tickts enviados
+    ticketsPendientes: number; // tickets pendientes desde la tabla 
+    ticketsTerminados: number;// tickets terminados desde la tabla 
+    ticketsTotales:number;
     constructor(private authService:AuthService, private productService: ProductService, public layoutService: LayoutService, private ticketsService
         :TicketsServiceService
     ) {
@@ -36,7 +40,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.initChart();
         this.user = this.authService.getUser(); //info usuario
         this.name()
-        this.ticketsCount()
+        // this.ticketsCount()
+        this.getTicketsCount();
 
         this.ticketsService.ticketCreated$.subscribe(() => {
             // Limpiar la caché y volver a cargar los datos
@@ -210,11 +215,57 @@ export class DashboardComponent implements OnInit, OnDestroy {
         });
     }
 
-     
-          
-          
+    //obtener un conteo de los ticketsEnviados por cada usuario 
+    getTicketsCount(){
         
+        this.ticketsService.getTableTicketsTotales(this.user.usuario).subscribe((res)=>{
+            // console.log(res.message)
+            if( res.message){
+                this.ticketsEnviados = 0;
+                return;
+            }
+            this.ticketsEnviados = res.conteo_tickets
+        })
+        this.getTicketsPendientes();
     }
+
+    //obtener los tickets pendientes para cada area
+
+    getTicketsPendientes(){
+        this.ticketsService.getTableTicketsPendientes(this.para_area).subscribe((res)=>{
+            if(res.message){
+                this.ticketsPendientes = 0;
+                return;
+            }
+            // this.ticketsPendientes = res.conteo_tickets;
+            if (res.para_area) {
+                this.ticketsPendientes = res.conteo_tickets;
+            } else {
+                this.ticketsPendientes = 0;
+            }
+
+            this.getTicketsTerminados()
+
+    })    
+}
+
+getTicketsTerminados(){
+    this.ticketsService.getTableTicketsTerminados(this.user.usuario).subscribe((res)=>{
+        // console.log(res)
+        if(res.message){
+            this.ticketsTerminados = 0
+            return;
+        }
+        this.ticketsTerminados = res.conteo_tickets;
+        this.ticketsTotales =  this.ticketsPendientes + this.ticketsEnviados + this.ticketsTerminados
+        // console.log('total de tickets',this.ticketsTotales)
+    })
+}
+
+
+
+
+}
     
 
 

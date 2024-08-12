@@ -124,4 +124,21 @@ export class TicketsServiceService {
   }
 
   //?termina notificaciones
+  
+
+  // es otra forma para ver los tickets enviados , el total de cada persona 
+  getTableTicketsTotales(nombre_usuario):Observable<any>{
+    return this.http.get<any>(`https://visualmanagment.com/AppCGP/apis/crearTickets/getTableticketsTotales.php?nombre_usuario=${nombre_usuario}&timestamp=${new Date().getTime()}`);
+  }
+
+  //Aqui va la tabla de los tickets pendientes
+  getTableTicketsPendientes(para_area):Observable<any>{
+    return this.http.get<any>(`https://visualmanagment.com/AppCGP/apis/crearTickets/getTableTicketsPendientes.php?para_area=${para_area}&timestamp=${new Date().getTime()}`) 
+  }
+  // para obtener la tabla de ticketsTerminados
+  getTableTicketsTerminados(nombre_usuario):Observable<any>{
+    return this.http.get<any>(`https://visualmanagment.com/AppCGP/apis/crearTickets/getTableTicketsCompletados.php?nombre_usuario=${nombre_usuario}&timestamp=${new Date().getTime()}`) 
+  }
+
+
 }

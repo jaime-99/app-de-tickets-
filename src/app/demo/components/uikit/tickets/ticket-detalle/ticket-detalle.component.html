@@ -6,13 +6,13 @@
 </div>
 
 
-<div class="card" *ngIf="loading">
+<div id="print-section" class="card" *ngIf="loading">
     <div class="grid">
         <div class="col-12 xl:col-4">
         <h5>Ticket con el numero de ID : {{this.tickets?.id}} </h5>
         </div>
         <div class="col-12 xl:col-3">
-            <button pButton label="Descargar PDF"></button>
+            <button pButton class="p-button-primary" (click)="exportToPDF()" label="Descargar PDF"></button>
         </div>
     </div>
 
@@ -68,7 +68,7 @@
                 <i class="pi pi-angle-right text-xl text-blue-500"></i>
             </div>
             <span class="text-900 line-height-3">
-                <strong>Trabajado por el usuario {{tickets?.trabajadoPor}}</strong> 
+                <strong>Trabajado por el usuario:</strong> 
                 {{ tickets?.trabajadoPor ? tickets.trabajadoPor : 'Aún nadie lo trabaja' }}
             </span>
             <!-- todo colocar que son mas detalles -->
