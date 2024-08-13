@@ -49,5 +49,11 @@ export class AuthService {
   }
 
 
+  checkAuthStatus(){
+    //para verificar si el usuario esta con la sesion iniciada
+    
+  }
+
+
 
 }

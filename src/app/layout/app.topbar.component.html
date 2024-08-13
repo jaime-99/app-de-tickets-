@@ -22,7 +22,7 @@
             <i class="pi pi-bell" *ngIf="this.notification?.length === 0"></i>
             <span class="hide">Notificaciones </span>
         </button>
-        <button class="p-link layout-topbar-button">
+        <button class="p-link layout-topbar-button" [routerLink]="'/editarPerfil'">
             <i class="pi pi-user"></i>
             <span class="hide">Perfil</span>
         </button>

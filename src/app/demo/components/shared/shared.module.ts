@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { PasswordModule } from 'primeng/password';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ToastModule } from 'primeng/toast';
 
 
 
@@ -25,7 +26,8 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     ButtonModule,
     DividerModule,
     PasswordModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    ToastModule
   ]
 })
 export class SharedModule { }

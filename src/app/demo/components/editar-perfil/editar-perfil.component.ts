@@ -35,6 +35,7 @@ export class EditarPerfilComponent implements OnInit {
   ngOnInit(): void {
 
     this.contraForm = new FormGroup({
+      id: new FormControl(''),
       password: new FormControl(''),
       repeatPassword: new FormControl(''),
     })
@@ -50,8 +51,8 @@ export class EditarPerfilComponent implements OnInit {
 
 
   editarPerfil(){
-    this.perfilService.putTicket(this.userForm.value).subscribe((res)=>{
-      console.log(res)
+    this.perfilService.putPerfil(this.userForm.value).subscribe((res)=>{
+      // console.log(res)
     })
   }
 
@@ -74,19 +75,21 @@ export class EditarPerfilComponent implements OnInit {
 
   //es el confirm del password 
   confirm1(event: Event) {
+    this.contraForm.patchValue({id:this.user.id})
     this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Estas seguro de cambiar la contrasena?',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
 
-          let pass1 = this.contraForm.get('password').value
-          let pass2 = this.contraForm.get('repeatPassword').value
+          let pass1 = this.contraForm.get('password')?.value
+          let pass2 = this.contraForm.get('repeatPassword')?.value
             if(pass1 === pass2){
                 this.changePassword()
-                this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'Has Cambiado la contrasena', life: 3000 });
+                this.messageService.add({ severity: 'success', summary: 'Confirmado', detail: 'Has Cambiado la contrasena', life: 3000 });
                 }else{
-                  return;
+                  this.messageService.add({ severity: 'error', summary: 'Rechazado', detail: 'Debe Coincidir la contrasena', life: 3000 });
+                  // return;
                 }
         },
         reject: () => {
@@ -96,11 +99,17 @@ export class EditarPerfilComponent implements OnInit {
 }
 
   changePassword(){
-    let pass1 = this.contraForm.get('password').value
-    let pass2 = this.contraForm.get('repeatPassword').value
-    if(pass1 === pass2){
 
-    }
+    const contrasenia = this.contraForm.get('password').value
+
+
+    if(this.contraForm.valid)
+    this.perfilService.putPassword(this.user.id, contrasenia).subscribe((res)=>{
+    this.contraForm.reset()
+      
+    })
+
+
   }
 
 }
