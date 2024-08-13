@@ -13,7 +13,9 @@ import { NotificationService } from './services/notificationUpdate.service';
 export class NotificationsComponent implements OnInit {
 
   user:any;
-  notificaciones: any;
+  notificaciones: any[];
+  notificacionesLeidas: any[];
+  loading = false;
 
   constructor (private ticketService:TicketsServiceService, private authService:AuthService,
     private confirmationService: ConfirmationService, private messageService: MessageService,
@@ -27,11 +29,14 @@ export class NotificationsComponent implements OnInit {
   }
 
   getNotifications(){
-
+    
     this.ticketService.getNotificatiosForUser(this.user.usuario).subscribe((res)=>{
       if(Array.isArray(res)){
-        this.notificaciones = res 
 
+        this.notificaciones = res.filter(noti => noti.read_at != null);
+        this.notificacionesLeidas = res.filter(noti=>noti.read_at === null)
+
+        this.loading = true;
       }else{
         this.notificaciones = []
       }

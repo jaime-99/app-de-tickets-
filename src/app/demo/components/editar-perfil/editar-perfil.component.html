@@ -1,0 +1,74 @@
+
+
+<div class="p-1">
+    <form [formGroup]="userForm">
+    <div class="card mb-0">
+
+        <h2>Editar Perfil</h2>
+
+    <div class="formgrid grid">
+
+        <div class="field col-12 xl:col-3">
+                <label for="firstname">Usuario</label>
+                <input  pInputText  formControlName="usuario"   type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 xl:col-3">
+                <label for="firstname">Nombre</label>
+                <input formControlName="nombre"  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 xl:col-3">
+                <label for="firstname">Apellido Paterno</label>
+                <input formControlName="apellido_paterno"  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 xl:col-3">
+                <label for="firstname">Apellido Materno</label>
+                <input formControlName="apellido_materno"  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 xl:col-3">
+                <label for="firstname">Area</label>
+                <input pInputText formControlName="area"  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 xl:col-9">
+                <label for="firstname">Correo</label>
+                <input formControlName="correo" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 xl:col-3">
+                <label for="firstname">Ciudad</label>
+                <input pInputText formControlName="ciudad"  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 xl:col-6">
+            <button class="p-button-success m-3 " (click)="editarPerfil()" label="Editar Perfil" pButton type="click"> </button>
+        </div>
+            
+    </div>
+
+    </div>
+    </form>
+
+
+    <div class="card mt-1">
+        <p-confirmPopup />
+        <h4>Cambiar Contrasena</h4>
+        <div class="flex flex-column gap-2">
+            <label for="username">Nueva Contrasena</label>
+            <p-password id="password" placeholder="Password" formControlName="password"[feedback]="false" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="username">Repetir la nueva contrasena</label>
+            <p-password id="password" placeholder="Password" formControlName="password"[feedback]="false" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+            
+        </div>
+
+        <p-divider />
+
+        <div class="flex flex column gap-2">
+            <button pButton class="p-button-success" (click)="confirm1($event)" label="Cambiar Contrasena"></button>
+        </div>
+            
+
+    </div>
+
+
+</div>
+

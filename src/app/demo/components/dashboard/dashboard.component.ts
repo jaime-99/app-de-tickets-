@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         setInterval(() => this.ticketsCount(), 60000); // Actualiza cada 60 segundos
         this.productService.getProductsSmall().then(data => this.products = data);
-
+        
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }

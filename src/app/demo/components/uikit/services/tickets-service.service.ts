@@ -139,6 +139,4 @@ export class TicketsServiceService {
   getTableTicketsTerminados(nombre_usuario):Observable<any>{
     return this.http.get<any>(`https://visualmanagment.com/AppCGP/apis/crearTickets/getTableTicketsCompletados.php?nombre_usuario=${nombre_usuario}&timestamp=${new Date().getTime()}`) 
   }
-
-
 }

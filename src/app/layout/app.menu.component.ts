@@ -94,7 +94,6 @@ export class AppMenuComponent implements OnInit {
         this.badgeSum = this.badge2.length + this.badge5.length; // estas notificaciones son para el usuario que manda el ticket
         this.badgeSum2 = this.badge1.length + this.badge6.length; // estas notificaciones son para el administrador del ticket
         
-        console.log(this.badgeSum);
         
       }
         menu(){

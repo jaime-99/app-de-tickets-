@@ -21,6 +21,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TabViewModule } from 'primeng/tabview';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 //componentes
 import { NotificationsComponent } from './notifications.component';
@@ -49,7 +51,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     RadioButtonModule,
     DialogModule,
     InputNumberModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TabViewModule,
+    ProgressSpinnerModule
   ],
   providers: [
     ConfirmationService,
