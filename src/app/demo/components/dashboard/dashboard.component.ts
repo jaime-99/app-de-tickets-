@@ -6,6 +6,8 @@ import { Subscription, debounceTime } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { AuthService } from '../auth/auth.service';
 import { TicketsServiceService } from '../uikit/services/tickets-service.service';
+import { ConnectedOverlayScrollHandler } from 'primeng/dom';
+import { identifierName } from '@angular/compiler';
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -22,10 +24,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     numTickets:any;
     numTicketsArea:any;
     para_area: number;
-    ticketsEnviados: any; // es para ver los tickts enviados
-    ticketsPendientes: number; // tickets pendientes desde la tabla 
-    ticketsTerminados: number;// tickets terminados desde la tabla 
-    ticketsTotales:number;
+    ticketsEnviados: number = 0; // es para ver los tickts enviados
+    ticketsPendientes: number = 0; // tickets pendientes desde la tabla 
+    ticketsTerminados: number = 0;// tickets terminados desde la tabla 
+    ticketsTotales:number = 0;
     constructor(private authService:AuthService, private productService: ProductService, public layoutService: LayoutService, private ticketsService
         :TicketsServiceService
     ) {
@@ -244,22 +246,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.ticketsPendientes = 0;
             }
 
-            this.getTicketsTerminados()
-
-    })    
+            
+        })    
+        this.getTicketsTerminados()
 }
 
 getTicketsTerminados(){
     this.ticketsService.getTableTicketsTerminados(this.user.usuario).subscribe((res)=>{
-        // console.log(res)
         if(res.message){
             this.ticketsTerminados = 0
-            return;
+            // return;
+        }else{
+
+            this.ticketsTerminados = res.conteo_tickets;
         }
-        this.ticketsTerminados = res.conteo_tickets;
         this.ticketsTotales =  this.ticketsPendientes + this.ticketsEnviados + this.ticketsTerminados
-        // console.log('total de tickets',this.ticketsTotales)
+        if(this.ticketsTotales ===undefined) this.ticketsTotales = 0  //solucionar esto
     })
+    // console.log(this.ticketsTotales)
 }
 
 
