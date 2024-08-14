@@ -2,7 +2,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
-import { generalGuard } from './demo/general.guard';
+import { generalGuard, generalGuard2 } from './demo/general.guard';
 
 @NgModule({
     imports: [
@@ -16,7 +16,9 @@ import { generalGuard } from './demo/general.guard';
                     { path: 'dashboard', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule),
                         canActivate: [generalGuard],
                      },
-                    { path: 'tickets', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
+                    { path: 'tickets', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule),
+                        canActivate: [generalGuard]
+                     },
                     { path: 'renta', loadChildren: () => import('./demo/components/rentaLaptops/rentaLaptop.module').then(m => m.rentaLaptopModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
@@ -26,7 +28,9 @@ import { generalGuard } from './demo/general.guard';
                     { path: 'editarPerfil', loadChildren: () => import('./demo/components/editar-perfil/editar-perfil.module').then(m => m.EditarPerfilModule) }
                 ]
             },
-            { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
+            { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule),
+                canActivate:[generalGuard2]
+             },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'notfound', component: NotfoundComponent },
             { path: 'registrarse', loadChildren: () => import('./demo/components/auth/registrarse/registrarse.module').then(m => m.RegistrarseModule) },
