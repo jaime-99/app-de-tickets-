@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Categorias } from './interface/ticket-interface'; 
 import { TicketsServiceService } from '../services/tickets-service.service';
 import { AuthService } from '../../auth/auth.service';
-import { Observable, map } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 import { usuario } from '../../auth/interfaces/usuario.interface';
 import { Categoria2 } from 'src/app/demo/interfaces/area-interface';
 
@@ -35,16 +35,17 @@ export class CrearTicketPage implements OnInit {
     constructor(private fb: FormBuilder,private ticketsService:TicketsServiceService, private authService:AuthService ) {}
     
     ngOnInit(){
+      //obtener datos del usuario
+      this.user = this.authService.getUser();
+      this.nombreArea = this.user.area;
       this.getCurrentDate();
       // this.getCategorias();
       this.ticketsService.getAreas().subscribe((res)=>{
         this.getCategorias()
-        this.totalAreas = res
+        this.totalAreas = res.filter(area=> area.area!==this.nombreArea)
+        console.log(res)
       })
 
-      //obtener datos del usuario
-      this.user = this.authService.getUser();
-      this.nombreArea = this.user.area;
 
       // this.ticketsService.getAreas().subscribe((res)=>{
       //   // Filtramos las áreas que tienen el nombre "Sistemas"
@@ -59,7 +60,7 @@ export class CrearTicketPage implements OnInit {
       this.ticketForm = this.fb.group({
         titulo: ['', [Validators.required, Validators.minLength(5)]],
         fecha: [this.actuallyDay, Validators.required],
-        descripcion: ['', Validators.required],
+        descripcion: ['', [Validators.required, Validators.minLength(10)]],
         para_area: [''],
         area: [this.user.area, Validators.required],
         correo: [this.user.correo, Validators.required],
@@ -112,7 +113,7 @@ export class CrearTicketPage implements OnInit {
       // esto cambia las categorias dependiendo del evento 
       updateCategoria2(event) {
         // console.log(event.value)
-        
+
         //todo validar esto */ if(event.value===this.user) 
         const selectedArea = event.value;
         this.IdArea2 = selectedArea;

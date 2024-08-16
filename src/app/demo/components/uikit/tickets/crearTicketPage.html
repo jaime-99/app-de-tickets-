@@ -7,7 +7,11 @@
 		  <div class="field col-12 md:col-4">
 			<label for="title">Título</label>
 			<input pInputText  type="text" formControlName="titulo" />
-			<p-message *ngIf="isFieldInvalid('titulo')" severity="error" text="Título es requerido y debe tener al menos 5 caracteres."></p-message>
+			<p-messages *ngIf="isFieldInvalid('titulo')" severity="error" >
+				<ng-template pTemplate>
+					<div class="ml-2">Debes agregar minimo 5 caracteres en el campo titulo</div>
+				</ng-template>
+				></p-messages>
 		  </div>
 
 		  <div class="field col-12 md:col-4">
@@ -31,8 +35,12 @@
 		  </div>
 		  <div class="field col-12 md:col-6">
 			<label >Descripción</label>
-			<textarea pInputTextarea rows="5" cols="30" formControlName="descripcion"></textarea>
-			<p-message *ngIf="isFieldInvalid('descripcion')" severity="error" text="Descripción es requerida y no debe exceder los 200 caracteres."></p-message>
+			<textarea pInputTextarea rows="5" cols="30" formControlName="descripcion" wrap="hard" style="resize: none;"></textarea>
+			<p-messages *ngIf="isFieldInvalid('descripcion')" severity="error" >
+			<ng-template pTemplate>
+				<div class="ml-2">Debes agregar minimo 10 caracteres en el campo descripcion</div>
+			</ng-template>
+			></p-messages>
 		  </div>
 		</form>
 	  </div>

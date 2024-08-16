@@ -21,7 +21,7 @@ export class TicketsTrabajadosComponent implements OnInit {
   para_area : any;
   user:usuario; //agregar tipo
   loading:boolean = true ;
-  alert:boolean = false;
+  alert:boolean = false; // es cuando no haya ningun tipo de ticket
   porTrabajar = 1; // si es 1 es que se ira con el parametro de que puede seleccionar para trabajarlo
 
   searchTerm: string = ''; // para buscar

@@ -150,7 +150,12 @@
 
     <div *ngIf="!loading && ticketsByEstatus('en progreso').length === 0"> 
 
-        <p>no hay tickets en progreso por el momento </p>
+        <!-- <p>no hay tickets en progreso por el momento </p> -->
+        <p-messages severity="error">
+            <ng-template pTemplate>
+                <div class="ml-2">No Hay tickets <strong> en progreso </strong> por el momento.</div>
+            </ng-template>
+        </p-messages>
     
     </div>
 
@@ -222,7 +227,11 @@
 <div *ngIf="!alert">
     <div *ngIf="!loading && ticketsByEstatus('terminado').length === 0"> 
 
-        <p>no hay tickets abiertos por el momento </p>
+        <p-messages severity="error">
+            <ng-template pTemplate>
+                <div class="ml-2">No Hay tickets terminados por el momento.</div>
+            </ng-template>
+        </p-messages>
     
     </div>
 <div class="card" *ngIf="!loading">

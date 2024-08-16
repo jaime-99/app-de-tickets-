@@ -43,6 +43,13 @@
                     <label for="">Al dia de</label>
                     <p-calendar formControlName="diaFin" />
                 </div>
+
+                <!-- colocar mensaje si las fechas estan mal -->
+                <p-messages *ngIf="rentaLaptopForm.errors?.dateRangeInvalid" severity="error">
+                    <ng-template pTemplate>
+                        <div class="ml-2">Las fecha 2 no puede ser anterior que la fecha 1.</div>
+                    </ng-template>
+                </p-messages>
                 <div class="col-6 xl:col-3">
                     <p><strong>  Programas </strong></p>
                 <div class="flex flex-column gap-2">
@@ -118,6 +125,7 @@
 
             <div class="col-12 xl:col-4">
                 <div class="card">
+                    <h4>Estatus de la venta</h4>
                     <p-timeline [value]="events">
                         <!-- <ng-template pTemplate="opposite" let-event>
                             {{ event.date }}

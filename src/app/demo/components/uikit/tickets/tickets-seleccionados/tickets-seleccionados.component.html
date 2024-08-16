@@ -25,7 +25,7 @@
   </div>
   <div *ngIf="!loading" class="col-12 xl:col-3">
 
-    <button [disabled]="this.filteredTickets.length<1" class="p-button-success" pButton label="descargar en excel" (click)="exportToExcel()"></button>
+    <button [disabled]="this.filteredTickets?.length<1" class="p-button-success" pButton label="descargar en excel" (click)="exportToExcel()"></button>
   </div>
   <div *ngIf="!loading" class="col-12 xl:col-3">
 

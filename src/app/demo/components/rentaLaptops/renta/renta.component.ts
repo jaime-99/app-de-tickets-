@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { rentaService } from '../services/renta.service';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, ValidatorFn , ValidationErrors, AbstractControl } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthService } from '../../auth/auth.service';
 import { ConnectableObservable, Subject } from 'rxjs';
 import { format } from 'date-fns';
+import { LOCALE_ID } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api';
+
 
 @Component({
   selector: 'app-renta',
@@ -17,8 +20,20 @@ export class RentaComponent  implements OnInit{
   user: any; // para saber el usuario y datos
 
   constructor (private rentaService:rentaService, private fb: FormBuilder, private confirmationService: ConfirmationService,
-    private messageService: MessageService, private authService: AuthService
+    private messageService: MessageService, private authService: AuthService,  private primengConfig: PrimeNGConfig
   ) { 
+
+    this.primengConfig.setTranslation({
+      firstDayOfWeek: 1,
+      dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
+      dayNamesShort: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
+      dayNamesMin: ["D", "L", "M", "M", "J", "V", "S"],
+      monthNames: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+      monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
+      today: 'Hoy',
+      clear: 'Limpiar'
+    });
+  
 
   }
   events: any[]; //linea del tiempo 
@@ -71,7 +86,10 @@ this.rentaLaptopForm = this.fb.group({
   rentaUsuario:[this.user.usuario],
   estatus:['abierto'],
 
-});
+}, { validators: dateRangeValidator()
+  
+ });
+
 
 this.checkFormStatus()
 
@@ -107,6 +125,12 @@ this.checkFormStatus()
       rejectLabel: "No",
       rejectButtonStyleClass:"p-button-text",
       accept: () => {
+
+        //colocar validacion de calendarios
+      let fecha1 =   this.rentaLaptopForm.get('diaInicio').value
+      let fecha2 =   this.rentaLaptopForm.get('diaFin').value
+
+
           this.onSubmit()
       },
 
@@ -207,13 +231,19 @@ this.checkFormStatus()
       subject: 'Renta exitosa',
       body: 'Tu renta ha sido exitosa, ahora espera solo la confirmacion, que te llegara por este medio.'
     }
-
     this.rentaService.sendEmail(email).subscribe();
-
-  
-
   }
-  
+}
 
+export function dateRangeValidator(): ValidatorFn {
+  return (formGroup: AbstractControl): ValidationErrors | null => {
+    const startDate = formGroup.get('diaInicio').value;
+    const endDate = formGroup.get('diaFin').value;
+
+    if (startDate && endDate && endDate < startDate) {
+      return { dateRangeInvalid: true };
+    }
+    return null;
+  };
 }
 

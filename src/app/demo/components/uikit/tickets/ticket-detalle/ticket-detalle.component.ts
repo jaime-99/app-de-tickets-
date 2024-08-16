@@ -116,6 +116,7 @@ export class TicketDetalleComponent implements OnInit{
         target: event.target as EventTarget,
         message: 'Seguro(a) que quieres aceptar el ticket?',
         icon: 'pi pi-exclamation-triangle',
+        acceptLabel:"Si",
         accept: () => {
           
             this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'has aceptado el ticket ', life: 3000 });
@@ -168,6 +169,7 @@ confirm2(event: Event) {
       message: 'Seguro(a) que quieres rechazar el ticket?',
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: 'p-button-danger p-button-sm',
+      acceptLabel:"Si",
       accept: () => {
           this.messageService.add({ severity: 'info', summary: 'Rechazado', detail: 'Has rechazado el ticket', life: 3000 });
 
