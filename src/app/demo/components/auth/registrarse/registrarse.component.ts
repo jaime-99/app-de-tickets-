@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn, EmailValidator } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { areasCGP } from '../interfaces/areas.interface';
+import { PerfilService } from '../../editar-perfil/services/perfil.service';
 @Component({
   selector: 'app-registrarse',
   templateUrl: './registrarse.component.html',
@@ -18,7 +19,9 @@ ciudadSeleccionada:any;
 validTemplate: boolean = false;
 messages: { severity: string; detail: string; }[];
 
-  constructor(private fb: FormBuilder, private authService:AuthService) {}
+  constructor(private fb: FormBuilder,
+  private authService:AuthService,
+  private perfilService:PerfilService) {}
 
 ngOnInit() {
 
@@ -31,9 +34,9 @@ ngOnInit() {
     apellido_materno: ['', Validators.required],
     usuario: ['', Validators.required],
     area: [this.areaSeleccionada, Validators.required],
-    correo: ['', [Validators.required, Validators.email]],
+    correo: ['', [Validators.required, Validators.email, this.emailDomainValidator()]],
     ciudad: [this.ciudadSeleccionada, [Validators.required]],
-    contrasenia: ['', Validators.required],
+    contrasenia: ['', [Validators.required, Validators.minLength(5)]],
 });
 
 }
@@ -57,6 +60,42 @@ addUser() {
     const usuario = this.registroForm.value;
   this.authService.createUser(usuario
   ).subscribe(response =>{
+
+    console.log(response)
+    console.log(response.user_id)
+    // return;
+    let userId = response.user_id;
+    let area = this.registroForm.get('area').value;
+    // que me regrese el id del usuario
+
+    if(area === 'Comercial') {
+      // colocar el tipoId en 3 
+      this.perfilService.putTipoPerfil(userId,3).subscribe(()=>{
+      })
+    }
+    else if(area === 'Administracion'){
+      //colocar el tipoId en usuario Ticket
+      this.perfilService.putTipoPerfil(userId, 4).subscribe(()=>{
+
+      })
+    }
+    else if(area === 'RH'){
+      //colocar el tipoId en usuario Ticket
+      this.perfilService.putTipoPerfil(userId,4).subscribe(()=>{
+      })
+    }
+    else if(area === 'Materiales'){
+      //colcoar el tipoId en usuarioTicket
+      this.perfilService.putTipoPerfil(userId,4).subscribe(()=>{
+
+      })
+    }else if(area === 'Diseño'){
+    // colocar el tipo id en usuarioTicket
+    this.perfilService.putTipoPerfil(userId,2).subscribe(()=>{
+
+    })
+    }
+  
   })
   
   }else{
@@ -72,7 +111,27 @@ addUser() {
 //   }
 // }
 
+}
+// es para validar el correo
+ emailDomainValidator(): ValidatorFn {
+  const allowedDomains = ['@cgpgroup.mx', '@egroup.mx', '@consultoriaglobal.mx'];
 
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value) {
+      return null; // Si no hay valor, no se aplica la validación
+    }
+
+    const email = control.value;
+    const domain = allowedDomains.find(domain => email.endsWith(domain));
+
+    return domain ? null : { invalidDomain: true };
+  };
+}
+
+
+isFieldInvalid(field: string): boolean {
+  const control = this.registroForm.get(field);
+  return control ? control.invalid && control.touched : false;
 }
 
 }

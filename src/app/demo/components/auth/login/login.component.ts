@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
 
     getUsers(){
         this.authService.getUsers().subscribe()
-
     }
 
     // onSubmit(): void {
@@ -63,6 +62,9 @@ export class LoginComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Exitoso', detail: 'Inicio de sesion con exito' });
             this.router.navigate(['/dashboard'])
             this.authService.saveUser(res); // Guardar la información del usuario en localStorage
+            // document.cookie = "access_granted=true; path=/; domain=.cgpgroup.mx";
+
+
             }else{
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Contraseña o Usuario incorrectos' });
             }

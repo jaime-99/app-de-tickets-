@@ -79,7 +79,7 @@ export class AppMenuComponent implements OnInit {
     updateBadgeCount() {
 
             if (!this.notifications) {
-                console.warn('No notifications available to update badges.');
+                // console.warn('No notifications available to update badges.');
                 this.badge1 = [];
                 this.badge2 = [];
                 this.badge3 = [];

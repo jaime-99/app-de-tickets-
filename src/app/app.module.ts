@@ -11,10 +11,13 @@ import { EventService } from './demo/service/event.service';
 import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
+import { SinAcceso } from './demo/components/sinAccesso/sinAcceso.component';
+
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
-    declarations: [AppComponent, NotfoundComponent],
-    imports: [AppRoutingModule, AppLayoutModule],
+    declarations: [AppComponent, NotfoundComponent, SinAcceso],
+    imports: [AppRoutingModule, AppLayoutModule, ButtonModule],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,

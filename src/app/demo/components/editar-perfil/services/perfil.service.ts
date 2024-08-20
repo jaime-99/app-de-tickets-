@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -20,6 +21,12 @@ export class PerfilService {
     let url = 'https://visualmanagment.com/AppCGP/apis/usuario/putPassword.php'
     const body = JSON.stringify({id,contrasenia}); // convierte un objeto en cadena
     return this.http.put(url, body);
+  }
+
+  putTipoPerfil(id,tipoId){
+    let url = 'https://visualmanagment.com/AppCGP/apis/usuario/putTipoUser.php'
+    const body = JSON.stringify({id,tipoId})
+    return this.http.put(url,body)
   }
 
 
