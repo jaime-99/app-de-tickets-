@@ -61,16 +61,24 @@ addUser() {
   this.authService.createUser(usuario
   ).subscribe(response =>{
 
-    console.log(response)
-    console.log(response.user_id)
+    // console.log(response)
+    // console.log(response.user_id)
     // return;
     let userId = response.user_id;
     let area = this.registroForm.get('area').value;
+    let ubicacion = this.registroForm.get('ciudad').value;
+    console.log(ubicacion)
     // que me regrese el id del usuario
 
-    if(area === 'Comercial') {
+    if(area === 'Comercial' && ubicacion ==='Saltillo') {
       // colocar el tipoId en 3 
-      this.perfilService.putTipoPerfil(userId,3).subscribe(()=>{
+      this.perfilService.putTipoPerfil(userId,5).subscribe(()=>{
+      })
+    }
+    else if(area === 'Comercial'){
+      //colocar el tipoId en usuario Ticket
+      this.perfilService.putTipoPerfil(userId, 4).subscribe(()=>{
+
       })
     }
     else if(area === 'Administracion'){

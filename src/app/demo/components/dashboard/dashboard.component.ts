@@ -268,9 +268,16 @@ getTicketsTerminados(){
 
 
 
-
+redirectToOficinas() {
+    setTimeout(() => {
+      window.location.href = "https://cgpowers.cgpgroup.mx";
+    }, 100);
+  }
 }
-    
+
+
+
+
 
 
 

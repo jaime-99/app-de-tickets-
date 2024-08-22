@@ -1,6 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class PerfilService {
     let url = 'https://visualmanagment.com/AppCGP/apis/usuario/putTipoUser.php'
     const body = JSON.stringify({id,tipoId})
     return this.http.put(url,body)
+  }
+
+  getEmailForUser(usuario):Observable<any>{
+    return this.http.get<any>(`https://visualmanagment.com/AppCGP/apis/usuario/getEmailForUser.php?usuario=${usuario}&timestamp=${new Date().getTime()}`);
   }
 
 

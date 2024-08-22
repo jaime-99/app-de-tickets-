@@ -8,6 +8,7 @@ import { AuthService } from '../../../auth/auth.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { PerfilService } from '../../../editar-perfil/services/perfil.service';
 
 @Component({
   selector: 'app-ticket-detalle',
@@ -30,12 +31,13 @@ export class TicketDetalleComponent implements OnInit{
 
 
   constructor (private ticketService:TicketsServiceService, private activatedRoute:ActivatedRoute, private authService:AuthService,
-    private confirmationService: ConfirmationService, private messageService: MessageService,
+    private confirmationService: ConfirmationService, private messageService: MessageService, private perfilService:PerfilService,
     private route:Router, 
-  ) {     this.comentarios2 = new FormControl('');
-  }
+  ) {     this.comentarios2 = new FormControl(''); }
 
   ngOnInit(): void {
+
+    
 
 
     this.user = this.authService.getUser()
@@ -156,11 +158,24 @@ sendNotification(ticket?){
   this.ticketService.addNotification(data).subscribe(()=>{
 
     // this.getUsuarioForArea() // ver si aqui se llama correcto
+    this.sendEmail()
+  })
+}
 
+sendEmail(){
+  //envar correo cuando se acepte ticket a la persona del ticket
+  const email = this.tickets.correo;
+  const data = {
+    to:email,
+    subject: 'Ticket Aceptado',
+    body: `Hola el usuario ${this.tickets.trabajadoPor} ha aceptado su ticket con el numero id ${this.ticketId} 
+    entra a https://plataformacgp.cgpgroup.mx para que veas el ticket actualizado `
+  }
+
+  this.ticketService.sendEmails(data).subscribe(()=>{
 
   })
-
-
+  
 }
 
 confirm2(event: Event) {
@@ -232,6 +247,26 @@ sendNotification6(){
   this.ticketService.addNotification(data).subscribe((res)=>{
     // console.log('notificacion tipo 6',res)
     this.putEstatusToCerrado(this.tickets?.id)
+
+    this.perfilService.getEmailForUser(this.tickets.trabajadoPor).subscribe((res)=>{
+      let correoUsuario = res
+      console.log(correoUsuario)
+      this.sendEmailCerrado(correoUsuario)
+    })
+  })
+}
+
+//se envia correo de cerrado a el usuario que mando el ticket 
+sendEmailCerrado(correo){
+
+  const data = {
+    to : correo,
+    subject: 'TICKET CERRADO',
+    body: `el ticket con el id ${this.ticketId} ha sido cerrado por ${this.tickets.nombre}`
+  }
+
+  this.ticketService.sendEmails(data).subscribe((res)=>{
+    console.log('correo enviado cuando el ticket se cierra',res)
   })
 }
 putEstatusToCerrado(id){

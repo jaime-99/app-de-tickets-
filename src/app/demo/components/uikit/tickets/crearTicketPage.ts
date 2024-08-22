@@ -79,8 +79,8 @@ export class CrearTicketPage implements OnInit {
         }
         
     onSubmit() {
-      // this.sendEmailToMe()
-      // this.sendEmailFinally() //activar
+      this.sendEmailToMe()
+      this.sendEmailFinally() //activar
       // return;
       this.Message = true;
       if (this.ticketForm.valid) {
@@ -180,7 +180,8 @@ export class CrearTicketPage implements OnInit {
         const data = {
           to: email,
           subject : 'Recibo de Ticket',
-          body: `Te ha enviado un ticket la persona con el nombre -   ${this.user.nombre}. Da click Aqui para acepetar el ticket` 
+          body: `Te ha enviado un ticket la persona con el nombre - ${this.user.nombre}. Ingresa a https://plataformacgp.cgpgroup.mx para
+          aceptar el ticket`
         }
 
         this.ticketsService.sendEmails(data).subscribe((res)=>{

@@ -169,7 +169,17 @@ paginatedTickets: any[] = [];
 
     this.ticketsService.addNotification(data).subscribe((res)=>{
       //todo hacer algo despues
-      console.log('se agrega la notificacion de terminado', res)
+      // se manda el correo despues 
+      const email = {
+        to:ticket.correo,
+        subject: 'ticket TERMINADO',
+        body:`Hola , ${ticket.nombre} tu ticket con el id ${ticket?.id} ha sido terminado , entra a http://plataformacgp.cgpgroup.mx para 
+        que CIERRES el ticket `,
+      }
+      this.ticketsService.sendEmails(email).subscribe(()=>{
+        
+      })
+      // console.log('se agrega la notificacion de terminado', res)
     })
   }
 

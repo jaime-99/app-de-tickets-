@@ -13,7 +13,6 @@ export class TicketsServiceService {
   private ticketCreatedSource = new Subject<void>();
     ticketCreated$ = this.ticketCreatedSource.asObservable();
 
-
   private apiUrl = 'https://visualmanagment.com/AppCGP/'; // Cambia esta URL a la ubicación real de tu script PHP
   
 

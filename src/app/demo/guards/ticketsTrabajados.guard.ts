@@ -6,16 +6,15 @@ import { AuthService } from '../components/auth/auth.service';
 
 
 
-export const rentaGuard: CanActivateFn = (route, state) => {
+export const TicketsGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   const authService = inject(AuthService);
   const isAuthenticated = authService.getUser();
 
   
-  if(isAuthenticated.tipoId ===2 || isAuthenticated.tipoId===4){
+  if(isAuthenticated.tipoId ===5  || isAuthenticated.tipoId === 4)
     return router.navigateByUrl('/sinAcceso')
-  }
     else{
       return true;
     }

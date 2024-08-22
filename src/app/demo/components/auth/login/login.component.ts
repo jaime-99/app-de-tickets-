@@ -63,7 +63,8 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/dashboard'])
             this.authService.saveUser(res); // Guardar la información del usuario en localStorage
             // document.cookie = "access_granted=true; path=/; domain=.cgpgroup.mx";
-
+            document.cookie = "access_granted=true; path=/; domain=.cgpgroup.mx; max-age=3600"; // Cookie válida por una hora
+                
 
             }else{
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Contraseña o Usuario incorrectos' });
