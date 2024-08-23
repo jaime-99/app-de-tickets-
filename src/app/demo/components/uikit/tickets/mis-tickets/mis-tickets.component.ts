@@ -96,7 +96,9 @@ export class MisTicketsComponent implements OnInit {
         case 'en progreso':
             return 'warning';
         case 'cerrado':
-            return 'primary';
+            return 'danger';
+        case 'terminado':
+            return 'info';
             default:
             return 'default'; // O cualquier otro valor por defecto que desees
     }

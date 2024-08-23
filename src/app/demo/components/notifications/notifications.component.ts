@@ -39,6 +39,7 @@ export class NotificationsComponent implements OnInit {
         this.loading = true;
       }else{
         this.notificaciones = []
+        this.loading = true;
       }
     })
   }
@@ -53,6 +54,7 @@ export class NotificationsComponent implements OnInit {
           acceptIcon:"none",
           rejectIcon:"none",
           rejectButtonStyleClass:"p-button-text",
+          acceptLabel:"Si",
           accept: () => {
             this.ticketService.putNotification(notificacion.id,this.getFormattedCurrentDate()).subscribe(()=>{
               // console.log(res)

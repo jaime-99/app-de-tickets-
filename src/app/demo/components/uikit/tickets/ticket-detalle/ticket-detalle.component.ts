@@ -28,6 +28,7 @@ export class TicketDetalleComponent implements OnInit{
   solucionado:boolean;
   visibleFinish:boolean  = false;
   updateTickets: boolean = false;
+  trabajadoPor: string; // es el usuaro de quien trabaja el ticket
 
 
   constructor (private ticketService:TicketsServiceService, private activatedRoute:ActivatedRoute, private authService:AuthService,
@@ -71,7 +72,8 @@ export class TicketDetalleComponent implements OnInit{
     this.ticketService.getTicketForId(this.ticketId).subscribe((res)=>{
       this.tickets = res 
       this.loading = true;
-      // console.log(this.tickets)
+      console.log(this.tickets.trabajadoPor) //todo checar por que no se ve
+      this.trabajadoPor = this.tickets.trabajadoPor
       if(this.updateTickets) this.getUsuarioForArea();
       // this.getUsuarioForArea()
     })
@@ -128,6 +130,7 @@ export class TicketDetalleComponent implements OnInit{
               // console.log('tickets actualizados con trabajadoPor',this.tickets)
               // return;
               this.sendNotification(ticket);
+              this.sendEmail(ticket)
               this.aceptlocationTicket(this.ticketId);
           }).catch(error => {
               console.error("Error actualizando el ticket:", error);
@@ -158,22 +161,24 @@ sendNotification(ticket?){
   this.ticketService.addNotification(data).subscribe(()=>{
 
     // this.getUsuarioForArea() // ver si aqui se llama correcto
-    this.sendEmail()
+    // this.sendEmail(ticket)
   })
 }
 
-sendEmail(){
-  //envar correo cuando se acepte ticket a la persona del ticket
+sendEmail(ticket?){
+  //enviar correo cuando se acepte ticket a la persona del ticket
+
   const email = this.tickets.correo;
+  console.log(this.tickets.trabajadoPor, 'linea 171')
   const data = {
     to:email,
-    subject: 'Ticket Aceptado',
-    body: `Hola el usuario ${this.tickets.trabajadoPor} ha aceptado su ticket con el numero id ${this.ticketId} 
+    subject: 'Ticket ACEPTADO',
+    body: `Hola el usuario - ${this.user.usuario} - ha aceptado su ticket con el numero id ${this.ticketId} 
     entra a https://plataformacgp.cgpgroup.mx para que veas el ticket actualizado `
   }
 
   this.ticketService.sendEmails(data).subscribe(()=>{
-
+    
   })
   
 }
@@ -262,7 +267,7 @@ sendEmailCerrado(correo){
   const data = {
     to : correo,
     subject: 'TICKET CERRADO',
-    body: `el ticket con el id ${this.ticketId} ha sido cerrado por ${this.tickets.nombre}`
+    body: `el ticket con el id ${this.ticketId} ha sido cerrado por el usuario  ${this.tickets.nombre}`
   }
 
   this.ticketService.sendEmails(data).subscribe((res)=>{

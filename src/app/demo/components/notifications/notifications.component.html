@@ -5,9 +5,77 @@
     fill="var(--surface-ground)" 
     animationDuration=".5s" />
 
+    <!-- <p-messages *ngIf="this.notificaciones.length===0 && loading" severity="info">
+        <ng-template pTemplate>
+            <div class="ml-2">Aun no tienes notificaciones.</div>
+        </ng-template>
+    </p-messages> -->
+
+
 
 <p-tabView *ngIf="loading">
-    <p-tabPanel header="Leidos">
+
+
+    <p-tabPanel header="no leidas">
+       
+        <p-table #dt2   [rowsPerPageOptions]="[5, 10, 20]"
+        [paginator]="true"name
+        [rows]="5"
+            [value]="notificacionesLeidas" 
+            [globalFilterFields]="['','message']"
+            styleClass="p-datatable-gridlines" 
+            [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0" [ngStyle]="{ color: '#FF0000' }">Notificaciones</h5>
+        
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="search( dt2, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                    </ng-template>
+        
+                    <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn>Mensaje </th>
+                        <th pSortableColumn>tipo</th>
+                        <!-- <th pSortableColumn>Fecha entrega</th> -->
+                        <th pSortableColumn="created_at">Fecha Registro <p-sortIcon field="created_at"></p-sortIcon></th>
+        
+                        <th pSortableColumn>Leido</th>
+                        <th pSortableColumn>Acciones</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-notificacion2>
+                    <tr>
+                        <td>{{ notificacion2?.message }}</td>
+                        <td>{{ notificacion2?.tipo }}</td>
+                        <td>{{ notificacion2?.created_at | date:'dd/MM/yyyy \'a la hora\' hh:mm a'}}</td>
+                        <td>
+                            El {{ notificacion2?.read_at ? (notificacion2.read_at | date:'dd/MM/yyyy \'a la hora:\' hh:mm a') : 'sin leer aún' }}
+        
+                        </td>
+                         <td>  
+                         <div class="flex">
+                            <button [disabled]="notificacion?.read_at" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="readMessage($event,notificacion2)"></button>
+                            <button pButton pRipple icon="pi pi-trash" type="click" class="p-button-rounded p-button-warning" (click)="deleteMessage(notificacion2)"></button>
+                        </div>
+                        </td>
+                    </tr>
+                </ng-template>
+        </p-table>
+        
+        <p-toast></p-toast>
+        <p-confirmDialog></p-confirmDialog>
+        
+        </p-tabPanel>
+
+
+
+
+
+    <p-tabPanel header="leidas">
        
 <p-table #dt   [rowsPerPageOptions]="[5, 10, 20]"
 [paginator]="true"name
@@ -40,11 +108,11 @@
         </ng-template>
         <ng-template pTemplate="body" let-notificacion>
             <tr>
-                <td>{{ notificacion?.message }}</td>
+                <td>{{ notificacion?.message }}</td>    
                 <td>{{ notificacion?.tipo }}</td>
-                <td>{{ notificacion?.created_at | date:'dd/MM/yyyy'}}</td>
+                <td>{{ notificacion?.created_at | date:'dd/MM/yyyy \'Hora:\' hh:mm a'}}</td>
                 <td>
-                    El {{ notificacion?.read_at ? (notificacion.read_at | date:'dd/MM/yyyy \'a la hora:\' HH:mm') : 'sin leer aún' }}
+                    El {{ notificacion?.read_at ? (notificacion.read_at | date:'dd/MM/yyyy \'a la hora:\' hh:mm a') : 'sin leer aún' }}
 
                 </td>
                  <td>  
@@ -62,61 +130,10 @@
 
 </p-tabPanel>
 
-<p-tabPanel header="Sin leer">
-       
-    <p-table #dt2   [rowsPerPageOptions]="[5, 10, 20]"
-    [paginator]="true"name
-    [rows]="5"
-        [value]="notificacionesLeidas" 
-        [globalFilterFields]="['','message']"
-        styleClass="p-datatable-gridlines" 
-        [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template pTemplate="caption">
-                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                    <h5 class="m-0" [ngStyle]="{ color: '#FF0000' }">Notificaciones</h5>
-    
-                    <span class="block mt-2 md:mt-0 p-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="search( dt2, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
-                    </span>
-                </div>
-                </ng-template>
-    
-                <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn>Mensaje </th>
-                    <th pSortableColumn>tipo</th>
-                    <!-- <th pSortableColumn>Fecha entrega</th> -->
-                    <th pSortableColumn="created_at">Fecha Registro <p-sortIcon field="created_at"></p-sortIcon></th>
-    
-                    <th pSortableColumn>Leido</th>
-                    <th pSortableColumn>Acciones</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-notificacion2>
-                <tr>
-                    <td>{{ notificacion2?.message }}</td>
-                    <td>{{ notificacion2?.tipo }}</td>
-                    <td>{{ notificacion2?.created_at | date:'dd/MM/yyyy'}}</td>
-                    <td>
-                        El {{ notificacion2?.read_at ? (notificacion2.read_at | date:'dd/MM/yyyy \'a la hora:\' HH:mm') : 'sin leer aún' }}
-    
-                    </td>
-                     <td>  
-                     <div class="flex">
-                        <button [disabled]="notificacion?.read_at" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="readMessage($event,notificacion2)"></button>
-                        <button pButton pRipple icon="pi pi-trash" type="click" class="p-button-rounded p-button-warning" (click)="deleteMessage(notificacion2)"></button>
-                    </div>
-                    </td>
-                </tr>
-            </ng-template>
-    </p-table>
-    
-    <p-toast></p-toast>
-    <p-confirmDialog></p-confirmDialog>
-    
-    </p-tabPanel>
+
 
 
 
 </p-tabView>
+
+

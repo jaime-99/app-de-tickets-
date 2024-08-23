@@ -73,7 +73,12 @@
 <div class="card" *ngIf="!loading">
     <div *ngIf="!loading && getTicketsByStatus('abierto').length === 0"> 
 
-        <p>no hay tickets abiertos por el momento </p>
+        <p-messages severity="info">
+            <ng-template pTemplate>
+                <div class="ml-2">No hay tickets ABIERTOS por el momento.</div>
+            </ng-template>
+        </p-messages>
+
     
     </div>
     <div *ngIf="!loading && getTicketsByStatus('abierto').length > 0">
@@ -135,7 +140,11 @@
 <div class="card" *ngIf="!loading">
     
     <div *ngIf="!loading && getTicketsByStatus('en progreso').length === 0">
-        <p>no hay tickets en progreso por el momento</p>
+        <p-messages severity="info">
+            <ng-template pTemplate>
+                <div class="ml-2">No hay tickets EN PROGRESO aun</div>
+            </ng-template>
+        </p-messages>
     </div>
     <div *ngIf="!loading && getTicketsByStatus('en progreso').length > 0">
     <p-table [value]="getTicketsByStatus('en progreso') | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}">
@@ -193,7 +202,14 @@
 <div *ngIf="!alert">
 <div class="card" *ngIf="!loading">
 
-    <div *ngIf="!loading && getTicketsByStatus('terminado').length === 0">No hay tickets terminados</div>
+    <div *ngIf="!loading && getTicketsByStatus('terminado').length === 0">
+
+        <p-messages severity="info">
+            <ng-template pTemplate>
+                <div class="ml-2">No hay tickets TERMINADOS.</div>
+            </ng-template>
+        </p-messages>
+    </div>
     <div *ngIf="!loading && getTicketsByStatus('terminado').length > 0">
 
     <p-table [value]="getTicketsByStatus('terminado') | pipeSearch:searchTerm" [tableStyle]="{'min-width': '50rem'}">

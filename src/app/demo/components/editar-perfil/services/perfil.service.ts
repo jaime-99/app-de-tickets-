@@ -30,9 +30,10 @@ export class PerfilService {
     return this.http.put(url,body)
   }
 
-  getEmailForUser(usuario):Observable<any>{
-    return this.http.get<any>(`https://visualmanagment.com/AppCGP/apis/usuario/getEmailForUser.php?usuario=${usuario}&timestamp=${new Date().getTime()}`);
+  getEmailForUser(usuario: string): Observable<string> {
+    return this.http.get(`https://visualmanagment.com/AppCGP/apis/usuario/getEmailForUser.php?usuario=${usuario}&timestamp=${new Date().getTime()}`, { responseType: 'text' });
   }
+  
 
 
 }
