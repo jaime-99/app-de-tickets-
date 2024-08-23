@@ -13,10 +13,10 @@ import { TicketsGuard } from 'src/app/demo/guards/ticketsTrabajados.guard';
 		{ path: '', component: CrearTicketPage },
 		{path: 'misTickets', component:MisTicketsComponent},
 		{path: 'ticketsTrabajados', component:TicketsTrabajadosComponent,
-			canActivate:[TicketsGuard]
+			// canActivate:[TicketsGuard]
 		},
 		{path: 'ticketsSeleccionados', component:TicketsSeleccionadosComponent,
-			canActivate:[TicketsGuard]
+			// canActivate:[TicketsGuard]
 		},
 		{path: 'ticketAceptado/:ticketId', component:MensajeAlertaComponent},
 		{path: ':id', component:TicketDetalleComponent},

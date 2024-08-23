@@ -21,6 +21,22 @@ export const rentaGuard: CanActivateFn = (route, state) => {
     }
 };
 
+// para que las rentas solo las pueda ver el de sistemas
+export const rentaGuard2: CanActivateFn = (route, state) => {
+  const router = inject(Router);
+
+  const authService = inject(AuthService);
+  const isAuthenticated = authService.getUser();
+
+  
+  if(isAuthenticated.area !=='Sistemas' ){
+    return router.navigateByUrl('/sinAcceso')
+  }
+    else{
+      return true;
+    }
+};
+
 // export const generalGuard2: CanActivateFn = (route, state) => {
 //   const router = inject(Router);
 //   const authService = inject(AuthService);

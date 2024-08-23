@@ -53,6 +53,8 @@ export class rentaService {
         const apiUrl = 'https://visualmanagment.com/AppCGP/apis/emails/send_test_email.php'
         return this.http.post<any>(apiUrl, data, {headers})
       }
+
+    
 }
 
 

@@ -212,7 +212,7 @@ this.checkFormStatus()
       to: 'sistemas@cgpgroup.mx',
       subject: `Renta de laptop(s)`,
       body : `${nombre}  ha mandado una renta de laptop del dia : ${soloFecha} 
-      para el dia ${soloFecha2}` 
+      para el dia ${soloFecha2} ir a plataformacgpgroup.cgpgroup.mx` 
     }
 
     this.rentaService.sendEmail(email).subscribe((res)=>{
@@ -226,12 +226,15 @@ this.checkFormStatus()
 
 
     const emailFor = this.user.correo;
+    const usuario = this.user.usuario;
+
+    
     // console.log(emailFor)
 
     const email = {
       to: emailFor,
       subject: 'Renta exitosa',
-      body: 'Tu renta ha sido exitosa, ahora espera solo la confirmacion, que te llegara por este medio.'
+      body: `Hola ${usuario} Tu renta ha sido exitosa, ahora espera solo la confirmacion, que te llegara por este medio.`
     }
     this.rentaService.sendEmail(email).subscribe();
   }

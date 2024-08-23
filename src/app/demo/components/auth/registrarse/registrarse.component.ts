@@ -12,7 +12,7 @@ export class RegistrarseComponent  implements OnInit{
 
 registroForm: FormGroup;
 
-areas = areasCGP.areas
+areas = areasCGP.areas;
 ciudades = areasCGP.ciudades;
 areaSeleccionada :any;
 ciudadSeleccionada:any;

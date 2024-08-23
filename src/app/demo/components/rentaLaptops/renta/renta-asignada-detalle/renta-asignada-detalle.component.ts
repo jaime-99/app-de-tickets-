@@ -5,6 +5,7 @@ import { Computadora, RentaLaptop } from '../../interfaces/renta.interface';
 import { FormControl } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { debounceTime, delay } from 'rxjs';
+import { PerfilService } from '../../../editar-perfil/services/perfil.service';
 
 @Component({
   selector: 'app-renta-asignada-detalle',
@@ -21,9 +22,13 @@ export class RentaAsignadaDetalleComponent implements OnInit {
   selectLaptops: FormControl[]  = [];
   selcciones = []
   loading:boolean = false;
+  emailUserRenta: string;
 
-  constructor ( private activateRoute :ActivatedRoute, private rentaService:rentaService, private messageService: MessageService,
-    private router:Router
+  constructor ( private activateRoute :ActivatedRoute,
+     private rentaService:rentaService,
+      private messageService: MessageService,
+    private router:Router,
+    private perfilService:PerfilService
   ) {
 
     // this.selectLaptops = this.computerArray.map(() => new FormControl());
@@ -52,10 +57,11 @@ export class RentaAsignadaDetalleComponent implements OnInit {
       delay(1000),
     ).subscribe((res)=>{
       this.loading = true;
-      // console.log( 'renta', res)
+      console.log( 'renta', res)
       this.rentaDetail = res
       this.numLaptops = this.rentaDetail.numeroComputadoras
       this.getLaptopsNames()
+      this.getEmailForUser()
 
 
       // console.log(this.numLaptops)
@@ -118,11 +124,49 @@ export class RentaAsignadaDetalleComponent implements OnInit {
 
     if(this.validateDropdowns()){
       this.rentaService.putComputersUse(this.rentaId,this.selcciones,'Cerrado').subscribe((res)=>{
+        this.sendEmailToUser()
         this.router.navigateByUrl('renta/rentaLaptops/Asignadas')
+
       })
     }else{
       // console.error('faltan');
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Te faltan laptops de seleccionar' });
     }
+  }
+
+  sendEmailToUser(){
+    const data = {
+      to: `${this.emailUserRenta}`,
+      subject: 'renta Aprobada',
+      body: `
+      <p>Hola <strong>${this.rentaDetail.rentaUsuario}</strong>,</p>
+
+      <p>Nos complace informarte que tu renta con el ID <strong>${this.rentaDetail.id}</strong> ha sido aprobada.</p>
+
+      <p>Detalles de la renta:</p>
+      <ul>
+        <li><strong>Fecha de inicio:</strong> ${this.rentaDetail.diaInicio}</li>
+        <li><strong>Fecha de fin:</strong> ${this.rentaDetail.diaFin}</li>
+      </ul>
+
+      <p>Para ver mas detalles, por favor visita: <a href="https://plataformacgp.cgpgroup.mx">https://plataformacgp.cgpgroup.mx</a></p>
+
+
+      <p>Saludos,<br>El equipo de CGP</p>
+    `
+    }
+
+    this.rentaService.sendEmail(data).subscribe((res)=>{
+      console.log(res)
+    })
+  }
+
+
+  getEmailForUser(){
+    this.perfilService.getEmailForUser(this.rentaDetail.rentaUsuario).subscribe((res)=>{
+
+      this.emailUserRenta = res
+      // console.log(this.emailUserRenta)
+    })
   }
 }
