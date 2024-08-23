@@ -7,6 +7,7 @@ import { ConnectableObservable, Subject } from 'rxjs';
 import { format } from 'date-fns';
 import { LOCALE_ID } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
+import { TicketsServiceService } from '../../uikit/services/tickets-service.service';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class RentaComponent  implements OnInit{
   user: any; // para saber el usuario y datos
 
   constructor (private rentaService:rentaService, private fb: FormBuilder, private confirmationService: ConfirmationService,
-    private messageService: MessageService, private authService: AuthService,  private primengConfig: PrimeNGConfig
+    private messageService: MessageService, private authService: AuthService,  private primengConfig: PrimeNGConfig,
+    private ticketService:TicketsServiceService
   ) { 
 
     this.primengConfig.setTranslation({
@@ -155,7 +157,7 @@ this.checkFormStatus()
       this.rentaService.PostRenta(this.rentaLaptopForm.value).subscribe((res)=>{
         this.alert = true;
         
-        // this.sendEmail();
+        this.sendEmail();
         // console.log(res)
       })
     }

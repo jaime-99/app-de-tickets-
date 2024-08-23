@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { rentaService } from '../../services/renta.service';
 import { RentaLaptop } from '../../interfaces/renta.interface';
 import { ActivatedRoute } from '@angular/router';
-import { delay } from 'rxjs';
+import { delay, Subject } from 'rxjs';
+import { TicketsServiceService } from '../../../uikit/services/tickets-service.service';
 
 @Component({
   selector: 'app-renta-detalle',
@@ -12,11 +13,13 @@ import { delay } from 'rxjs';
 export class RentaDetalleComponent implements OnInit {
   laptopsUsadas: any;
 
-  constructor ( private rentaService : rentaService, private activateRoute:ActivatedRoute) { }
+  constructor ( private rentaService : rentaService, private activateRoute:ActivatedRoute, private ticketService:TicketsServiceService) { }
   loading:boolean = false;
   renta:RentaLaptop // datos de la renta 
   rentaId:string; // es el id de la renta
   ngOnInit(): void {
+
+    
 
     this.activateRoute.paramMap.subscribe(params=>{
       this.rentaId= params.get('id');
@@ -40,7 +43,12 @@ export class RentaDetalleComponent implements OnInit {
 
   // aqui sera un arreglo de los equipos de venta que se usaran en la renta
   EquiposParaRenta(){
-    const laptops = this.renta.EquiposParaRenta;
+    const laptops = this.renta?.EquiposParaRenta;
+
+    if (!laptops) {
+      this.laptopsUsadas = [];
+      return;
+    }
     
     const laptopArray = laptops.split(',').map((laptopString) => {
       // Separar las propiedades de cada objeto usando '-' como separador
@@ -63,4 +71,17 @@ export class RentaDetalleComponent implements OnInit {
   }
 
 
+
+  sendEmailRenta(){
+
+    const data = {
+
+      to:'sistemas.cgpgroup.mx',
+      subject: 'Renta de laptops',
+      body: `el usuario $ `      
+    }
+
+    this.ticketService.sendEmails
+
+  }
 }

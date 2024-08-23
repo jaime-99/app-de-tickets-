@@ -2,7 +2,7 @@
 export class areasCGP {
 
     public static areas = [
-        { name: 'Sistemas', code: 'Opción 1' },
+        // { name: 'Sistemas', code: 'Opción 1' },
         { name: 'Comercial', code: 'Opción 2' },
         { name: 'Diseño', code: 'Opción 3' },
         { name: 'Administracion', code: 'Opción 4' },
