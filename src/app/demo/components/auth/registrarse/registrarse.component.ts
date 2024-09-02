@@ -93,13 +93,13 @@ addUser() {
       })
     }
     else if(area === 'Materiales'){
-      //colcoar el tipoId en usuarioTicket
+      //colocar el tipoId en usuarioTicket
       this.perfilService.putTipoPerfil(userId,4).subscribe(()=>{
 
       })
     }else if(area === 'Diseño'){
     // colocar el tipo id en usuarioTicket
-    this.perfilService.putTipoPerfil(userId,2).subscribe(()=>{
+    this.perfilService.putTipoPerfil(userId,4).subscribe(()=>{
 
     })
     }

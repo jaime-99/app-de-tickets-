@@ -54,16 +54,16 @@ export class LoginComponent implements OnInit {
     //   }
 
       onSubmit2(){
-
+        
         const {username, password} = this.loginForm.value;
-
+            
         this.authService.login2(username,password).subscribe((res)=>{
             if(res && res.usuario){
             this.messageService.add({ severity: 'success', summary: 'Exitoso', detail: 'Inicio de sesion con exito' });
             this.router.navigate(['/dashboard'])
             this.authService.saveUser(res); // Guardar la información del usuario en localStorage
             // document.cookie = "access_granted=true; path=/; domain=.cgpgroup.mx";
-            document.cookie = "access_granted=true; path=/; domain=.cgpgroup.mx; max-age=3600"; // Cookie válida por una hora
+            // document.cookie = "access_granted=true; path=/; domain=.cgpgroup.mx; max-age=3600"; // Cookie válida por una hora
                 
 
             }else{

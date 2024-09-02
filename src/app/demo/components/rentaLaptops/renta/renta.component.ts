@@ -109,7 +109,7 @@ this.checkFormStatus()
       }
     }
 
-    console.log(this.selectedPrograms)
+    // console.log(this.selectedPrograms)
 
     // console.log(this.selectedPrograms); // Puedes ver los programas seleccionados en la consola
   }
@@ -226,6 +226,7 @@ this.checkFormStatus()
 
 
     const emailFor = this.user.correo;
+
     const usuario = this.user.usuario;
 
     

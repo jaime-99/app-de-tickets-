@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PerfilService } from './services/perfil.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
@@ -36,8 +36,14 @@ export class EditarPerfilComponent implements OnInit {
 
     this.contraForm = new FormGroup({
       id: new FormControl(''),
-      password: new FormControl(''),
-      repeatPassword: new FormControl(''),
+      password: new FormControl('', [
+        Validators.required, // El campo es obligatorio
+        Validators.minLength(5), // La contraseña debe tener al menos 8 caracteres
+      ]),
+      
+      repeatPassword: new FormControl('',[
+        Validators.required, Validators.minLength(5),
+      ]),
     })
 
    this.user =  this.authService.getUser();
@@ -63,6 +69,7 @@ export class EditarPerfilComponent implements OnInit {
         target: event.target as EventTarget,
         message: 'Estas seguro de cambiar los datos?',
         icon: 'pi pi-exclamation-triangle',
+        acceptLabel:'Si',
         accept: () => {
                 this.editarPerfil();
                 this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'Has Actualizado el Perfil', life: 3000 });
@@ -82,8 +89,14 @@ export class EditarPerfilComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
 
+          if(this.contraForm.invalid){
+            this.messageService.add({ severity: 'error', summary: 'Rechazado', detail: 'la contraseña debe tener minimo 5 caracteres', life: 3000 });
+            return;
+          }
+
           let pass1 = this.contraForm.get('password')?.value
           let pass2 = this.contraForm.get('repeatPassword')?.value
+          // if(pass1.length>3 && pass2.length>3)
             if(pass1 === pass2){
                 this.changePassword()
                 this.messageService.add({ severity: 'success', summary: 'Confirmado', detail: 'Has Cambiado la contrasena', life: 3000 });
@@ -108,6 +121,7 @@ export class EditarPerfilComponent implements OnInit {
     this.contraForm.reset()
       
     })
+
 
 
   }

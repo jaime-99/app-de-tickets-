@@ -33,7 +33,7 @@ export class RentaAsignadaComponent implements OnInit {
     
     this.rentaService.getAllRentas().pipe(  
       catchError((error)=>{
-        console.error('error al obtener las rentas', error);
+        // console.error('error al obtener las rentas', error);
         return of([]);
       })
     )

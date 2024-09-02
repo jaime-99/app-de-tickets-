@@ -131,7 +131,7 @@ export class TicketsTrabajadosComponent implements OnInit {
       case 'en progreso':
           return 'warning';
       case 'cerrado':
-          return 'alert';
+          return 'danger';
           default:
           return 'default'; // O cualquier otro valor por defecto que desees
   }

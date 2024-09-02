@@ -32,8 +32,8 @@ export class AuthService {
   }
 
   login2(usuario: string, contrasenia: string): Observable<any> {
-    const url1 = 'https://visualmanagment.com/AppCGP/apis/usuario/getUserForUser.php'
-    const url = `${url1}?usuario=${usuario}&contrasenia=${contrasenia}`;
+    const url1 = `https://visualmanagment.com/AppCGP/apis/usuario/getUserForUser.php`
+    const url = `${url1}?usuario=${usuario}&contrasenia=${contrasenia}&timestamp=${new Date().getTime()}`;
     return this.http.get<any>(url);
   }
 

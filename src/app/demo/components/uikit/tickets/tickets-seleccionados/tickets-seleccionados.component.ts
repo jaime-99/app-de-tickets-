@@ -86,7 +86,7 @@ paginatedTickets: any[] = [];
       case 'terminado':
           return 'success';
       case 'cerrado':
-          return 'alert';
+          return 'danger';
           default:
           return 'default'; // O cualquier otro valor por defecto que desees
   }

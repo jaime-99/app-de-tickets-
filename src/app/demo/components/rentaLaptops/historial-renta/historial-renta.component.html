@@ -77,7 +77,7 @@
             [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
             [maximizable]="true">
                 <p>
-                    Se hace entrega de {{laptopsUsadas?.length}} equipos de cómputo (laptop) con un cable de conexión de carga, cable de toma corriente, {{laptopsUsadas?.length}} mouses funcionales con su  mousepad a la persona.<strong> {{rentaDetalles?.nombre}}</strong>, haciéndose responsable del equipo, para uso personal con un tiempo estimado de entrega indefinido del presente año, quedando bajo su resguardo debiéndolo regresar a la empresa en las mismas condiciones que se le fue entregado.
+                    Se hace entrega de {{laptopsUsadas?.length}} equipos de cómputo (laptop) con {{laptopsUsadas?.length}} de conexión de carga, cable de toma corriente, {{laptopsUsadas?.length}} mouses funcionales con su  mousepad a la persona.<strong> {{rentaDetalles?.nombre}}</strong>, haciéndose responsable del equipo, para uso personal con un tiempo estimado de entrega indefinido del presente año, quedando bajo su resguardo debiéndolo regresar a la empresa en las mismas condiciones que se le fue entregado.
                 Equipos: </p>
                 <br>
                 <ul *ngFor="let lap of laptopsUsadas let i = index">

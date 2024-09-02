@@ -57,7 +57,7 @@ export class RentaAsignadaDetalleComponent implements OnInit {
       delay(1000),
     ).subscribe((res)=>{
       this.loading = true;
-      console.log( 'renta', res)
+      // console.log( 'renta', res)
       this.rentaDetail = res
       this.numLaptops = this.rentaDetail.numeroComputadoras
       this.getLaptopsNames()
@@ -104,7 +104,7 @@ export class RentaAsignadaDetalleComponent implements OnInit {
     // this.selcciones[index] = seleccion;
     if (this.selcciones.includes(seleccion)) {  
       // Mostrar un mensaje de error o realizar alguna acción
-      console.error('Esta opción ya ha sido seleccionada.');
+      // console.error('Esta opción ya ha sido seleccionada.');
       this.messageService.add({ severity: 'error', summary: 'Error', 
         detail: 'Esta laptop ya se ha seleccionado, selecciona otra diferente' });
 
@@ -139,25 +139,25 @@ export class RentaAsignadaDetalleComponent implements OnInit {
       to: `${this.emailUserRenta}`,
       subject: 'renta Aprobada',
       body: `
-      <p>Hola <strong>${this.rentaDetail.rentaUsuario}</strong>,</p>
+      Hola <strong>${this.rentaDetail.rentaUsuario}
 
-      <p>Nos complace informarte que tu renta con el ID <strong>${this.rentaDetail.id}</strong> ha sido aprobada.</p>
+      Nos complace informarte que tu renta con el ID <strong>${this.rentaDetail.id} ha sido aprobada.
 
       <p>Detalles de la renta:</p>
-      <ul>
-        <li><strong>Fecha de inicio:</strong> ${this.rentaDetail.diaInicio}</li>
-        <li><strong>Fecha de fin:</strong> ${this.rentaDetail.diaFin}</li>
-      </ul>
+      
+          Fecha de inicio: ${this.rentaDetail.diaInicio}
+          Fecha de fin: ${this.rentaDetail.diaFin}
+      
 
-      <p>Para ver mas detalles, por favor visita: <a href="https://plataformacgp.cgpgroup.mx">https://plataformacgp.cgpgroup.mx</a></p>
+      Para ver mas detalles, por favor visita: https://plataformacgp.cgpgroup.mx
 
 
-      <p>Saludos,<br>El equipo de CGP</p>
+      Saludos,El equipo de CGP
     `
     }
 
     this.rentaService.sendEmail(data).subscribe((res)=>{
-      console.log(res)
+      // console.log(res)
     })
   }
 

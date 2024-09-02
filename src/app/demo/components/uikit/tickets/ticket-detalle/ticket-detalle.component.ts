@@ -192,6 +192,7 @@ confirm2(event: Event) {
       acceptLabel:"Si",
       accept: () => {
           this.messageService.add({ severity: 'info', summary: 'Rechazado', detail: 'Has rechazado el ticket', life: 3000 });
+          //todo ver que pasa cuando lo rechaza
 
       },
       reject: () => {

@@ -37,7 +37,7 @@ export class HistorialRentaComponent  implements OnInit{
         this.alert = true;
       }
 
-        console.log(res)
+        // console.log(res)
     })
 
   }
@@ -55,7 +55,7 @@ export class HistorialRentaComponent  implements OnInit{
     this.laptopsUsadas = []
     this.rentaService.getRentaForId(id).subscribe((res)=>{
       this.rentaDetalles = res 
-      console.log(this.rentaDetalles)
+      // console.log('renta detalles',this.rentaDetalles)
 
       if(this.rentaDetalles.EquiposParaRenta === undefined || null){
         this.laptopsUsadas = []
