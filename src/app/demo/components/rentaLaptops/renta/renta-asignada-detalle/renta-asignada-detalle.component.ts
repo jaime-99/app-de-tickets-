@@ -143,7 +143,7 @@ export class RentaAsignadaDetalleComponent implements OnInit {
 
       Nos complace informarte que tu renta con el ID <strong>${this.rentaDetail.id} ha sido aprobada.
 
-      <p>Detalles de la renta:</p>
+      Detalles de la renta:
       
           Fecha de inicio: ${this.rentaDetail.diaInicio}
           Fecha de fin: ${this.rentaDetail.diaFin}

@@ -24,6 +24,8 @@ import { SinAcceso } from './demo/components/sinAccesso/sinAcceso.component';
                     { path: 'renta', loadChildren: () => import('./demo/components/rentaLaptops/rentaLaptop.module').then(m => m.rentaLaptopModule),
                         canActivate:[generalGuard,rentaGuard ]
                      },
+                    { path: 'requisicion', loadChildren: () => import('./demo/components/requiziciones/requiziciones.module').then(m => m.RequizicionesModule),
+                     },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
                     { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
@@ -43,6 +45,7 @@ import { SinAcceso } from './demo/components/sinAccesso/sinAcceso.component';
             { path: 'notfound', component: NotfoundComponent },
             { path: 'sinAcceso', component: SinAcceso },
             { path: 'registrarse', loadChildren: () => import('./demo/components/auth/registrarse/registrarse.module').then(m => m.RegistrarseModule) },
+            { path: 'requiziciones', loadChildren: () => import('./demo/components/requiziciones/requiziciones.module').then(m => m.RequizicionesModule) },
             // { path: 'notifications', loadChildren: () => import('./demo/components/notifications/notifications.module').then(m => m.NotificationsModule) },
             // { path: 'editarPerfil', loadChildren: () => import('./demo/components/editar-perfil/editar-perfil.module').then(m => m.EditarPerfilModule) },
             { path: '**', redirectTo: '/notfound' },

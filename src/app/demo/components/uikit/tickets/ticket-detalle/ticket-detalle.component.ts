@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { PerfilService } from '../../../editar-perfil/services/perfil.service';
 
 @Component({
@@ -34,7 +34,8 @@ export class TicketDetalleComponent implements OnInit{
   constructor (private ticketService:TicketsServiceService, private activatedRoute:ActivatedRoute, private authService:AuthService,
     private confirmationService: ConfirmationService, private messageService: MessageService, private perfilService:PerfilService,
     private route:Router, 
-  ) {     this.comentarios2 = new FormControl(''); }
+
+  ) {     this.comentarios2 = new FormControl('sin comentarios'); }
 
   ngOnInit(): void {
 
@@ -224,9 +225,10 @@ onSubmit(){
 
   // console.log(this.tickets)
   // return;
-  this.visibleFinish = true
   // console.log(this.comentarios2.value)
+  //todo pendiente, sin comentarios no se si se guarda pero sin el solucionado revisar , fecha 02/09/2024
   if(this.comentarios2.valid){
+    this.visibleFinish = true
 
     const data = {
       id:this.tickets.idTicket, // debe ir el id de la tabla del detalleTicket y no el id del ticket (resolver)
@@ -239,6 +241,9 @@ onSubmit(){
       // location.reload();
       this.sendNotification6();
     })
+  }else{
+    console.log('es falso , el campo comentarios no esta')
+    return;
   }
 }
 sendNotification6(){

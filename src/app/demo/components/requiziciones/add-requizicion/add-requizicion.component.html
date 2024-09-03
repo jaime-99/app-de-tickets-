@@ -1,0 +1,78 @@
+<h3>Crear Requisicion</h3>
+
+<p-card header="Requisicion Parte  {{currentStep}}">
+
+
+<div *ngIf="currentStep === 1" class="grid">
+    
+<div class="col-3 xl:col-4">
+    <label for="date">Fecha</label>
+    <input id="date" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="col-3 xl:col-4">
+    <label >Nombre del Solicitante</label>
+    <input type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="col-3 xl:col-4">
+    <label >Puesto del Solicitante</label>
+    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="col-3 xl:col-3">
+    <label >Region del solicitante</label>
+    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="col-3 xl:col-3">
+    <label >Nombres Vacantes (list)</label>
+    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="col-3 xl:col-3">
+    <label >No.Vacantes</label>
+    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="col-3 xl:col-3">
+    <label >Sexo(checbox)</label>
+    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="col-3 xl:col-3">
+    <label >Estado Civil(list)</label>
+    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+
+</div>
+
+
+
+<div *ngIf="currentStep === 2" class="grid">
+    <div class="col-3 xl:col-4">
+      <label for="rangoEdad">Rango de Edad</label>
+      <input id="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+    <div class="col-3 xl:col-4">
+      <label for="rangoEdad">Nivel de estudios minimo</label>
+      <input id="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+        <div class="col-3 xl:col-4">
+        <label for="rangoEdad">Horarios establecidos en CGP</label>
+        <input id="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+        <div class="col-3 xl:col-4">
+        <label for="rangoEdad">Tiempo minimo de experiencia (list)</label>
+        <input id="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+        <div class="col-3 xl:col-4">
+        <label for="rangoEdad">Requiere dominio en idiomas (check)</label>
+        <input id="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+</div>
+
+
+
+
+<div class="flex justify-content-between flex-wrap">
+
+    <p-button *ngIf="currentStep > 1" (onClick)="previous()" label="Anterior"></p-button>
+    <p-button *ngIf="currentStep < 2" (onClick)="next()" label="Siguiente"></p-button>
+
+</div>
+
+</p-card>

@@ -201,6 +201,26 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             // {
+            {
+                items: [
+                    { label: 'requisiciones', icon: 'pi pi-desktop',
+
+                    items: [
+                        // {
+                        //     label: 'Rentar',
+                        //     icon: 'pi pi-desktop',
+                        //     routerLink: ['/tickets/list']
+                        // },
+                        {
+                            label: 'Crear requisicion',
+                            icon: 'pi pi-desktop',
+                            routerLink: ['./requisicion']
+                        },
+                    ]
+                     },
+                ]
+            },
+            // {
             //     label: 'Prime Blocks',
             //     items: [
             //         { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'], badge: 'NEW' },
