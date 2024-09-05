@@ -203,7 +203,7 @@ export class AppMenuComponent implements OnInit {
             // {
             {
                 items: [
-                    { label: 'requisiciones', icon: 'pi pi-desktop',
+                    { label: 'RH', icon: 'pi pi-receipt',
 
                     items: [
                         // {
@@ -213,7 +213,7 @@ export class AppMenuComponent implements OnInit {
                         // },
                         {
                             label: 'Crear requisicion',
-                            icon: 'pi pi-desktop',
+                            icon: 'pi pi-plus',
                             routerLink: ['./requisicion']
                         },
                     ]

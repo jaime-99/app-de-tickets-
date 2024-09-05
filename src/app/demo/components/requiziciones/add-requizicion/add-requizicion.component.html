@@ -2,41 +2,51 @@
 
 <p-card header="Requisicion Parte  {{currentStep}}">
 
+    <form [formGroup]="requisicionForm" (ngSubmit)="onSubmit()" >
+
+
 
 <div *ngIf="currentStep === 1" class="grid">
     
 <div class="col-3 xl:col-4">
     <label for="date">Fecha</label>
-    <input id="date" type="date" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <input id="date" formControlName="fecha"  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
 </div>
+    
 <div class="col-3 xl:col-4">
     <label >Nombre del Solicitante</label>
-    <input type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <input type="text" formControlName="nombreSolicitante" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <p-messages *ngIf="isFieldInvalid('nombreSolicitante')" severity="error" >
+        <ng-template pTemplate>
+            <div class="ml-2">Obligatorio nombre de solicitante</div>
+        </ng-template>
+        ></p-messages>
 </div>
 <div class="col-3 xl:col-4">
     <label >Puesto del Solicitante</label>
-    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <input  type="text" formControlName="puestoSolicitante" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
 </div>
 <div class="col-3 xl:col-3">
     <label >Region del solicitante</label>
-    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <input  type="text" formControlName="regionSolicitante" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
 </div>
 <div class="col-3 xl:col-3">
-    <label >Nombres Vacantes (list)</label>
-    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <label >Motivo de la vacante</label>
+    <input  type="text" formControlName="motivo" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
 </div>
-<div class="col-3 xl:col-3">
-    <label >No.Vacantes</label>
-    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+<div class="col-3 xl:col-4">
+    <label >Nombres Vacantes </label>
+    <p-dropdown class="" formControlName="noVacantes" [options]="vacantes" optionLabel="name" optionValue="name"></p-dropdown>
+  </div>
+<div class="col-3 xl:col-2">
+    <label >Sexo </label>
+    <p-dropdown class="" formControlName="sexo" [options]="sexo" optionLabel="name" optionValue="name"></p-dropdown>
 </div>
-<div class="col-3 xl:col-3">
-    <label >Sexo(checbox)</label>
-    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+<div class="col-3 xl:col-4">
+    <label >Estado Civil </label>
+    <p-dropdown class="" formControlName="estadoCivil" [options]="estadoCivil" optionLabel="name" optionValue="name"></p-dropdown>
 </div>
-<div class="col-3 xl:col-3">
-    <label >Estado Civil(list)</label>
-    <input  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-</div>
+
 
 </div>
 
@@ -45,34 +55,244 @@
 <div *ngIf="currentStep === 2" class="grid">
     <div class="col-3 xl:col-4">
       <label for="rangoEdad">Rango de Edad</label>
-      <input id="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+      <input id="rangoEdad" formControlName="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="col-3 xl:col-4">
-      <label for="rangoEdad">Nivel de estudios minimo</label>
-      <input id="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <label >Nivel de estuduios minimo </label>
+        <p-dropdown class="" formControlName="nivelDeEstudios" [options]="nivelEstudios" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
         <div class="col-3 xl:col-4">
         <label for="rangoEdad">Horarios establecidos en CGP</label>
-        <input id="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <input id="rangoEdad" formControlName="horariosEstablecidos" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+    <div class="col-3 xl:col-4">
+        <label >Tiempo minimo de experiencia </label>
+        <p-dropdown class="" formControlName="tiempoMinExperiencia" [options]="tiempoExperiencia" optionLabel="name" optionValue="name"></p-dropdown>
+    </div>
+    <div class="col-3 xl:col-4">
+        <p> <strong>  Requiere dominio </strong></p>
+        <div class="flex flex-column gap-2">
+
+        <p-radioButton name="requiereDominioIdiomas" value="si" formControlName="requiereDominioIdiomas"  inputId="si" label="Si"></p-radioButton>
+        <p-radioButton  name="requiereDominioIdiomas" value="no" formControlName="requiereDominioIdiomas" inputId="no" label="No"></p-radioButton>
+        </div>
+
     </div>
         <div class="col-3 xl:col-4">
-        <label for="rangoEdad">Tiempo minimo de experiencia (list)</label>
-        <input id="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-    </div>
+        <label for="rangoEdad">Salario</label>
+        <input id="rangoEdad" formControlName="salario" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
         <div class="col-3 xl:col-4">
-        <label for="rangoEdad">Requiere dominio en idiomas (check)</label>
-        <input id="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-    </div>
+            <label for="act">Actividades Principales</label>
+            <input id="act" formControlName="actividadesPrincipales" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        
+        <div class="col-3 xl:col-4">
+            <label for="float-input">Conocimientos Previos</label>
+            <textarea  
+                rows="3" 
+                cols="30" 
+                pInputTextarea 
+                formControlName="conocimientosPrevios"
+                placeholder="EJ: Excel"
+                >
+            </textarea>
+        </div>
 </div>
+
+
+
+<div *ngIf="currentStep===3" class="grid">
+    <h4 class="col-12 xl:col-12">Habilidades Requeridas</h4>
+    <strong class="col-12 xl:col-12">ANALISIS</strong>
+    
+    <div class="col-3 xl:col-3">
+    <p-checkbox 
+        formControlName="compresion_verbal" 
+        binary="true"
+        inputId="uno" />
+    <label for="uno">Compresion verbal/escrita</label>
+    </div>
+    <div class="col-3 xl:col-3">
+    <p-checkbox 
+        formControlName="seguimiento_instrucciones" 
+        binary="true"
+        inputId="dos" />
+    <label for="dos">seguimiento de instrucciones/procedimientos</label>
+    </div>
+    <div class="col-3 xl:col-3">
+    <p-checkbox 
+        formControlName="objetividad_en_manejo" 
+        binary="true" 
+        inputId="tres" />
+    <label for="tres">Objetividad en el manejo de informacion</label>
+    </div>
+
+    <strong class="col-12 xl:col-12">LIDERAZGO</strong>
+
+    <div class="col-3 xl:col-3">
+    <p-checkbox 
+        formControlName="manejo_personal" 
+        binary="true"
+        inputId="cuatro" />
+        
+    <label for="cuatro">manejo de personal</label>
+    </div>
+    <div class="col-3 xl:col-3">
+    <p-checkbox 
+        formControlName="negociacion" 
+        binary="true"
+        inputId="cinco" />
+    <label for="cinco">Negociacion</label>
+    </div>
+    <div class="col-3 xl:col-3">
+    <p-checkbox 
+        formControlName="toma_decisiones" 
+        binary="true"
+        inputId="cinco" />
+    <label for="cinco">Toma de decisiones</label>
+    </div>
+    <div class="col-3 xl:col-3">
+    <p-checkbox 
+        formControlName="poder_personal" 
+        binary="true"
+        inputId="seis" />
+    <label for="seis">Poder personal(lograr que sucedan las cosas)</label>
+    </div>
+    <strong class="col-12 xl:col-12">COMUNICACION</strong>
+
+    <div class="col-3 xl:col-3">
+        <p-checkbox 
+            formControlName="facilidad_de_palabra" 
+            binary="true"
+            inputId="siete" />
+        <label for="siete">Failidad de palabra</label>
+        </div>
+    <div class="col-3 xl:col-3">
+        <p-checkbox 
+            formControlName="dominio_publico" 
+            binary="true" 
+            inputId="ocho" />
+        <label for="ocho">Dominio de Publico</label>
+        </div>
+    <div class="col-3 xl:col-3">
+        <p-checkbox 
+            formControlName="dominio_publico" 
+            binary="true" 
+            inputId="ocho" />
+        <label for="ocho">Asertividad</label>
+        </div>
+
+        <strong class="col-12 xl:col-12">PLANEACION / ORGANIZACION</strong>
+
+        <div class="col-3 xl:col-3">
+            <p-checkbox 
+                formControlName="Iniciativa" 
+                binary="true" 
+                inputId="nueve" />
+            <label for="nueve">Iniciativa</label>
+        </div>
+        <div class="col-3 xl:col-3">
+            <p-checkbox 
+                formControlName="Orientado_resultados" 
+                binary="true" 
+                inputId="diez" />
+            <label for="diez">Orientado a resultados</label>
+        </div>
+        <div class="col-3 xl:col-3">
+            <p-checkbox 
+                formControlName="clasificacion_orden" 
+                binary="true" 
+                inputId="once" />
+            <label for="once">Clasificacion y orden logico de informacion</label>
+        </div>
+        <div class="col-3 xl:col-3">
+            <p-checkbox 
+                formControlName="trabajo_equipo" 
+                binary="true" 
+                inputId="doce" />
+            <label for="doce">Trabajo en equipo</label>
+        </div>
+        <div class="col-3 xl:col-3">
+            <p-checkbox 
+                formControlName="creatividad" 
+                binary="true" 
+                inputId="trece" />
+            <label for="trece">Creatividad</label>
+        </div>
+        <div class="col-3 xl:col-3">
+            <p-checkbox 
+                formControlName="adaptable_a_cambios" 
+                binary="true" 
+                inputId="catorce"/>
+            <label for="catorce">Adaptable a cambios</label>
+        </div>
+        <div class="col-3 xl:col-3">
+            <p-checkbox 
+                formControlName="concentracion" 
+                binary="true" 
+                inputId="quince"/>
+            <label for="quince">Concentracion</label>
+        </div>
+        <div class="col-3 xl:col-3">
+            <p-checkbox 
+                formControlName="manejo_de_estres" 
+                binary="true" 
+                inputId="diez_y_seis"/>
+            <label for="diez_y_seis">Manejo de estres laboral</label>
+        </div>
+
+        <strong class="col-12 xl:col-12">ACTITUDES REQUERIDAS</strong>
+
+
+        <div class="col-3 xl:col-3">
+            <p-checkbox 
+                formControlName="responsable" 
+                binary="true" 
+                inputId="diez_y_siete"/>
+            <label for="diez_y_siete">Responsable</label>
+        </div>
+        <div class="col-3 xl:col-3">
+            <p-checkbox 
+                formControlName="empatico" 
+                binary="true" 
+                inputId="diez_y_ocho"/>
+            <label for="diez_y_ocho">Empatico</label>
+        </div>
+        <div class="col-3 xl:col-3">
+        <p-checkbox 
+                formControlName="emprendedor" 
+                binary="true"
+                inputId="diez_y_nueve"/>
+            <label for="diez_y_nueve">Emprendedor</label>
+        </div>
+        <div class="col-3 xl:col-3">
+        <p-checkbox 
+                formControlName="colaborador" 
+                binary="true"
+                inputId="veinte"/>
+            <label for="veinte">Colaborador</label>
+        </div>
+    
+
+    
+</div>
+
+
+        
 
 
 
 
 <div class="flex justify-content-between flex-wrap">
 
-    <p-button *ngIf="currentStep > 1" (onClick)="previous()" label="Anterior"></p-button>
-    <p-button *ngIf="currentStep < 2" (onClick)="next()" label="Siguiente"></p-button>
+    <p-button icon="pi pi-arrow-left" *ngIf="currentStep > 1" (onClick)="previous()" label="Anterior"></p-button>
+    <p-button icon="pi pi-arrow-right" *ngIf="currentStep < 3" (onClick)="next()" label="Siguiente"></p-button>
+    
+    <button icon="pi pi-check" pButton  class="p-button-success" type="submit"*ngIf="currentStep ===3" label="Enviar Datos"></button>
 
 </div>
 
+
+</form>
 </p-card>

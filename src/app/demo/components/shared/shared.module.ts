@@ -9,6 +9,11 @@ import { DividerModule } from 'primeng/divider';
 import { PasswordModule } from 'primeng/password';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { MessagesModule } from 'primeng/messages';
 
 
 
@@ -27,7 +32,12 @@ import { ToastModule } from 'primeng/toast';
     DividerModule,
     PasswordModule,
     ConfirmPopupModule,
-    ToastModule
+    ToastModule,
+    DropdownModule,
+    CheckboxModule,
+    RadioButtonModule,
+    InputTextareaModule,
+    MessagesModule
   ]
 })
 export class SharedModule { }

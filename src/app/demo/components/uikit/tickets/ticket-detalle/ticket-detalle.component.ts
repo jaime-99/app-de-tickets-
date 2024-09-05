@@ -226,7 +226,6 @@ onSubmit(){
   // console.log(this.tickets)
   // return;
   // console.log(this.comentarios2.value)
-  //todo pendiente, sin comentarios no se si se guarda pero sin el solucionado revisar , fecha 02/09/2024
   if(this.comentarios2.valid){
     this.visibleFinish = true
 
