@@ -216,6 +216,11 @@ export class AppMenuComponent implements OnInit {
                             icon: 'pi pi-plus',
                             routerLink: ['./requisicion']
                         },
+                        {
+                            label: 'Requisiciones Solicitadas',
+                            icon: 'pi pi-plus',
+                            routerLink: ['./requisicion/requisiciones_solicitadas']
+                        },
                     ]
                      },
                 ]

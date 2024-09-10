@@ -82,9 +82,9 @@ this.rentaLaptopForm = this.fb.group({
   programas: [[]],
   comentarios: [''],
   mouse: [,Validators.required],
-  extensiones: [],
-  lugar:[],
-  ubicacion:['Oficinas De Saltillo'],
+  extensiones: [0],
+  lugar:[0],
+  ubicacion:['Oficinas De Saltillo', [Validators.required]],
   rentaUsuario:[this.user.usuario],
   estatus:['abierto'],
 
@@ -139,13 +139,15 @@ this.checkFormStatus()
   })}
 
   onSubmit(){
-    
+    const formValue = this.rentaLaptopForm.value;
     if(this.rentaLaptopForm.invalid){
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Te faltan datos, intenta de nuevo' });
       // return;
       // this.alert = true;
     }
 
+    formValue.extensiones = Number(formValue.extensiones);
+    formValue.mouse = Number(formValue.mouse);
     this.rentaLaptopForm.patchValue({programas:this.selectedPrograms})
     this.checkFormStatus();
 
@@ -153,10 +155,10 @@ this.checkFormStatus()
     // return;
     // return;
     //?checar esta parte
+    
     if(this.rentaLaptopForm.valid){
       this.rentaService.PostRenta(this.rentaLaptopForm.value).subscribe((res)=>{
         this.alert = true;
-        
         this.sendEmail();
         // console.log(res)
       })

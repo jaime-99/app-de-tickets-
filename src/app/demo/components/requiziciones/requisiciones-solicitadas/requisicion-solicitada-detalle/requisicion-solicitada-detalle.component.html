@@ -1,0 +1,85 @@
+
+<div class="p-card">
+
+
+    <div class="flex flex-column p-1">
+        <h4 class="flex justify-content-center ">Detalles del requerimiento con el ID # {{requisicion?.id}} </h4>
+    </div>
+
+
+    <table border="1" style="border-collapse: collapse; width: 100%;">
+        <thead>
+            <tr>
+                <th colspan="3" style="text-align: left;">Nombre del solicitante: <span>{{requisicion?.nombre_solicitante}} </span></th>
+            </tr>
+            <tr>
+                <th colspan="3" style="text-align: left;">Puesto del solicitante: <span>{{requisicion?.puesto_solicitante}} </span></th>
+            </tr>
+            <tr>
+                <th colspan="3" style="text-align: left;">Región Solicitante: <span> {{requisicion.region_solicitante}}  </span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Sección Datos del Puesto -->
+            <tr>
+                <th colspan="3" style="text-align: center;">DATOS DEL PUESTO</th>
+            </tr>
+            <tr>
+                <th colspan="2" style="text-align: center;">Consultor ( &nbsp;&nbsp; )</th>
+                <th style="text-align: center;">Personal Interno ( &nbsp; X &nbsp; )</th>
+            </tr>
+    
+            <!-- Fila para Motivo de la Vacante, Sexo y Estado Civil -->
+            <tr>
+                <td style="width: 33%; text-align: left;">Motivo de la vacante: <span>{{requisicion?.motivo_vacante}} </span> </td>
+                <td style="width: 33%; text-align: left;">Sexo: <strong> {{requisicion?.sexo}} </strong>  </td>
+                <td style="width: 33%; text-align: left;">Estado civil: <strong>{{requisicion?.estado_civil}} </strong></td>
+            </tr>
+    
+            <!-- Fila para No. de Vacantes, Rango de Edad, Escolaridad -->
+            <tr>
+                <td style="text-align: left;">No. De vacantes: <strong>{{requisicion?.no_vacante}} </strong> </td>
+                <td style="text-align: left;">Rango de edad: <strong> {{requisicion?.rango_edad}} </strong></td>
+                <td style="text-align: left;">Escolaridad: <strong>{{requisicion?.nivel_estudios_minimos}} </strong> </td>
+            </tr>
+    
+            <!-- Fila para Años de Experiencia, Requiere Dominio de Idiomas, Salario -->
+            <tr>
+                <td style="text-align: left;">Años de experiencia: <strong> {{requisicion?.tiempo_minimo_experiencia}} </strong> </td>
+                <td style="text-align: left;" colspan="2">Requiere dominio en idiomas:
+                      <strong> {{requisicion?.requiere_dominio_idiomas ===1? 'Si': 'No'}} </strong> </td>
+            </tr>
+    
+            <!-- Fila para Salario -->
+            <tr>
+                <td style="text-align: left;">Salario: <strong>{{requisicion?.salario}} </strong> </td>
+                <td colspan="2" style="text-align: left;"></td>
+            </tr>
+    
+            <!-- Fila para Horario y Días Laborales -->
+            <tr>
+                <td style="text-align: left;">Horario y días laborales: <strong> {{requisicion?.horario_dias_laborales}} </strong> </td>
+                <td colspan="2" style="text-align: left;"></td>
+            </tr>
+    
+            <!-- Fila para Principales actividades -->
+            <tr>
+                <td colspan="3" style="text-align: left;">Principales actividades / temas / conocimientos:</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <p-divider></p-divider>
+    
+    
+            <!-- habilidades requeridas en otro html para que no se alargue -->
+
+            <app-habilidades-requeridas *ngIf="requisicion" [dataHabilidades]="requisicion"></app-habilidades-requeridas>
+
+        </div>
+
+
+    
+    
+

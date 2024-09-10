@@ -41,4 +41,22 @@ export  class Categorias
         {name:'1 año de experiencia'},
         {name:'mas 1 año de experiencia'},
     ]
+    public static region = [
+        {name:'Saltillo'},
+        {name:'Nuevo Leon'},
+        {name:'Chihuaha'},
+        {name:'Guadalajara'},
+        {name:'Durango'},
+        {name:'Puebla'},
+        {name:'Sonora'},
+    ]
+    public static edad = [
+        {name:'18-25'},
+        {name:'25-30'},
+        {name:'+30'},
+    ]
+
+    
+
+    
 }

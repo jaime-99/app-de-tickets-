@@ -14,6 +14,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MessagesModule } from 'primeng/messages';
+import { TableModule } from 'primeng/table';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 
 
@@ -37,7 +39,9 @@ import { MessagesModule } from 'primeng/messages';
     CheckboxModule,
     RadioButtonModule,
     InputTextareaModule,
-    MessagesModule
+    MessagesModule,
+    TableModule,
+    KeyFilterModule
   ]
 })
 export class SharedModule { }

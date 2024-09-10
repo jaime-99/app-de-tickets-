@@ -28,7 +28,8 @@
 </div>
 <div class="col-3 xl:col-3">
     <label >Region del solicitante</label>
-    <input  type="text" formControlName="regionSolicitante" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <p-dropdown class="" formControlName="regionSolicitante" [options]="regiones" optionLabel="name" optionValue="name"></p-dropdown>
+
 </div>
 <div class="col-3 xl:col-3">
     <label >Motivo de la vacante</label>
@@ -38,14 +39,7 @@
     <label >Nombres Vacantes </label>
     <p-dropdown class="" formControlName="noVacantes" [options]="vacantes" optionLabel="name" optionValue="name"></p-dropdown>
   </div>
-<div class="col-3 xl:col-2">
-    <label >Sexo </label>
-    <p-dropdown class="" formControlName="sexo" [options]="sexo" optionLabel="name" optionValue="name"></p-dropdown>
-</div>
-<div class="col-3 xl:col-4">
-    <label >Estado Civil </label>
-    <p-dropdown class="" formControlName="estadoCivil" [options]="estadoCivil" optionLabel="name" optionValue="name"></p-dropdown>
-</div>
+
 
 
 </div>
@@ -54,23 +48,38 @@
 
 <div *ngIf="currentStep === 2" class="grid">
     <div class="col-3 xl:col-4">
+        <label >Sexo </label>
+        <p-dropdown class="" formControlName="sexo" [options]="sexo" optionLabel="name" optionValue="name"></p-dropdown>
+    </div>
+    <div class="col-3 xl:col-4">
+        <label >Estado Civil </label>
+        <p-dropdown class="" formControlName="estadoCivil" [options]="estadoCivil" optionLabel="name" optionValue="name"></p-dropdown>
+    </div>
+    <div class="col-3 xl:col-4">
       <label for="rangoEdad">Rango de Edad</label>
-      <input id="rangoEdad" formControlName="rangoEdad" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <p-dropdown class="" formControlName="rangoEdad" [options]="edades" optionLabel="name" optionValue="name"></p-dropdown>
+
     </div>
     <div class="col-3 xl:col-4">
         <label >Nivel de estuduios minimo </label>
         <p-dropdown class="" formControlName="nivelDeEstudios" [options]="nivelEstudios" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
-        <div class="col-3 xl:col-4">
-        <label for="rangoEdad">Horarios establecidos en CGP</label>
-        <input id="rangoEdad" formControlName="horariosEstablecidos" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <div class="col-6 xl:col-4">
+        <p> Horarios Establecidos en CGP</p>
+        <div class="flex flex-column gap-2">
+            <p-radioButton name="horario" selected formControlName="horario" value="no"  inputId="si" label="de 8:30 a 5:30"   (onClick)="onRadioButtonChange('no')"></p-radioButton>
+            <p-radioButton name="horario" formControlName="horario" value="si" inputId="no" label="otro"   (onClick)="onRadioButtonChange('si')"></p-radioButton>
+            <span *ngIf="otherSelected">Horario   <input type="text" pInputText placeholder="EJ:de 9 a 4pm" formControlName="horariosEstablecidos"/> </span>
+
+        </div>
+          
     </div>
     <div class="col-3 xl:col-4">
         <label >Tiempo minimo de experiencia </label>
         <p-dropdown class="" formControlName="tiempoMinExperiencia" [options]="tiempoExperiencia" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div class="col-3 xl:col-4">
-        <p> <strong>  Requiere dominio </strong></p>
+        <p> <strong>  Requiere dominio de idiomas </strong></p>
         <div class="flex flex-column gap-2">
 
         <p-radioButton name="requiereDominioIdiomas" value="si" formControlName="requiereDominioIdiomas"  inputId="si" label="Si"></p-radioButton>
@@ -79,8 +88,8 @@
 
     </div>
         <div class="col-3 xl:col-4">
-        <label for="rangoEdad">Salario</label>
-        <input id="rangoEdad" formControlName="salario" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <label for="salario">Salario</label>
+        <input placeholder="$1500" pInputText pKeyFilter="money" id="salario" formControlName="salario" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
         <div class="col-3 xl:col-4">
             <label for="act">Actividades Principales</label>
@@ -273,6 +282,22 @@
                 inputId="veinte"/>
             <label for="veinte">Colaborador</label>
         </div>
+
+
+        <div class="col-3 xl:col-4">
+            <label for="float-input"> <strong> Requerimientos Adicionales </strong> </label>
+            <textarea  
+                rows="3" 
+                cols="30" 
+                pInputTextarea 
+                formControlName="requerimientosAdicionales"
+                placeholder="EJ: Que sea capas de hablar en publico"
+                >
+            </textarea>
+        </div>
+
+
+        
     
 
     

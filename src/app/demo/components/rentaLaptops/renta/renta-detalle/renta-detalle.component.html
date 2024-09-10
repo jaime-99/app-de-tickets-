@@ -31,8 +31,8 @@
                     <p> <strong> fecha de Fin : </strong>  {{renta.diaFin | date: 'dd/MM/yyyy'}} </p>
                     </div>
                     </div>
-                    <p> <strong>  Comentarios: {{renta.comentarios}}  </strong> </p>
-                    <p> <strong>  Programas: </strong> {{renta.programas}}  </p>
+                    <p> <strong>  Comentarios: </strong> {{renta.comentarios ? renta.comentarios: 'Sin Comentarios'}}   </p>
+                    <p> <strong>  Programas: </strong> {{renta.programas ? renta.programas:'Sin Programas'}}  </p>
                     <p> <strong>  Mouse :  </strong> {{renta.mouse | changeBoolean:renta.mouse}}  </p>
                     <p> <strong>  Extensiones : </strong> {{renta.extensiones | changeBoolean:renta.extensiones}}   </p>
 
