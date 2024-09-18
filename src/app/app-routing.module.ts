@@ -5,6 +5,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
 import { generalGuard, generalGuard2 } from './demo/general.guard';
 import { rentaGuard } from './demo/guards/renta.guard';
 import { SinAcceso } from './demo/components/sinAccesso/sinAcceso.component';
+import { requisicionesGuard } from './demo/components/requiziciones/requisiciones-guard.guard';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import { SinAcceso } from './demo/components/sinAccesso/sinAcceso.component';
                         canActivate:[generalGuard,rentaGuard ]
                      },
                     { path: 'requisicion', loadChildren: () => import('./demo/components/requiziciones/requiziciones.module').then(m => m.RequizicionesModule),
+                        canActivate:[requisicionesGuard]
                      },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },

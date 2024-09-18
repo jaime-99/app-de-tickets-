@@ -55,6 +55,17 @@ export  class Categorias
         {name:'25-30'},
         {name:'+30'},
     ]
+    public static noVacantes = [
+        {name:'1'},
+        {name:'2'},
+        {name:'3 o mas'},
+    ]
+    public static publicacionVacante = [
+        {name:'Facebook'},
+        {name:'Indeed'},
+        {name:'otro'},
+    ]
+
 
     
 

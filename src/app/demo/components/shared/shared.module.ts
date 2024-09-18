@@ -16,6 +16,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 
@@ -41,7 +42,8 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     InputTextareaModule,
     MessagesModule,
     TableModule,
-    KeyFilterModule
+    KeyFilterModule,
+    InputNumberModule
   ]
 })
 export class SharedModule { }

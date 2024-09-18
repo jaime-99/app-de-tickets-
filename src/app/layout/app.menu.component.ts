@@ -115,7 +115,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Menu',
                 items: [
-                    { label: 'Tickets', icon: 'pi pi-ticket',
+                    { label: 'Sistemas', icon: 'pi pi-ticket',
 
                     items: [
                         {
@@ -149,6 +149,29 @@ export class AppMenuComponent implements OnInit {
                             ]
                             // routerLink: ['/tickets/crearTicket/ticketsTrabajados']
                         },
+                        {
+                            label: 'Renta de laptops',
+                            icon: 'pi pi-ticket',
+                            items: [
+                                {
+                                    label: 'Rentar',
+                                    icon: 'pi pi-desktop',
+                                    routerLink: ['./renta/rentaLaptops']
+                                },
+                                {
+                                    label: 'MI Historial',
+                                    icon: 'pi pi-desktop',
+                                    routerLink: ['./renta/rentaLaptops/miHistorial']
+                                },
+                                {
+                                    label: 'Asignadas',
+                                    icon: 'pi pi-desktop',
+                                    routerLink: ['./renta/rentaLaptops/Asignadas']
+                                },
+
+                            ]
+                            // routerLink: ['/tickets/crearTicket/ticketsTrabajados']
+                        },
                     ]
 
 
@@ -171,35 +194,7 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             // {
-            {
-                items: [
-                    { label: 'Renta de laptops', icon: 'pi pi-desktop',
-
-                    items: [
-                        // {
-                        //     label: 'Rentar',
-                        //     icon: 'pi pi-desktop',
-                        //     routerLink: ['/tickets/list']
-                        // },
-                        {
-                            label: 'Rentar',
-                            icon: 'pi pi-desktop',
-                            routerLink: ['./renta/rentaLaptops']
-                        },
-                        {
-                            label: 'MI Historial',
-                            icon: 'pi pi-desktop',
-                            routerLink: ['./renta/rentaLaptops/miHistorial']
-                        },
-                        {
-                            label: 'Asignadas',
-                            icon: 'pi pi-desktop',
-                            routerLink: ['./renta/rentaLaptops/Asignadas']
-                        },
-                    ]
-                     },
-                ]
-            },
+            
             // {
             {
                 items: [

@@ -8,6 +8,7 @@ import { AddRequizicionComponent } from './add-requizicion/add-requizicion.compo
 import { RequisicionesSolicitadasComponent } from './requisiciones-solicitadas/requisiciones-solicitadas.component';
 import { RequisicionSolicitadaDetalleComponent } from './requisiciones-solicitadas/requisicion-solicitada-detalle/requisicion-solicitada-detalle.component';
 import { HabilidadesRequeridasComponent } from './habilidades-requeridas/habilidades-requeridas.component';
+import { PlantillaMensajeComponent } from './plantilla-mensaje/plantilla-mensaje.component';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { HabilidadesRequeridasComponent } from './habilidades-requeridas/habilid
     RequisicionSolicitadaDetalleComponent,// componente para ver requisiciones pero individual con su id
     
     //inputs o outputs usados 
-    HabilidadesRequeridasComponent
+    HabilidadesRequeridasComponent,
+    //plantila mensaje 
+    PlantillaMensajeComponent
   ],
   imports: [
     CommonModule,

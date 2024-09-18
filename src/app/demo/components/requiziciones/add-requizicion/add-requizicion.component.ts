@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Categorias } from '../interfaces/clases';
 import { RequizicionesService } from '../requiziciones.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-requizicion',
   templateUrl: './add-requizicion.component.html',
@@ -9,16 +10,23 @@ import { RequizicionesService } from '../requiziciones.service';
 })
 export class AddRequizicionComponent implements OnInit {
 
-  constructor (private fb: FormBuilder, private requisicionService:RequizicionesService) {}
+  constructor (private fb: FormBuilder, private requisicionService:RequizicionesService,
+    private router:Router
+  ) {}
   requisicionForm: FormGroup; // formulario
   currentStep: number = 1; // pasos / steps 
   vacantes = Categorias.vacante;
   sexo = Categorias.sexo;
-  estadoCivil = Categorias.estadoCivil;
-  nivelEstudios = Categorias.nivelEstudios;
-  tiempoExperiencia = Categorias.tiempoExperiencia;
-  regiones = Categorias.region
-  edades = Categorias.edad
+  estadoCivil = Categorias.estadoCivil; // el estado civil
+  nivelEstudios = Categorias.nivelEstudios; // los niveles de estudios
+  tiempoExperiencia = Categorias.tiempoExperiencia; // el tiempo de experiencia
+  regiones = Categorias.region // las regiones
+  edades = Categorias.edad // las edades
+  noVacantes = Categorias.noVacantes // el numero de vacantes
+  publicacionVacante = Categorias.publicacionVacante // en donde se publicara
+  showOtherField: boolean = false; // para ver si escogio otro o no en la lista de publicacion
+
+  
   otherSelected:boolean = false;
   ngOnInit(): void {
 
@@ -29,19 +37,19 @@ export class AddRequizicionComponent implements OnInit {
       fecha: [{value:this.actualDate(), disabled:true}, [Validators.required]],
       nombreSolicitante: ['', [Validators.required]],
       puestoSolicitante: ['', [Validators.required,]],
-      regionSolicitante: ['', [Validators.required,]],
-      nombresVacante: ['', [Validators.required,]],
+      regionSolicitante: ['Saltillo', [Validators.required,]],
+      nombresVacante: ['Ejecutiva/o comercial', [Validators.required,]],
       motivo: ['', [Validators.required,]], 
-      noVacantes: ['', [Validators.required,]],
-      sexo: ['', [Validators.required,]],
-      estadoCivil: ['', [Validators.required,]],
+      noVacantes: ['1', [Validators.required,]],
+      sexo: ['Masculino', [Validators.required,]],
+      estadoCivil: ['Soltero', [Validators.required,]],
       //segundaParte
-      rangoEdad: ['', [Validators.required,]],
-      nivelDeEstudios: ['', [Validators.required,]],
+      rangoEdad: ['18-25', [Validators.required,]],
+      nivelDeEstudios: ['Licenciatura', [Validators.required,]],
       horariosEstablecidos: ['8:30-5:30', [Validators.required,]],
-      tiempoMinExperiencia: ['', [Validators.required,]],
+      tiempoMinExperiencia: ['sin experiencia necesaria', [Validators.required,]],
       requiereDominioIdiomas: ['no', [Validators.required,]],
-      salario: ['', [Validators.required,]],
+      salario: [1500, [Validators.required,]],
       //parte 3 
       actividadesPrincipales: ['', [Validators.required,]],
       conocimientosPrevios: ['', [Validators.required,]],
@@ -78,6 +86,8 @@ export class AddRequizicionComponent implements OnInit {
       
       // es para el horario de la opcion extra 
       horario: ['no'],
+      // extra 
+      otherPublicacionVacante:['']
 
     });
 
@@ -103,7 +113,7 @@ export class AddRequizicionComponent implements OnInit {
 
     const payload = {
       datos_puesto: {
-        fecha_solicitud: formValues.fecha,
+        fecha_solicitud: this.actualDateForm() ,
         nombre_solicitante: formValues.nombreSolicitante,
         puesto_solicitante: formValues.puestoSolicitante,
         region_solicitante: formValues.regionSolicitante,
@@ -140,7 +150,11 @@ export class AddRequizicionComponent implements OnInit {
         dominio_publico: formValues.dominio_publico ? 1 : 0,
         asertividad: formValues.asertividad ? 1 : 0
       }
+
     };
+
+    this.router.navigateByUrl('/requisicion/requisicion_Creada')
+    return;
 
     console.log(payload);
     return;
@@ -157,10 +171,25 @@ export class AddRequizicionComponent implements OnInit {
   }
 
 
-  actualDate(){
+   actualDate() {
     const date = new Date();
-    return date.toLocaleDateString()
-  }
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    
+    // return `${year}-${month}-${day}`; // Devuelve en formato YYYY-MM-DD
+    return `${day}/${month}/${year}`; // Devuelve en formato DD/MM/YYYY
+}
+actualDateForm() {
+  const date = new Date();
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  
+  return `${year}-${month}-${day}`; // Devuelve en formato YYYY-MM-DD 
+  // return `${day}/${month}/${year}`; // Devuelve en formato DD/MM/YYYY
+
+}
 
 
   onRadioButtonChange(value: string): void {
@@ -177,8 +206,27 @@ export class AddRequizicionComponent implements OnInit {
 
   }
 
-  checkFormStatus(){
+  checkFormStatus(){  
+  }
 
+  onDropdownChange(event: any) {
+    this.showOtherField = event.value === 'otro';
+    if (!this.showOtherField) {
+      this.requisicionForm.get('otherPublicacionVacante')?.reset();
+    }
+  }
+
+
+  changeReset(){
+   
+    const otherValue = this.requisicionForm.get('otherPublicacionVacante')?.value;
+  
+  if (this.showOtherField && otherValue) {
+    // Establece el valor de 'publicacionVacante' como el valor de 'otherPublicacionVacante'
+    this.requisicionForm.get('publicacionVacante')?.setValue(otherValue);
+  }
+
+  console.log(this.requisicionForm.value);  // Verificar los valores del formulario
 
   }
 

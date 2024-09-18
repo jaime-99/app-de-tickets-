@@ -35,10 +35,15 @@
     <label >Motivo de la vacante</label>
     <input  type="text" formControlName="motivo" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
 </div>
+<div class="col-3 xl:col-3">
+    <label >Numero de vacantes</label>
+    <p-dropdown class="" formControlName="noVacantes" [options]="noVacantes" optionLabel="name" optionValue="name"></p-dropdown>
+
+</div>
 <div class="col-3 xl:col-4">
     <label >Nombres Vacantes </label>
-    <p-dropdown class="" formControlName="noVacantes" [options]="vacantes" optionLabel="name" optionValue="name"></p-dropdown>
-  </div>
+    <p-dropdown class="" formControlName="nombresVacante" [options]="vacantes" optionLabel="name" optionValue="name"></p-dropdown>
+</div>
 
 
 
@@ -89,9 +94,9 @@
     </div>
         <div class="col-3 xl:col-4">
         <label for="salario">Salario</label>
-        <input placeholder="$1500" pInputText pKeyFilter="money" id="salario" formControlName="salario" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <p-inputNumber   mode="currency"currency="USD" id="salario" formControlName="salario" locale="en-US"/>
         </div>
-        <div class="col-3 xl:col-4">
+        <!-- <div class="col-3 xl:col-4">
             <label for="act">Actividades Principales</label>
             <input id="act" formControlName="actividadesPrincipales" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
@@ -106,13 +111,42 @@
                 placeholder="EJ: Excel"
                 >
             </textarea>
-        </div>
+        </div> -->
 </div>
 
 
 
 <div *ngIf="currentStep===3" class="grid">
+    
     <h4 class="col-12 xl:col-12">Habilidades Requeridas</h4>
+
+    <div class="col-3 xl:col-3">
+        <label >Actividades principales</label>
+        <textarea  
+            rows="3" 
+            cols="30" 
+            pInputTextarea 
+            formControlName="actividadesPrincipales"
+            placeholder="EJ: crear tablas en excel"
+            wrap="hard"
+            style="resize: none;">
+            >
+        </textarea>
+    </div>
+    
+    <div class="col-3 xl:col-3">
+        <label>Conocimientos Previos</label>
+        <textarea  
+            rows="3" 
+            cols="50" 
+            pInputTextarea 
+            formControlName="conocimientosPrevios"
+            placeholder="EJ: Excel"
+            style="resize:none"
+            wrap="hard"
+            >
+        </textarea>
+    </div>
     <strong class="col-12 xl:col-12">ANALISIS</strong>
     
     <div class="col-3 xl:col-3">
@@ -285,7 +319,7 @@
 
 
         <div class="col-3 xl:col-4">
-            <label for="float-input"> <strong> Requerimientos Adicionales </strong> </label>
+            <label for="float-input"> <strong> Requerimientos Adicionales (opcional) </strong> </label>
             <textarea  
                 rows="3" 
                 cols="30" 
@@ -294,6 +328,18 @@
                 placeholder="EJ: Que sea capas de hablar en publico"
                 >
             </textarea>
+        </div>
+        <p-divider class="col-12 xl:col-12"></p-divider>
+        <div class="col-3 xl:col-4">
+            <label >Publicacion Vacante en </label>
+            <p-dropdown class="" formControlName="publicacionVacante" 
+             [options]="publicacionVacante" optionLabel="name" optionValue="name"(onChange)="onDropdownChange($event)">
+
+             ></p-dropdown>
+        </div>
+        <div class="col-3 xl:col-6" *ngIf="showOtherField">
+            <label>Otra Publicación</label>
+            <input type="text" (input)="changeReset()"  formControlName="otherPublicacionVacante" placeholder="Especifica otra opción" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
 
 
