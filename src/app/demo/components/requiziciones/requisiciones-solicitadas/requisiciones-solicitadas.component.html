@@ -1,16 +1,36 @@
-<p>requisiciones-solicitadas works!</p>
 
 
 
 
 <p-table 
+    #dt1
     [value]="requiziciones" 
     styleClass="p-datatable-gridlines" 
-    [tableStyle]="{ 'min-width': '50rem' }">
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [globalFilterFields]="['usuario', 'nombre_solicitante']"
+
+
+    >
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <p-button label="Limpiar" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt1)" />
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Palabra" />
+            </span>
+        </div>
+    </ng-template>
+    
         <ng-template pTemplate="header">
             <tr>
                 <th>#</th>
-                <th>Fecha de la solicitud</th>
+                <th pSortableColumn="fecha_solicitud">
+                    Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+                </th>
+                <th>Usuario </th>
                 <th>Nombre del solicitante</th>
                 <th>Puesto del Solicitante</th>
                 <th>Nombre de la vacante</th>
@@ -19,14 +39,21 @@
         </ng-template>
         <ng-template pTemplate="body" let-requisiciones>
             <tr>
-                <td>{{ requisiciones.id }}</td>
-                <td>{{ requisiciones.fecha_solicitud }}</td>
+                <td>{{ requisiciones.datos_puesto_id }}</td>
+                <td>{{ requisiciones.fecha_solicitud | date: 'dd/MM/yyyy' }}</td>
+                <td> <strong>{{ requisiciones.usuario }} </strong> </td>
                 <td>{{ requisiciones.nombre_solicitante }}</td>
                 <td>{{ requisiciones.puesto_solicitante }}</td>
                 <td>{{ requisiciones.nombre_vacante }}</td>
                 <td>
-                    <button class="p-button-success" pButton label="Ver" (click)="goToDetalles(requisiciones.id)" ></button>
+                    <button class="p-button-success" pButton label="Ver" (click)="goToDetalles(requisiciones.datos_puesto_id)" ></button>
                 </td>
             </tr>
         </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">Sin registros</td>
+            </tr>
+        </ng-template>
+        
 </p-table>

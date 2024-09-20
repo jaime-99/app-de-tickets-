@@ -16,6 +16,7 @@ export class RequisicionSolicitadaDetalleComponent implements OnInit {
     private requisicionesService:RequizicionesService
   ) {}
   requisicionId:any;
+  loading:boolean = false;
 
   ngOnInit(): void {
     
@@ -28,7 +29,9 @@ export class RequisicionSolicitadaDetalleComponent implements OnInit {
 
   getRequisicionForId(){
     this.requisicionesService.getRequisicionForId(this.requisicionId).subscribe((res)=>{
+
       this.requisicion = res
+      this.loading = true;
     })
   }
 

@@ -12,20 +12,20 @@
     <tbody>
         <tr>
             <td>
-                <div>Comprensión verbal/escrita   <strong>X</strong> </div> 
-                <div>Seguimiento de instrucciones/procedimientos</div>
-                <div>Objetividad en el manejo de información</div>
+                <div>Comprensión verbal/escrita <strong>{{ dataHabilidades.compresion_verbal === 1 ? 'X' : '' }}</strong></div> 
+                <div>Seguimiento de instrucciones/procedimientos <strong>{{ dataHabilidades.seguimiento_de_instrucciones === 1 ? 'X' :''}} </strong> </div>
+                <div>Objetividad en el manejo de información  <strong>{{ dataHabilidades.objetividad_en_manejo_informacion === 1 ? 'X' :'' }}</strong></div>
             </td>
             <td>
-                <div>Manejo de personal</div>
-                <div>Negociación</div>
-                <div>Toma de decisiones</div>
-                <div>Poder personal (lograr que sucedan las cosas)</div>
+                <div>Manejo de personal  <strong>{{ dataHabilidades.manejo_de_personal === 1 ? 'X' :'' }}</strong> </div>
+                <div>Negociación  <strong>{{ dataHabilidades.negociacion === 1 ? 'X' :'' }}</strong> </div>
+                <div>Toma de decisiones <strong>{{ dataHabilidades.toma_de_decisiones === 1 ? 'X' : '' }}</strong>  </div>
+                <div>Poder personal (lograr que sucedan las cosas) <strong>{{ dataHabilidades.poder_personal === 1 ? 'X' : '' }}</strong> </div>
             </td>
             <td>
-                <div>Facilidad de palabra</div>
-                <div>Dominio de público</div>
-                <div>Asertividad</div>
+                <div>Facilidad de palabra  <strong>{{ dataHabilidades.facilidad_de_palabra === 1 ? 'X' : '' }}</strong> </div>
+                <div>Dominio de público <strong>{{ dataHabilidades.dominio_publico === 1 ? 'X' : '' }}</strong> </div>
+                <div>Asertividad <strong>{{ dataHabilidades.asertividad === 1 ? 'X' : ''}}</strong> </div>
             </td>
         </tr>
         <tr>
@@ -38,18 +38,18 @@
         </tr>
         <tr>
             <td>
-                <div>Iniciativa</div>
-                <div>Creatividad</div>
+                <div>Iniciativa <strong>{{ dataHabilidades.iniciativa === 1 ? 'X' : '' }}</strong> </div>
+                <div>Creatividad  <strong>{{ dataHabilidades.creatividad === 1 ? 'X' : '' }}</strong>   </div>
             </td>
             <td>
-                <div>Orientado a resultados</div>
-                <div>Adaptable a cambios</div>
+                <div>Orientado a resultados  <strong>{{ dataHabilidades.orientado_a_resultados === 1 ? 'X' : '' }}</strong> </div>
+                <div>Adaptable a cambios  <strong>{{ dataHabilidades.adaptable_a_cambios === 1 ? 'X' : '' }}</strong> </div>
             </td>
             <td>
-                <div>Clasificación y orden lógico de información</div>
-                <div>Concentración</div>
-                <div>Trabajo en equipo</div>
-                <div>Manejo de estrés laboral</div>
+                <div>Clasificación y orden lógico de información  <strong>{{ dataHabilidades.clasificacion_y_orden_logico === 1 ? 'X' : '' }}</strong>  </div>
+                <div>Concentración <strong>{{ dataHabilidades.concentracion === 1 ? 'X' : '' }}</strong> </div>
+                <div>Trabajo en equipo  <strong>{{ dataHabilidades.trabajo_en_equipo === 1 ? 'X' : '' }}</strong> </div>
+                <div>Manejo de estrés laboral <strong>{{ dataHabilidades.manejo_de_estres === 1 ? 'X' : '' }}</strong> </div>
             </td>
         </tr>
         <tr>
@@ -57,14 +57,14 @@
         </tr>
         <tr>
             <td>
-                <div>Responsable</div>
+                <div>Responsable <strong>{{ dataHabilidades.responsable === 1 ? 'X' : '' }}</strong> </div>
             </td>
             <td>
-                <div>Empático</div>
-                <div>Emprendedor</div>
+                <div>Empático <strong>{{ dataHabilidades.empatico === 1 ? 'X' : '' }}</strong> </div>
+                <div>Emprendedor <strong>{{ dataHabilidades.emprendedor === 1 ? 'X' : '' }}</strong>  </div>
             </td>
             <td>
-                <div>Colaborador</div>
+                <div>Colaborador <strong>{{ dataHabilidades.colaborador === 1 ? 'X' : '' }}</strong> </div>
             </td>
         </tr>
         <tr>

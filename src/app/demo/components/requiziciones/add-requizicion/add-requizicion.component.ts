@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Categorias } from '../interfaces/clases';
 import { RequizicionesService } from '../requiziciones.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 @Component({
   selector: 'app-add-requizicion',
   templateUrl: './add-requizicion.component.html',
@@ -10,8 +11,10 @@ import { Router } from '@angular/router';
 })
 export class AddRequizicionComponent implements OnInit {
 
-  constructor (private fb: FormBuilder, private requisicionService:RequizicionesService,
-    private router:Router
+  constructor (private fb: FormBuilder,
+     private requisicionService:RequizicionesService,
+    private router:Router,
+    private authUser:AuthService
   ) {}
   requisicionForm: FormGroup; // formulario
   currentStep: number = 1; // pasos / steps 
@@ -25,14 +28,13 @@ export class AddRequizicionComponent implements OnInit {
   noVacantes = Categorias.noVacantes // el numero de vacantes
   publicacionVacante = Categorias.publicacionVacante // en donde se publicara
   showOtherField: boolean = false; // para ver si escogio otro o no en la lista de publicacion
-
+  usuario:any; // es del usuario de quien mandara el formulario
   
   otherSelected:boolean = false;
   ngOnInit(): void {
 
-
-
-  
+    this.usuario =this.authUser.getUser()
+    
     this.requisicionForm = this.fb.group({
       fecha: [{value:this.actualDate(), disabled:true}, [Validators.required]],
       nombreSolicitante: ['', [Validators.required]],
@@ -43,6 +45,7 @@ export class AddRequizicionComponent implements OnInit {
       noVacantes: ['1', [Validators.required,]],
       sexo: ['Masculino', [Validators.required,]],
       estadoCivil: ['Soltero', [Validators.required,]],
+      usuario: [this.usuario.usuario],
       //segundaParte
       rangoEdad: ['18-25', [Validators.required,]],
       nivelDeEstudios: ['Licenciatura', [Validators.required,]],
@@ -70,7 +73,7 @@ export class AddRequizicionComponent implements OnInit {
       dominio_publico: [false, []],
       asertividad: [false, []],
       // parte 4 PLANEACION/ORGANIZACION
-      Iniciativa: [false, []],
+      iniciativa: [false, []],
       Orientado_resultados: [false, []],
       clasificacion_orden: [false, []],
       trabajo_equipo: [false, []],
@@ -83,6 +86,7 @@ export class AddRequizicionComponent implements OnInit {
       empatico: [false, []],
       emprendedor: [false, []],
       colaborador: [false, []],
+      sentido_de_pertenencia:[false, []],
       
       // es para el horario de la opcion extra 
       horario: ['no'],
@@ -121,7 +125,8 @@ export class AddRequizicionComponent implements OnInit {
         motivo_vacante: formValues.motivo,
         no_vacante: formValues.noVacantes,
         sexo: formValues.sexo,
-        estado_civil: formValues.estadoCivil
+        estado_civil: formValues.estadoCivil,
+        usuario:formValues.usuario
       },
       datos_puesto2: {
         rango_edad: formValues.rangoEdad,
@@ -149,16 +154,34 @@ export class AddRequizicionComponent implements OnInit {
         facilidad_de_palabra: formValues.facilidad_de_palabra ? 1 : 0,
         dominio_publico: formValues.dominio_publico ? 1 : 0,
         asertividad: formValues.asertividad ? 1 : 0
+      },
+      habilidades_requeridas2: {
+        iniciativa: formValues.iniciativa ? 1 : 0,
+        orientado_a_resultados: formValues.Orientado_resultados ? 1 : 0,
+        clasificacion_y_orden_logico: formValues.clasificacion_orden ? 1 : 0,
+        trabajo_en_equipo: formValues.trabajo_equipo ? 1 : 0,
+        creatividad: formValues.creatividad ? 1 : 0,
+        adaptable_a_cambios: formValues.adaptable_a_cambios ? 1 : 0,
+        concentracion: formValues.concentracion ? 1 : 0,
+        manejo_de_estres: formValues.manejo_de_estres ? 1 : 0,
+      },
+      habilidades_requeridas3: {
+        responsable: formValues.responsable ? 1 : 0,
+        empatico: formValues.empatico ? 1 : 0,
+        emprendedor: formValues.emprendedor ? 1 : 0,
+        colaborador: formValues.colaborador ? 1 : 0,
+        sentido_de_pertenencia: formValues.sentido_de_pertenencia ? 1 : 0
+        
       }
 
     };
 
-    this.router.navigateByUrl('/requisicion/requisicion_Creada')
-    return;
+    // this.router.navigateByUrl('/requisicion/requisicion_Creada')
 
-    console.log(payload);
-    return;
+    // console.log(payload);
+    // return;
 
+    // console.log(this.requisicionForm.value)
     this.requisicionService.postRequisicion(payload)
     .subscribe((res)=>{
       console.log(res)
@@ -226,8 +249,21 @@ actualDateForm() {
     this.requisicionForm.get('publicacionVacante')?.setValue(otherValue);
   }
 
-  console.log(this.requisicionForm.value);  // Verificar los valores del formulario
+  // console.log(this.requisicionForm.value);  // Verificar los valores del formulario
+  }
 
+  sendMail(){
+    //enviar correo a RH y a jefe
+
+    const data = {
+      to: "generalistarh@cgpgroup.mx",
+    subject: "Requisicion",
+    body: "Te ha llegado una requisicion \n favor de entrar a https://plataformacgp.cgpgroup.mx/PlataformaCGP para verla a detalle  "
+    }
+
+    this.requisicionService.sendEmailRequisicion(data).subscribe(()=>{
+
+    })
   }
 
 

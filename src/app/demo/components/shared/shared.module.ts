@@ -17,6 +17,10 @@ import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { TagModule } from 'primeng/tag';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { FormsModule } from '@angular/forms';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 
@@ -43,7 +47,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
     MessagesModule,
     TableModule,
     KeyFilterModule,
-    InputNumberModule
+    InputNumberModule,
+    TagModule,
+    MultiSelectModule,
+    FormsModule,
+    ProgressSpinnerModule
+    
   ]
 })
 export class SharedModule { }
