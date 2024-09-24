@@ -201,21 +201,54 @@ export class AppMenuComponent implements OnInit {
                     { label: 'RH', icon: 'pi pi-receipt',
 
                     items: [
+            
                         // {
-                        //     label: 'Rentar',
-                        //     icon: 'pi pi-desktop',
-                        //     routerLink: ['/tickets/list']
+                        //     label: 'Crear requisicion',
+                        //     icon: 'pi pi-plus',
+                        //     routerLink: ['./requisicion']
+                        // },
+                        // {
+                        //     label: 'Requisiciones Solicitadas',
+                        //     icon: 'pi pi-plus',
+                        //     routerLink: ['./requisicion/requisiciones_solicitadas']
                         // },
                         {
-                            label: 'Crear requisicion',
-                            icon: 'pi pi-plus',
-                            routerLink: ['./requisicion']
+                            label: 'Requisiciones',
+                            items: [
+                                {
+                                    label: 'interna',
+                                    items:[
+                                        {
+                                            label: 'crear',
+                                            routerLink: ['/requisicion']
+
+                                        },
+                                        {
+                                            label: 'Ver Requisiciones',
+                                            routerLink: ['./requisicion/requisiciones_solicitadas']
+
+                                        }
+                                    ]
+                                },
+                                {
+                                    label: 'Externa',
+                                    items:[
+                                        {
+                                            label: 'Crear',
+                                            routerLink: ['']
+                                        },
+                                        {
+                                            label: 'Ver requisiciones',
+                                            routerLink: ['']
+                                        }
+                                    ]
+                                    
+                                }
+
+                            ]
+                            // routerLink: ['/tickets/crearTicket/ticketsTrabajados']
                         },
-                        {
-                            label: 'Requisiciones Solicitadas',
-                            icon: 'pi pi-plus',
-                            routerLink: ['./requisicion/requisiciones_solicitadas']
-                        },
+
                     ]
                      },
                 ]

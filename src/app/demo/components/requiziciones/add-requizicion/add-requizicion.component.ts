@@ -4,6 +4,7 @@ import { Categorias } from '../interfaces/clases';
 import { RequizicionesService } from '../requiziciones.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-add-requizicion',
   templateUrl: './add-requizicion.component.html',
@@ -14,7 +15,8 @@ export class AddRequizicionComponent implements OnInit {
   constructor (private fb: FormBuilder,
      private requisicionService:RequizicionesService,
     private router:Router,
-    private authUser:AuthService
+    private authUser:AuthService,
+    private messageService: MessageService
   ) {}
   requisicionForm: FormGroup; // formulario
   currentStep: number = 1; // pasos / steps 
@@ -182,16 +184,33 @@ export class AddRequizicionComponent implements OnInit {
     // return;
 
     // console.log(this.requisicionForm.value)
-    this.requisicionService.postRequisicion(payload)
-    .subscribe((res)=>{
-      console.log(res)
-    })
+    if(this.requisicionForm.valid){
+      this.requisicionService.postRequisicion(payload)
+      .subscribe((res)=>{
+        // console.log(res)
+        // this.sendMail();
+      this.router.navigateByUrl('/requisicion/requisicion_Creada')
+
+      })
+    }else{
+      this.markAllAsTouched();
+      this.show();
+      return;
+    }
   }
 
   isFieldInvalid(field: string): boolean {
     const control = this.requisicionForm.get(field);
     return control ? control.invalid && control.touched : false;
   }
+  markAllAsTouched() {
+    // para marcar tocado cada input
+    Object.keys(this.requisicionForm.controls).forEach(field => {
+      const control = this.requisicionForm.get(field);
+      control?.markAsTouched({ onlySelf: true });
+    });
+  }
+  
 
 
    actualDate() {
@@ -256,14 +275,20 @@ actualDateForm() {
     //enviar correo a RH y a jefe
 
     const data = {
-      to: "generalistarh@cgpgroup.mx",
-    subject: "Requisicion",
-    body: "Te ha llegado una requisicion \n favor de entrar a https://plataformacgp.cgpgroup.mx/PlataformaCGP para verla a detalle  "
+      to: "sistemas@cgpgroup.mx",
+    subject: "Requisicion RH ",
+    body: `Te ha llegado una requisicion del usuario ${this.usuario.usuario}  \n favor de entrar a https://plataformacgp.cgpgroup.mx/PlataformaCGP para verla a detalle`
     }
 
     this.requisicionService.sendEmailRequisicion(data).subscribe(()=>{
 
     })
+  }
+
+  show(){
+    //mostrar el mensaje de error 
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Faltan algunos datos, revise de nuevo' });
+
   }
 
 

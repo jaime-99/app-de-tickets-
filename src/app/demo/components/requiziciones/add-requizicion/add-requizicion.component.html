@@ -18,22 +18,38 @@
     <input type="text" formControlName="nombreSolicitante" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     <p-messages *ngIf="isFieldInvalid('nombreSolicitante')" severity="error" >
         <ng-template pTemplate>
-            <div class="ml-2">Obligatorio nombre de solicitante</div>
+            <span class="ml-2">Obligatorio nombre de solicitante</span>
         </ng-template>
-        ></p-messages>
+    </p-messages>
 </div>
 <div class="col-3 xl:col-4">
     <label >Puesto del Solicitante</label>
     <input  type="text" formControlName="puestoSolicitante" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <p-messages *ngIf="isFieldInvalid('puestoSolicitante')" severity="error" >
+        <ng-template pTemplate>
+            <span class="ml-2">Obligatorio puesto del solicitante</span>
+        </ng-template>
+    </p-messages>
 </div>
 <div class="col-3 xl:col-3">
     <label >Region del solicitante</label>
     <p-dropdown class="" formControlName="regionSolicitante" [options]="regiones" optionLabel="name" optionValue="name"></p-dropdown>
+    <p-messages *ngIf="isFieldInvalid('regionSolicitante')" severity="error" >
+        <ng-template pTemplate>
+            <span class="ml-2">Obligatorio region del solicitante</span>
+        </ng-template>
+    </p-messages>
+    
 
 </div>
 <div class="col-3 xl:col-3">
     <label >Motivo de la vacante</label>
     <input  type="text" formControlName="motivo" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    <p-messages *ngIf="isFieldInvalid('motivo')" severity="error" >
+        <ng-template pTemplate>
+            <span class="ml-2">Obligatorio motivo de la vacante</span>
+        </ng-template>
+    </p-messages>
 </div>
 <div class="col-3 xl:col-3">
     <label >Numero de vacantes</label>
@@ -132,6 +148,11 @@
             style="resize: none;">
             >
         </textarea>
+        <p-messages *ngIf="isFieldInvalid('actividadesPrincipales')" severity="error" >
+            <ng-template pTemplate>
+                <span class="ml-2">Obligatorio actividades principales</span>
+            </ng-template>
+        </p-messages>
     </div>
     
     <div class="col-3 xl:col-3">
@@ -146,6 +167,11 @@
             wrap="hard"
             >
         </textarea>
+        <p-messages *ngIf="isFieldInvalid('conocimientosPrevios')" severity="error" >
+            <ng-template pTemplate>
+                <span class="ml-2">Obligatorio conocimientos previos</span>
+            </ng-template>
+        </p-messages>
     </div>
     <strong class="col-12 xl:col-12">ANALISIS</strong>
     
@@ -230,7 +256,7 @@
 
         <div class="col-3 xl:col-3">
             <p-checkbox 
-                formControlName="Iniciativa" 
+                formControlName="iniciativa" 
                 binary="true" 
                 inputId="nueve" />
             <label for="nueve">Iniciativa</label>
@@ -356,6 +382,9 @@
     
 </div>
 
+
+    <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
+    <!-- <p-button (onClick)="show()" label="Show" /> -->
 
         
 

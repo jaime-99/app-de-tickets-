@@ -26,7 +26,11 @@ export class RequisicionesSolicitadasComponent implements OnInit {
 
   getRequisiciones(){
     this.requisicionesService.getRequisiciones().subscribe((res)=>{
+      if(Array.isArray(res)){
       this.requiziciones = res
+      }else{
+        this.requiziciones = []
+      }
     })
   }
 

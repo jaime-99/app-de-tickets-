@@ -44,7 +44,7 @@ sortAscending: boolean = true; // Variable para controlar el orden de la ordenac
 
 paginatedTickets: any[] = [];
   first: number = 0;
-  rows: number = 4;
+  rows: number = 8;
 
   ngOnInit(): void {
 

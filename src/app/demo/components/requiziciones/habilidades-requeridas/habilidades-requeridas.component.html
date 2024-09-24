@@ -65,11 +65,22 @@
             </td>
             <td>
                 <div>Colaborador <strong>{{ dataHabilidades.colaborador === 1 ? 'X' : '' }}</strong> </div>
+                <div>Sentido de pertenencia <strong>{{ dataHabilidades.colaborador === 1 ? 'X' : '' }}</strong> </div>
             </td>
         </tr>
         <tr>
             <td colspan="3">
-                <div>Otras habilidades o actitudes requeridas: Sentido de pertenencia</div>
+                <div>Otras habilidades o actitudes requeridas:  <strong> {{dataHabilidades.requerimientos_adicionales}} </strong>  </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div>Requerimientos Adicionales:  <strong> {{dataHabilidades.requerimientos_adicionales}}  </strong>  </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div>Publicacion Vacante:  <strong> {{dataHabilidades.publicacion_vacante}}  </strong>  </div>
             </td>
         </tr>
     </tbody>
