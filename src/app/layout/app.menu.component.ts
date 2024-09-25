@@ -5,6 +5,7 @@ import { AuthService } from '../demo/components/auth/auth.service';
 import { TicketsServiceService } from '../demo/components/uikit/services/tickets-service.service';
 import { catchError, of, Subscription } from 'rxjs';
 import { NotificationService } from '../demo/components/notifications/services/notificationUpdate.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-menu',
@@ -231,7 +232,6 @@ export class AppMenuComponent implements OnInit {
                                         {
                                             label: 'Ver Requisiciones',
                                             routerLink: ['./requisicion/requisiciones_solicitadas']
-
                                         }
                                     ]
                                 },
@@ -256,7 +256,50 @@ export class AppMenuComponent implements OnInit {
 
                     ]
                      },
+                     
                 ]
+
+
+                
+
+            },
+
+            {
+                items: [
+                    { label: 'Materiales', icon: '',
+
+                    items: [
+            
+                        // {
+                        //     label: 'Crear requisicion',
+                        //     icon: 'pi pi-plus',
+                        //     routerLink: ['./requisicion']
+                        // },
+                        // {
+                        //     label: 'Requisiciones Solicitadas',
+                        //     icon: 'pi pi-plus',
+                        //     routerLink: ['./requisicion/requisiciones_solicitadas']
+                        // },
+                        {
+                            label: 'Solicitudes',
+                            items: [
+                                {
+                                    label: 'Nueva Solicitud',
+                                    routerLink: ['./materiales/nueva-solicitud']
+                                },
+
+                            ]
+                            // routerLink: ['/tickets/crearTicket/ticketsTrabajados']
+                        },
+
+                    ]
+                     },
+                     
+                ]
+
+
+                
+
             },
             // {
             //     label: 'Prime Blocks',

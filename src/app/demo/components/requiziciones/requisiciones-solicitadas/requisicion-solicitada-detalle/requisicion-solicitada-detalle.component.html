@@ -5,9 +5,9 @@
 
 <div *ngIf="loading"  class="p-card">
 
-    <div class="flex">
+    <div class="flex p-1">
 
-        <button lass="p-button" pButton (click)="downloadPDF()" label="descargar PDF"></button>
+        <button  icon="pi pi-download" class="p-button" pButton (click)="downloadPDF()" label="descargar PDF"></button>
 
     </div>
 
@@ -35,8 +35,8 @@
                 <th colspan="3" style="text-align: center;">DATOS DEL PUESTO</th>
             </tr>
             <tr>
-                <th colspan="2" style="text-align: center;">Consultor ( &nbsp;&nbsp; )</th>
-                <th style="text-align: center;">Personal Interno ( &nbsp; X &nbsp; )</th>
+                <th colspan="2" style="text-align: center;">Personal Interno ( &nbsp; X &nbsp; )</th>
+                <!-- <th style="text-align: center;">Personal Interno ( &nbsp; X &nbsp; )</th> -->
             </tr>
     
             <!-- Fila para Motivo de la Vacante, Sexo y Estado Civil -->

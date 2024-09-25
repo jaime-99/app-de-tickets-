@@ -22,6 +22,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule } from '@angular/forms';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SkeletonModule } from 'primeng/skeleton';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 
@@ -53,7 +54,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     MultiSelectModule,
     FormsModule,
     ProgressSpinnerModule,
-    SkeletonModule
+    SkeletonModule,
+    FileUploadModule
     
   ]
 })

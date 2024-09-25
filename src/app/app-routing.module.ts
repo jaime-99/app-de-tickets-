@@ -28,6 +28,9 @@ import { requisicionesGuard } from './demo/components/requiziciones/requisicione
                     { path: 'requisicion', loadChildren: () => import('./demo/components/requiziciones/requiziciones.module').then(m => m.RequizicionesModule),
                         canActivate:[requisicionesGuard]
                      },
+                    { path: 'materiales', loadChildren: () => import('./demo/components/materiales/materiales.module').then(m => m.MaterialesModule),
+                        canActivate:[requisicionesGuard]
+                     },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
                     { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
@@ -47,8 +50,9 @@ import { requisicionesGuard } from './demo/components/requiziciones/requisicione
             { path: 'notfound', component: NotfoundComponent },
             { path: 'sinAcceso', component: SinAcceso },
             { path: 'registrarse', loadChildren: () => import('./demo/components/auth/registrarse/registrarse.module').then(m => m.RegistrarseModule) },
-            { path: 'requiziciones', loadChildren: () => import('./demo/components/requiziciones/requiziciones.module').then(m => m.RequizicionesModule) },
-            { path: 'requisiciones-externas', loadChildren: () => import('./demo/components/requiziciones/requisiciones-externas/requisiciones-externas.module').then(m => m.RequisicionesExternasModule) },
+            // { path: 'requiziciones', loadChildren: () => import('./demo/components/requiziciones/requiziciones.module').then(m => m.RequizicionesModule) },
+            // { path: 'requisiciones-externas', loadChildren: () => import('./demo/components/requiziciones/requisiciones-externas/requisiciones-externas.module').then(m => m.RequisicionesExternasModule) },
+            // { path: 'materiales', loadChildren: () => import('./demo/components/materiales/materiales.module').then(m => m.MaterialesModule) },
             // { path: 'notifications', loadChildren: () => import('./demo/components/notifications/notifications.module').then(m => m.NotificationsModule) },
             // { path: 'editarPerfil', loadChildren: () => import('./demo/components/editar-perfil/editar-perfil.module').then(m => m.EditarPerfilModule) },
             { path: '**', redirectTo: '/notfound' },

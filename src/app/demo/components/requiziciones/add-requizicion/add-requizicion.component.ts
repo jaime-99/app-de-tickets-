@@ -118,10 +118,10 @@ export class AddRequizicionComponent implements OnInit {
   onSubmit(){
     if(this.ambas) {
       this.requisicionForm.get('publicacionVacante')?.setValue(['facebook', 'indeed']);
-      console.log('si esta lleno el ambas')
-      console.log(this.ambas)
+      // console.log('si esta lleno el ambas')
+      // console.log(this.ambas)
     }else{
-      console.log('no esta lleno el arreglo de ambas')
+      // console.log('no esta lleno el arreglo de ambas')
     }
     const formValues = this.requisicionForm.getRawValue(); // Captura el valor del formulario
 
