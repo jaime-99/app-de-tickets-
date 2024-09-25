@@ -40,7 +40,7 @@
         <ng-template pTemplate="body" let-requisiciones>
             <tr>
                 <td>{{ requisiciones.datos_puesto_id }}</td>
-                <td>{{ requisiciones.fecha_solicitud | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ requisiciones.fecha_solicitud | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
                 <td> <strong>{{ requisiciones.usuario }} </strong> </td>
                 <td>{{ requisiciones.nombre_solicitante }}</td>
                 <td>{{ requisiciones.puesto_solicitante }}</td>

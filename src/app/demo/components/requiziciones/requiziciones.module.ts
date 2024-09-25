@@ -10,6 +10,7 @@ import { RequisicionSolicitadaDetalleComponent } from './requisiciones-solicitad
 import { HabilidadesRequeridasComponent } from './habilidades-requeridas/habilidades-requeridas.component';
 import { PlantillaMensajeComponent } from './plantilla-mensaje/plantilla-mensaje.component';
 import { MessageService } from 'primeng/api';
+import { MisRequisicionesInternasComponent } from './mis-requisiciones-internas/mis-requisiciones-internas.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MessageService } from 'primeng/api';
     AddRequizicionComponent,// componente para agregar requiziciones , se hara inputs de prueba
     RequisicionesSolicitadasComponent,// componente para ver las requisiciones
     RequisicionSolicitadaDetalleComponent,// componente para ver requisiciones pero individual con su id
+    MisRequisicionesInternasComponent,
     
     //inputs o outputs usados 
     HabilidadesRequeridasComponent,

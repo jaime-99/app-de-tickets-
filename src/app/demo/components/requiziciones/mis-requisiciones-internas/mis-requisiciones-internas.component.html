@@ -1,0 +1,91 @@
+<h3>Mis requisiciones Internas</h3>
+
+<ng-container *ngIf="isLoading; else dataLoaded">
+  <!-- Skeleton Loading State -->
+  <p-table 
+    [value]="[1, 2, 3, 4, 5]" 
+    styleClass="p-datatable-gridlines" 
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rows]="5"
+    [paginator]="false">
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th>Fecha Solicitud</th>
+        <th>Nombre del solicitante</th>
+        <th>Puesto del Solicitante</th>
+        <th>Nombre de la vacante</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body">
+      <tr>
+        <td><p-skeleton width="2rem"></p-skeleton></td>
+        <td><p-skeleton width="10rem"></p-skeleton></td>
+        <td><p-skeleton width="12rem"></p-skeleton></td>
+        <td><p-skeleton width="10rem"></p-skeleton></td>
+        <td><p-skeleton width="15rem"></p-skeleton></td>
+        <td><p-skeleton width="5rem"></p-skeleton></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-container>
+
+<!-- Data Loaded State -->
+<ng-template  #dataLoaded>
+  <p-table 
+    #dt1
+    [value]="requisciones" 
+    styleClass="p-datatable-gridlines" 
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [globalFilterFields]="['nombre_solicitante']">
+
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <p-button label="Limpiar" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt1)" />
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Palabra" />
+        </span>
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th pSortableColumn="fecha_solicitud">
+          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+        </th>
+        <th>Nombre del solicitante</th>
+        <th>Puesto del Solicitante</th>
+        <th>Nombre de la vacante</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-requisiciones>
+      <tr>
+        <td>{{ requisiciones.datos_puesto_id }}</td>
+        <td>{{ requisiciones.fecha_solicitud | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ requisiciones.nombre_solicitante }}</td>
+        <td>{{ requisiciones.puesto_solicitante }}</td>
+        <td>{{ requisiciones.nombre_vacante }}</td>
+        <td>
+          <button class="p-button-success" pButton label="Ver" (click)="goToDetalles(requisiciones.datos_puesto_id)" ></button>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">Sin registros</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-template>
+

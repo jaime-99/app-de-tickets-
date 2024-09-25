@@ -224,6 +224,11 @@ export class AppMenuComponent implements OnInit {
 
                                         },
                                         {
+                                            label: 'mis requisiciones',
+                                            routerLink: ['/requisicion/mis-requisiciones']
+
+                                        },
+                                        {
                                             label: 'Ver Requisiciones',
                                             routerLink: ['./requisicion/requisiciones_solicitadas']
 
@@ -234,8 +239,8 @@ export class AppMenuComponent implements OnInit {
                                     label: 'Externa',
                                     items:[
                                         {
-                                            label: 'Crear',
-                                            routerLink: ['']
+                                            label: 'crear',
+                                            routerLink: ['./requisicion/externas']
                                         },
                                         {
                                             label: 'Ver requisiciones',

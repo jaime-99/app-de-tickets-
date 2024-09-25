@@ -15,7 +15,7 @@ export class RequizicionesService {
     let url = `https://visualmanagment.com/AppCGP/apis/RH/AddCrearRequisicion.php`;
     return this.http.post<any>(url, data);
 } 
-
+  // requisiciones internas
   getRequisiciones(){
     const url = `https://visualmanagment.com/AppCGP/apis/RH/getRequisiciones.php?timestamp=${new Date().getTime()}`
     return this.http.get<any>(url)
@@ -24,7 +24,10 @@ export class RequizicionesService {
     const url = `https://visualmanagment.com/AppCGP/apis/RH/getRequisicionForId.php?id=${id}&timestamp=${new Date().getTime()}`
     return this.http.get<any>(url)
   }
-
+  getRequisicionForUsuario(usuario){
+    const url = `https://visualmanagment.com/AppCGP/apis/RH/getRequisicionesForUsuario.php?usuario=${usuario}&timestamp=${new Date().getTime()}`
+    return this.http.get<any>(url)
+  }
   sendEmailRequisicion(data){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const apiUrl = 'https://visualmanagment.com/AppCGP/apis/emails/send_test_email.php'

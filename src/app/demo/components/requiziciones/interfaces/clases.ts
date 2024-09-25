@@ -3,20 +3,20 @@ export  class Categorias
 
     public static vacante  = [
 
-        {name:'Ejecutiva/o comercial'},
-        {name:'Auxiliar Comercial / Administrativo'},
-        {name:'Auxiliar de Operaciones'},
-        {name:'Analista Financiero'},
-        {name:'Auxiliar Administrativo'},
-        {name:'Chofer Mensajero'},
-        {name:'Disenadora'},
-        {name:'Auxiliar de RH'},
-        {name:'Auxiliar de Limpieza'},
-        {name:'Auxiliar de Materiales'},
-        {name:'Soporte Tecnico de TI'},
-        {name:'Auxiliar de contenido E-Learning'},
-        {name:'Coordinador de Operaciones'},
-        {name:'Coordinador de ventas'},
+        {name:'Ejecutiva/o comercial (CGP)'},
+        {name:'Auxiliar Comercial / Administrativo (CGP)'},
+        {name:'Auxiliar de Operaciones (CGP'},
+        {name:'Analista Financiero (CGP)'},
+        {name:'Auxiliar Administrativo (CGP)'},
+        {name:'Chofer Mensajero (CGP)'},
+        {name:'Disenadora (CGP)'},
+        {name:'Auxiliar de RH (CGP)'},
+        {name:'Auxiliar de Limpieza (CGP)'},
+        {name:'Auxiliar de Materiales (CGP)'},
+        {name:'Soporte Tecnico de TI (CGP)'},
+        {name:'Auxiliar de contenido E-Learning (E-GROUP)'},
+        {name:'Coordinador de Operaciones (CLICK TO-GO)'},
+        {name:'Coordinador de ventas (CLICK TO-GO)'},
     ]
 
     public static sexo = [
@@ -49,6 +49,8 @@ export  class Categorias
         {name:'Durango'},
         {name:'Puebla'},
         {name:'Sonora'},
+        {name:'E-group'},
+        {name:'Clicktogo'},
     ]
     public static edad = [
         {name:'18-25'},
@@ -61,9 +63,10 @@ export  class Categorias
         {name:'3 o mas'},
     ]
     public static publicacionVacante = [
-        {name:'Facebook'},
-        {name:'Indeed'},
-        {name:'otro'},
+        { name: 'Facebook', value: 'facebook' },
+        { name: 'Indeed', value: 'indeed' },
+        { name: 'Ambas', value: 'ambas' } ,
+        { name: 'Otro', value: 'otro' } 
     ]
 
 

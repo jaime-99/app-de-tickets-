@@ -11,6 +11,7 @@ import { MessageService } from 'primeng/api';
   styleUrl: './add-requizicion.component.scss'
 })
 export class AddRequizicionComponent implements OnInit {
+  ambas: string[];
 
   constructor (private fb: FormBuilder,
      private requisicionService:RequizicionesService,
@@ -42,7 +43,7 @@ export class AddRequizicionComponent implements OnInit {
       nombreSolicitante: ['', [Validators.required]],
       puestoSolicitante: ['', [Validators.required,]],
       regionSolicitante: ['Saltillo', [Validators.required,]],
-      nombresVacante: ['Ejecutiva/o comercial', [Validators.required,]],
+      nombresVacante: ['Ejecutiva/o comercial (CGP)', [Validators.required,]],
       motivo: ['', [Validators.required,]], 
       noVacantes: ['1', [Validators.required,]],
       sexo: ['Masculino', [Validators.required,]],
@@ -54,7 +55,7 @@ export class AddRequizicionComponent implements OnInit {
       horariosEstablecidos: ['8:30-5:30', [Validators.required,]],
       tiempoMinExperiencia: ['sin experiencia necesaria', [Validators.required,]],
       requiereDominioIdiomas: ['no', [Validators.required,]],
-      salario: [1500, [Validators.required,]],
+      salario: [8000, [Validators.required,]],
       //parte 3 
       actividadesPrincipales: ['', [Validators.required,]],
       conocimientosPrevios: ['', [Validators.required,]],
@@ -115,6 +116,13 @@ export class AddRequizicionComponent implements OnInit {
 
   //se envia formulario 
   onSubmit(){
+    if(this.ambas) {
+      this.requisicionForm.get('publicacionVacante')?.setValue(['facebook', 'indeed']);
+      console.log('si esta lleno el ambas')
+      console.log(this.ambas)
+    }else{
+      console.log('no esta lleno el arreglo de ambas')
+    }
     const formValues = this.requisicionForm.getRawValue(); // Captura el valor del formulario
 
     const payload = {
@@ -175,15 +183,15 @@ export class AddRequizicionComponent implements OnInit {
         sentido_de_pertenencia: formValues.sentido_de_pertenencia ? 1 : 0
         
       }
-
+      
     };
+
+    
 
     // this.router.navigateByUrl('/requisicion/requisicion_Creada')
 
     // console.log(payload);
     // return;
-
-    // console.log(this.requisicionForm.value)
     if(this.requisicionForm.valid){
       this.requisicionService.postRequisicion(payload)
       .subscribe((res)=>{
@@ -218,17 +226,30 @@ export class AddRequizicionComponent implements OnInit {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
     
-    // return `${year}-${month}-${day}`; // Devuelve en formato YYYY-MM-DD
-    return `${day}/${month}/${year}`; // Devuelve en formato DD/MM/YYYY
+      return `${day}/${month}/${year}`; // Devuelve en formato DD/MM/YYYY
+
+
 }
 actualDateForm() {
   const date = new Date();
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
+
+  const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+    // return `${year}-${month}-${day}`; // Devuelve en formato YYYY-MM-DD
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   
-  return `${year}-${month}-${day}`; // Devuelve en formato YYYY-MM-DD 
+  // return `${year}-${month}-${day}`; // Devuelve en formato YYYY-MM-DD 
   // return `${day}/${month}/${year}`; // Devuelve en formato DD/MM/YYYY
 
 }
@@ -256,6 +277,14 @@ actualDateForm() {
     if (!this.showOtherField) {
       this.requisicionForm.get('otherPublicacionVacante')?.reset();
     }
+
+    if(event.value ==='ambas'){
+      // this.requisicionForm.get('publicacionVacante')?.setValue(['facebook', 'indeed']);
+      this.ambas = ['facebook','indeed']
+    }
+    // else{
+    //   this.requisicionForm.get('publicacionVacante')?.setValue(event.value);
+    // }
   }
 
 

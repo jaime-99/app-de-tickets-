@@ -21,6 +21,7 @@ import { TagModule } from 'primeng/tag';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule } from '@angular/forms';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 
@@ -51,7 +52,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TagModule,
     MultiSelectModule,
     FormsModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    SkeletonModule
     
   ]
 })

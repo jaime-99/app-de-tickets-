@@ -1,4 +1,4 @@
-<h3>Crear Requisicion</h3>
+<h3>Crear Requisicion Interna</h3>
 
 <p-card header="Requisicion Parte  {{currentStep}}">
 
@@ -32,9 +32,9 @@
     </p-messages>
 </div>
 <div class="col-3 xl:col-3">
-    <label >Region del solicitante</label>
+    <label >Oficina Solicitante</label>
     <p-dropdown class="" formControlName="regionSolicitante" [options]="regiones" optionLabel="name" optionValue="name"></p-dropdown>
-    <p-messages *ngIf="isFieldInvalid('regionSolicitante')" severity="error" >
+    <p-messages *ngIf="isFieldInvalid('regionSolicitante')" severity="error">
         <ng-template pTemplate>
             <span class="ml-2">Obligatorio region del solicitante</span>
         </ng-template>
@@ -88,16 +88,12 @@
     <div class="col-6 xl:col-4">
         <p> Horarios Establecidos en CGP</p>
         <div class="flex flex-column gap-2">
-            <p-radioButton name="horario" selected formControlName="horario" value="no"  inputId="si" label="de 8:30 a 5:30"   (onClick)="onRadioButtonChange('no')"></p-radioButton>
+            <p-radioButton name="horario" selected formControlName="horario" value="no"  inputId="si" label="L a V 8:30 a 5:30"   (onClick)="onRadioButtonChange('no')"></p-radioButton>
             <p-radioButton name="horario" formControlName="horario" value="si" inputId="no" label="otro"   (onClick)="onRadioButtonChange('si')"></p-radioButton>
             <span *ngIf="otherSelected">Horario   <input type="text" pInputText placeholder="EJ:de 9 a 4pm" formControlName="horariosEstablecidos"/> </span>
 
         </div>
           
-    </div>
-    <div class="col-3 xl:col-4">
-        <label >Tiempo minimo de experiencia </label>
-        <p-dropdown class="" formControlName="tiempoMinExperiencia" [options]="tiempoExperiencia" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div class="col-3 xl:col-4">
         <p> <strong>  Requiere dominio de idiomas </strong></p>
@@ -107,6 +103,10 @@
         <p-radioButton  name="requiereDominioIdiomas" value="no" formControlName="requiereDominioIdiomas" inputId="no" label="No"></p-radioButton>
         </div>
 
+    </div>
+    <div class="col-3 xl:col-4">
+        <label >Tiempo minimo de experiencia </label>
+        <p-dropdown class="" formControlName="tiempoMinExperiencia" [options]="tiempoExperiencia" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
         <div class="col-3 xl:col-4">
         <label for="salario">Salario</label>
@@ -342,7 +342,7 @@
                 inputId="veinte"/>
             <label for="veinte">Colaborador</label>
         </div>
-        <div class="col-3 xl:col-3">
+        <div class="col-3 xl:col-12">
         <p-checkbox 
                 formControlName="sentido_de_pertenencia" 
                 binary="true"
@@ -351,22 +351,17 @@
         </div>
 
 
-        <div class="col-3 xl:col-4">
-            <label for="float-input"> <strong> Requerimientos Adicionales (opcional) </strong> </label>
-            <textarea  
-                rows="3" 
-                cols="30" 
-                pInputTextarea 
-                formControlName="requerimientosAdicionales"
-                placeholder="EJ: Que sea capas de hablar en publico"
-                >
-            </textarea>
+        <div class="field col-12">
+            <label for="requerimientos"> Requerimientos adicionales</label>
+            <textarea id="requerimientos" type="text" formControlName="requerimientosAdicionales" rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
+    
+        
         <p-divider class="col-12 xl:col-12"></p-divider>
         <div class="col-3 xl:col-4">
-            <label >Publicacion Vacante en </label>
+            <label class=""> <strong> Publicacion Vacante en </strong> </label>
             <p-dropdown class="" formControlName="publicacionVacante" 
-             [options]="publicacionVacante" optionLabel="name" optionValue="name"(onChange)="onDropdownChange($event)">
+             [options]="publicacionVacante" optionLabel="name" optionValue="value"(onChange)="onDropdownChange($event)">
 
              ></p-dropdown>
         </div>
@@ -394,7 +389,7 @@
 <div class="flex justify-content-between flex-wrap">
 
     <p-button icon="pi pi-arrow-left" *ngIf="currentStep > 1" (onClick)="previous()" label="Anterior"></p-button>
-    <p-button icon="pi pi-arrow-right" *ngIf="currentStep < 3" (onClick)="next()" label="Siguiente"></p-button>
+    <p-button icon="pi pi-arrow-right" *ngIf="currentStep < 3" (onClick)="next()" label="Siguiente" class="ml-auto"></p-button>
     
     <button icon="pi pi-check" pButton  class="p-button-success" type="submit"*ngIf="currentStep ===3" label="Enviar Datos"></button>
 

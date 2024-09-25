@@ -48,6 +48,7 @@ import { requisicionesGuard } from './demo/components/requiziciones/requisicione
             { path: 'sinAcceso', component: SinAcceso },
             { path: 'registrarse', loadChildren: () => import('./demo/components/auth/registrarse/registrarse.module').then(m => m.RegistrarseModule) },
             { path: 'requiziciones', loadChildren: () => import('./demo/components/requiziciones/requiziciones.module').then(m => m.RequizicionesModule) },
+            { path: 'requisiciones-externas', loadChildren: () => import('./demo/components/requiziciones/requisiciones-externas/requisiciones-externas.module').then(m => m.RequisicionesExternasModule) },
             // { path: 'notifications', loadChildren: () => import('./demo/components/notifications/notifications.module').then(m => m.NotificationsModule) },
             // { path: 'editarPerfil', loadChildren: () => import('./demo/components/editar-perfil/editar-perfil.module').then(m => m.EditarPerfilModule) },
             { path: '**', redirectTo: '/notfound' },
