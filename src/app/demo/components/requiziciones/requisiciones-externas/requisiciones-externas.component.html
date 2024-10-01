@@ -1,17 +1,23 @@
 
-<p-card header="Requisicion Instructor">
+<p-card header="Requisicion Instructor" *ngIf="!messageSuccesful">
+    <form [formGroup]="requisicionForm2" (ngSubmit)="onSubmit()" >
 
-    <h5>Datos del solicitante</h5>
+    <h5 *ngIf="currentStep===1">Datos del solicitante</h5>
 
 
-    <div class="formgrid grid">
+    <div class="formgrid grid" *ngIf="currentStep===1">
         <div class="field col-12 md:col-6">
             <label for="firstname6">Usuario</label>
-            <input id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <input  id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
         <div class="field col-12 md:col-6">
             <label for="lastname6">Nombre del solciitante</label>
-            <input id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <input formControlName="nombre_del_solicitante" id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <p-messages *ngIf="isFieldInvalid('nombre_del_solicitante')" severity="error" >
+                <ng-template pTemplate>
+                    <span class="ml-2">Obligatorio nombre del solicitante</span>
+                </ng-template>
+            </p-messages>
         </div>
         <!-- <div class="field col-12">
             <label for="address">Descripcipion</label>
@@ -19,61 +25,136 @@
         </div> -->
         <div class="field col-12 md:col-3">
             <label for="state">Puesto del solicitante</label>
-            <select id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
-                <option>Regional</option>
-                <option>Coord. de ventas</option>
-                <option>Ej. comercial</option>
+            <select formControlName="puesto_del_solicitante" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+                <option *ngFor="let puesto of puestoSolicitante" [value]="puesto.name">{{ puesto.name }}</option>
             </select>
+            <p-messages *ngIf="isFieldInvalid('puesto_del_solicitante')" severity="error" >
+                <ng-template pTemplate>
+                    <span class="ml-2">Obligatorio puesto del solicitante</span>
+                </ng-template>
+            </p-messages>
         </div>
         <div class="field col-12 md:col-3">
             <label for="state">Region del solicitante</label>
-            <select id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
-                <option>Chihuahua</option>
-                <option>Guadalajara</option>
-                <option>Monterrey</option>
+            <select formControlName="region_solicitante" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+                <option *ngFor="let region of regionSolicitante" [value]="region.name"> {{region.name}}</option>
             </select>
         </div>
         
     </div>
 
-    <h5>Datos del curso</h5>
+    <h5 *ngIf="currentStep===1">Datos del curso</h5>
 
-    <div class="formgrid grid">
+    <div class="formgrid grid" *ngIf="currentStep===1">
         <div class="field col-12 md:col-6">
-            <label for="firstname6">Usuario</label>
-            <input id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <label for="firstname6">Tematica solicitada</label>
+            <input formControlName="tematica_solicitada" id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
+        
         <div class="field col-12 md:col-6">
             <label for="lastname6">Numero de vacantes</label>
-            <input id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <select formControlName="num_vacantes" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+                <option  *ngFor="let numVacantes of numVacantes" [value]="numVacantes.name" > {{numVacantes.name}} </option>
+            </select>
         </div>
         <div class="field col-12 md:col-6">
             <label for="lastname6">Localidad donde se impartira</label>
-            <input id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <input formControlName="localidad_impartira" id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
         <div class="field col-12 md:col-6">
             <label for="lastname6">Numero de participantes</label>
-            <input id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <select formControlName="num_participantes" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+                <option *ngFor="let p of numeroDeParticipantes" [value]="p.name" > {{p.name}} </option>
+            </select>
         </div>
         <div class="field col-12 md:col-3">
             <label for="state">Horarios y dias requeridos</label>
-            <select id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
-                <option>N/A</option>
-                <option>Aun no especificado</option>
-                <option>Abierta</option>
+            <select (change)="horarioChange($event)" formControlName="horarios_dias_requeridos" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+                <option *ngFor="let h of horariosYDias" [value]="h.name">{{h.name}} </option>
             </select>
         </div>
+        <div class="field col-12 md:col-6" *ngIf="isOtroSelected">
+            <label for="customHonorario"></label>
+            <textarea placeholder="Escribe los detalles de los horarios y dias requeridos" formControlName="horarios_dias_requeridos" id="customHonorario" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+          </div>
+          
         <div class="field col-12">
             <label for="address">Motivo del requeimiento del cliente</label>
-            <textarea id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            <textarea formControlName="motivo_del_requerimiento_cliente" id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
         <div class="field col-12">
             <label for="address">Honorario a ofrecer</label>
-            <textarea id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            <textarea formControlName="honorario_a_ofrecer"  id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
         
-
     </div>
+
+<!-- paso dos  -->
+
+
+        <h5 *ngIf="currentStep>1" >Datos del Instructor</h5>
+    <div class="formgrid grid" *ngIf="currentStep>1">
+        <div class="field col-12 md:col-6">
+            <label for="state">Escolaridad minima</label>
+            <select formControlName="escolaridad_minima" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+                <option>bachillerato</option>
+                <option>Licenciatura / ingieneria</option>
+                <option>Desgrado</option>
+            </select>
+        </div>
+        <div class="field col-12 md:col-6">
+            <label for="state">Sexo</label>
+            <select formControlName="sexo" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+                <option>Hombre</option>
+                <option>Mujer</option>
+                <option>indistinto</option>
+            </select>
+        </div>
+        <div class="field col-12 md:col-6">
+            <label for="state">Requiere dominio de idiomas</label>
+            <select formControlName="requiere_dominio_idiomas" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+                <option>No</option>
+                <option>si</option>
+            </select>
+        </div>
+        <div class="field col-12 md:col-6">
+            <label for="state">Anios de experiencia</label>
+            <select formControlName="anios_experiencia" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+                <option>5-10</option>
+                <option>10-15</option>
+            </select>
+        </div>
+        <div class="field col-12">
+            <label for="address">Principales temas, conocimientos</label>
+            <textarea formControlName="principales_temas"  id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+        </div>
+    </div>
+
+
+    <div class="flex justify-content-between flex-wrap">
+        <p-button icon="pi pi-arrow-left" *ngIf="currentStep > 1" (onClick)="previous()" label="Anterior"></p-button>
+        <p-button icon="pi pi-arrow-right" *ngIf="currentStep < 2" (onClick)="next()" label="Siguiente" class="ml-auto"></p-button>
+        
+        <button icon="pi pi-check" pButton  class="p-button-success" type="submit"*ngIf="currentStep ===2" label="Enviar Datos"></button>
+    </div>
+
     
+    </form>
     
     </p-card>
+
+
+
+
+    <div *ngIf="messageSuccesful"  class="grid flex flex-column align-items-center">
+        <div class="flex justify-content-center align-items-center bg-green-500 border-circle" style="height:4rem; width:4rem;">
+            <i class="pi pi-fw pi-check-circle text-3xl text-white"></i>
+        </div>
+      
+        <div class="m-4">
+        <p>Tu requisicion ha sido exitosa</p>
+        <p>Favor de esperar la confirmacion de RH</p>
+        <button pButton pRipple icon="pi pi-arrow-left" label="Ir a mis requisiciones" class="p-button-text" [routerLink]="['./requisicion/externas/mis-requisiciones-externas']"></button>
+      
+        </div>
+      </div>

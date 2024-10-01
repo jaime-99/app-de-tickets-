@@ -34,5 +34,13 @@ export class RequizicionesService {
     return this.http.post<any>(apiUrl, data, {headers})
   }
 
+  // externas
+
+  postRequisicionExterna(data){
+    let url = `https://visualmanagment.com/AppCGP/apis/RH/AddCrearRequisicion2.php`;
+    return this.http.post<any>(url, data);
+} 
+
+
 
 }

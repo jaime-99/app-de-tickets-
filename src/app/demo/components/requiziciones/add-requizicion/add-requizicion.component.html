@@ -386,14 +386,14 @@
 
 
 
-<div class="flex justify-content-between flex-wrap">
-
+    <div class="flex justify-content-between flex-wrap">
+    
     <p-button icon="pi pi-arrow-left" *ngIf="currentStep > 1" (onClick)="previous()" label="Anterior"></p-button>
     <p-button icon="pi pi-arrow-right" *ngIf="currentStep < 3" (onClick)="next()" label="Siguiente" class="ml-auto"></p-button>
     
     <button icon="pi pi-check" pButton  class="p-button-success" type="submit"*ngIf="currentStep ===3" label="Enviar Datos"></button>
-
 </div>
+
 
 
 </form>
