@@ -32,16 +32,16 @@ export class MisRequisicionesInternasComponent implements OnInit {
   getRequisiciones(){
 
     this.requisicionesService.getRequisicionForUsuario(this.usuario.usuario).subscribe((res)=>{
+
+      // this.requisciones = res;
+      // this.isLoading = false;
+      // return;
       
-      if(res && typeof res === 'object'){
-        this.requisciones = [res]
-        if(res.message){
-          this.requisciones = [];
-        }
+      if(Array.isArray(res)){
+        this.requisciones = res
       }else{
         this.requisciones = []
       }
-
       setTimeout(() => {
         this.isLoading = false;
       }, 350);  // delay
@@ -56,7 +56,9 @@ export class MisRequisicionesInternasComponent implements OnInit {
     this.searchValue = '' 
   }
 
-  goToDetalles(){
+  goToDetalles(id){
+    
+    this.router.navigateByUrl(`/requisicion/${id}`)
     
 
   }

@@ -8,7 +8,11 @@
     <div class="formgrid grid" *ngIf="currentStep===1">
         <div class="field col-12 md:col-6">
             <label for="firstname6">Usuario</label>
-            <input  id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <input formControlName="usuario"  id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-12 md:col-6">
+            <label for="firstname6">Fecha</label>
+            <input formControlName="fecha"  id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
         <div class="field col-12 md:col-6">
             <label for="lastname6">Nombre del solciitante</label>
@@ -81,10 +85,20 @@
         <div class="field col-12">
             <label for="address">Motivo del requeimiento del cliente</label>
             <textarea formControlName="motivo_del_requerimiento_cliente" id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            <p-messages *ngIf="isFieldInvalid('motivo_del_requerimiento_cliente')" severity="error" >
+                <ng-template pTemplate>
+                    <span class="ml-2">Obligatorio motivo del cliente</span>
+                </ng-template>
+            </p-messages>
         </div>
         <div class="field col-12">
             <label for="address">Honorario a ofrecer</label>
             <textarea formControlName="honorario_a_ofrecer"  id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            <p-messages *ngIf="isFieldInvalid('honorario_a_ofrecer')" severity="error" >
+                <ng-template pTemplate>
+                    <span class="ml-2">Obligatorio Honorario</span>
+                </ng-template>
+            </p-messages>
         </div>
         
     </div>
@@ -126,7 +140,12 @@
         </div>
         <div class="field col-12">
             <label for="address">Principales temas, conocimientos</label>
-            <textarea formControlName="principales_temas"  id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            <textarea placeholder="ejemplo" formControlName="principales_temas"  id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            <p-messages *ngIf="isFieldInvalid('principales_temas')" severity="error" >
+                <ng-template pTemplate>
+                    <span class="ml-2">campo Obligatorio</span>
+                </ng-template>
+            </p-messages>
         </div>
     </div>
 
@@ -152,9 +171,9 @@
         </div>
       
         <div class="m-4">
-        <p>Tu requisicion ha sido exitosa</p>
+        <p>Tu requisicion externa  ha sido exitosa</p>
         <p>Favor de esperar la confirmacion de RH</p>
-        <button pButton pRipple icon="pi pi-arrow-left" label="Ir a mis requisiciones" class="p-button-text" [routerLink]="['./requisicion/externas/mis-requisiciones-externas']"></button>
+        <button pButton pRipple icon="pi pi-arrow-left" label="Ir a mis requisiciones Externas" class="p-button-text" [routerLink]="['/requisicion/externas/mis-requisiciones-externas']"></button>
       
         </div>
       </div>

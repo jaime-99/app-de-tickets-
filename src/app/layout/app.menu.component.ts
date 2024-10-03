@@ -245,6 +245,10 @@ export class AppMenuComponent implements OnInit {
                                         {
                                             label: 'Mis requisiciones',
                                             routerLink: ['./requisicion/externas/mis-requisiciones-externas']
+                                        },
+                                        {
+                                            label: 'Todas',
+                                            routerLink: ['./requisicion/externas/todas-las-requisiciones']
                                         }
                                     ]
                                     

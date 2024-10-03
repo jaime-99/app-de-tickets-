@@ -1,0 +1,63 @@
+<div *ngIf="loading"></div>
+  <div class="flex justify-content-start align-items-start" style="margin-bottom: 1rem;">
+    <button (click)="downloadPDF()" icon="pi pi-download" pButton type="button" label="PDF"></button>
+  </div>
+
+<div *ngIf="!loading" class="card flex justify-content-center">
+  <p-progressSpinner 
+      styleClass="w-4rem h-4rem" 
+      strokeWidth="8" 
+      fill="var(--surface-ground)" 
+      animationDuration=".5s" />
+</div>
+
+<div *ngIf="loading">
+
+<h3>Datos de la requisicion Externa con el ID : {{requisicionDetalle?.id}} </h3>
+
+<table id="print-section" border="1" cellspacing="0" cellpadding="8" width="100%">
+    <tr>
+        <td colspan="3"><strong>DATOS DEL SOLICITANTE</strong></td>
+      </tr>
+  <tr>
+    <td><strong>Nombre del solicitante:</strong> {{requisicionDetalle?.nombre_del_solicitante}} </td>
+    <td><strong>Puesto del solicitante:</strong> {{requisicionDetalle?.puesto_del_solicitante}} </td>
+    <td><strong>Región solicitante:</strong>  {{requisicionDetalle?.region_solicitante}} </td>
+  </tr>
+  <tr>
+    <td colspan="3"><strong>DATOS DEL CURSO</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Tematica solicitada:</strong > {{requisicionDetalle?.tematica_solicitada}} </td>
+    <td><strong>Num. Vacantes:</strong>{{requisicionDetalle?.num_vacantes}} </td>
+    <td><strong>Localidad donde se impartira:</strong> {{requisicionDetalle?.localidad_impartira}} </td>
+  </tr>
+  <tr>
+    <td><strong>No. de participantes:</strong> {{requisicionDetalle.num_participantes}} </td>
+    <td><strong>Horarios y dias requeridos:</strong> {{requisicionDetalle.horarios_dias_requeridos}} </td>
+    <td><strong>Motivo del requerimiento del cliente:</strong>  {{requisicionDetalle.motivo_del_requerimiento_cliente}}  </td>
+  </tr>
+  <tr>
+    <td colspan="3"><strong>Honorario a ofrecer:</strong>   {{requisicionDetalle.honorario_a_ofrecer}} </td>
+  </tr>
+  <tr>
+    <td colspan="3"><strong>DATOS DEL INSTRUCTOR</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Escolaridad:</strong>  {{requisicionDetalle?.escolaridad_minima}} </td>
+    <td><strong>Sexo:</strong> {{requisicionDetalle?.sexo}} </td>
+    <td colspan="3"><strong>Requiere dominio de idiomas:</strong> {{requisicionDetalle.requiere_dominio_idiomas}} </td>
+  </tr>
+  <tr>
+    <td colspan="3"><strong>Anios de experiencia:</strong> {{requisicionDetalle?.anios_experiencia}} </td>
+  </tr>
+  <tr>
+    <td colspan="3"><strong>Principales temas, conicimientos y habilidades requeridas:</strong>  {{requisicionDetalle?.principales_temas}}  </td>
+  </tr>
+  <tr>
+    <td colspan="3"><strong>Comentarios adicionales:</strong> 6</td>
+  </tr>
+</table>
+
+
+</div>

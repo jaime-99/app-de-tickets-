@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { categoriasRequisicionE} from './/interfaces/clases-externas'
 import { RequizicionesService } from '../requiziciones.service';
+import { AuthService } from '../../auth/auth.service';
 @Component({
   selector: 'app-requisiciones-externas',
   templateUrl: './requisiciones-externas.component.html',
@@ -18,9 +19,12 @@ export class RequisicionesExternasComponent implements OnInit {
   numVacantes = categoriasRequisicionE.numVacantes;
   isOtroSelected: boolean = false;
   messageSuccesful: boolean = false;
-  constructor(private fb: FormBuilder, private requisicionesService:RequizicionesService) {
+  usuario: any;
+  constructor(private fb: FormBuilder, private requisicionesService:RequizicionesService,
+    private authService:AuthService
+  ) {
     this.requisicionForm2 = this.fb.group({
-        usuario: ['usuario123', Validators.required],
+      usuario: [{ value: this.user['usuario'], disabled: true }, Validators.required],
         nombre_del_solicitante: ['Juan Pérez', Validators.required],
         puesto_del_solicitante: ['Coordinador', Validators.required],
         region_solicitante: ['Noroeste', Validators.required],
@@ -29,18 +33,19 @@ export class RequisicionesExternasComponent implements OnInit {
         localidad_impartira: ['Culiacán', Validators.required],
         num_participantes: [30, Validators.required],
         horarios_dias_requeridos: ['Lunes a Viernes, 10:00 a 12:00', Validators.required],
-        motivo_del_requerimiento_cliente: ['Requerimiento por aumento de alumnos'],
+        motivo_del_requerimiento_cliente: ['', Validators.required],
         honorario_a_ofrecer: ['2000', Validators.required],
+        fecha: [this.actualDate()],
         escolaridad_minima: ['Licenciatura', Validators.required],
         sexo: ['Masculino', Validators.required],
         requiere_dominio_idiomas: [true, Validators.required],
         anios_experiencia: [3, Validators.required],
-        principales_temas: ['Álgebra, Geometría']
+        principales_temas: ['', Validators.required]
     })
   }
   
   ngOnInit(): void {
-    
+    this.user
   }
 
   next(){
@@ -50,6 +55,11 @@ export class RequisicionesExternasComponent implements OnInit {
 
   previous(): void {
     this.currentStep--;
+  }
+
+  get user():string{
+
+    return this.authService.getUser()
   }
 
 
@@ -69,7 +79,8 @@ export class RequisicionesExternasComponent implements OnInit {
         num_participantes: formValues.num_participantes,
         horarios_dias_requeridos: formValues.horarios_dias_requeridos,
         motivo_del_requerimiento_cliente: formValues.motivo_del_requerimiento_cliente,
-        honorario_a_ofrecer: formValues.honorario_a_ofrecer
+        honorario_a_ofrecer: formValues.honorario_a_ofrecer,
+        fecha:this.actualDate2()
       },
       requisicionInstructor2: {
         escolaridad_minima: formValues.escolaridad_minima,
@@ -83,9 +94,10 @@ export class RequisicionesExternasComponent implements OnInit {
     // Ahora puedes mandar el objeto requisicionData como lo requieras
 
     this.messageSuccesful = true;
-    return;
+    // return;
     this.requisicionesService.postRequisicionExterna(requisicionData).subscribe((res)=>{
-      console.log(res)
+      // console.log(res)
+      
     })
 
     
@@ -93,9 +105,6 @@ export class RequisicionesExternasComponent implements OnInit {
 
   horarioChange(event: any) {
     const selectedValue = event.target.value;
-
-
-
     // Si el valor es "Otro", mostrar el textarea
     if (selectedValue === 'otro') {
       this.isOtroSelected = true;
@@ -110,5 +119,31 @@ export class RequisicionesExternasComponent implements OnInit {
     const control = this.requisicionForm2.get(field);
     return control ? control.invalid && control.touched : false;
   }
+
+
+  actualDate() {
+    const date = new Date();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+      return `${day}/${month}/${year}`; // Devuelve en formato DD/MM/YYYY
+}
+  actualDate2() {
+    const date = new Date();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+      return `${year}/${month}/${day}`; // Devuelve en formato DD/MM/YYYY
+}
 
 }

@@ -40,6 +40,18 @@ export class RequizicionesService {
     let url = `https://visualmanagment.com/AppCGP/apis/RH/AddCrearRequisicion2.php`;
     return this.http.post<any>(url, data);
 } 
+getRequisicionForUsuarioExterna(usuario){
+  const url = `https://visualmanagment.com/AppCGP/apis/RH/getRequisicionesExternasForUsuario.php?usuario=${usuario}&timestamp=${new Date().getTime()}`
+  return this.http.get<any>(url)
+}
+getRequisicionExternaForId(id){
+  const url = `https://visualmanagment.com/AppCGP/apis/RH/getRequisicionExternaForId.php?id=${id}&timestamp=${new Date().getTime()}`
+  return this.http.get<any>(url)
+}
+getAllExternas(){
+  const url = `https://visualmanagment.com/AppCGP/apis/RH/getAllRequisicionesExternas.php?timestamp=${new Date().getTime()}`
+  return this.http.get<any>(url)
+}
 
 
 

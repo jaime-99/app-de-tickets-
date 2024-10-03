@@ -5,12 +5,16 @@ import { RequisicionesExternasRoutingModule } from './requisiciones-externas-rou
 import { MisRequisicionesExternasComponent } from './mis-requisiciones-externas/mis-requisiciones-externas.component';
 import { RequisicionesExternasComponent } from './requisiciones-externas.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ExternaDetalleComponent } from './externa-detalle/externa-detalle.component';
+import { TodasExternasComponent } from './todas-externas/todas-externas.component';
 
 
 @NgModule({
   declarations: [
     RequisicionesExternasComponent,
-    MisRequisicionesExternasComponent
+    MisRequisicionesExternasComponent,
+    ExternaDetalleComponent,
+    TodasExternasComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,6 @@
-<h3>Mis requisiciones Internas</h3>
+<h3>Todas las requisiciones Externas</h3>
 
-<ng-container *ngIf="isLoading; else dataLoaded">
+<ng-container *ngIf="loading; else dataLoaded">
   <!-- Skeleton Loading State -->
   <p-table 
     [value]="[1, 2, 3, 4, 5]" 
