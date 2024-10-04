@@ -12,11 +12,11 @@
         <input id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="field col-12">
-        <label for="address">Descripcipion</label>
+        <label for="address">Descripcion</label>
         <textarea id="address" type="text" rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
     </div>
     <div class="field col-12 md:col-6">
-        <label for="city">Ciudad</label>
+        <label for="city">Nombre del curso </label>
         <input id="city" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="field col-12 md:col-3">
@@ -31,6 +31,14 @@
         <label for="zip">Fecha</label>
         <input id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
+    <div class="field col-12 md:col-3">
+        <label for="zip">Id Curso</label>
+        <input id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+    <div class="field col-12 md:col-3">
+        <label for="zip">Link</label>
+        <input id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
 </div>
 
 <p-divider></p-divider>
@@ -39,15 +47,26 @@
     <p-toast />
     <p-fileUpload 
         mode="basic" 
-        chooseLabel="Choose" 
+        chooseLabel="Cargar" 
         chooseIcon="pi pi-upload"
         name="demo[]" 
-        url="https://www.primefaces.org/cdn/api/upload.php" 
         accept="image/*" 
         maxFileSize="1000000" 
-        (onUpload)="onUpload($event)"
+        (onSelect)="onSelect($event)"
+        #fileUpload
          />
-</div>
+         <button (click)="elimiarArchivo()" class="p-button-danger" pButton label="Eliminar archivo" icon="pi pi-check"></button>
+
+        </div>
+
+
+
+        <div>
+            <button  pButton label="Enviar solicitud" icon="pi pi-check"
+             style="width: 100%;" class="p-button-block p-button-success"></button>
+        </div>
+        
+
 
 
 </p-card>

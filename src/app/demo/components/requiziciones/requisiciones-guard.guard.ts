@@ -11,10 +11,13 @@ export const requisicionesGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const isAuthenticated = authService.getUser();
 
+
   
-  if(isAuthenticated.tipoId ==2 || isAuthenticated.tipoId ==3 || isAuthenticated.tipoId ==5 )
+  if(isAuthenticated.area !=='RH' && isAuthenticated.area!=='Sistemas' )
     return router.navigateByUrl('/sinAcceso')
     else{
       return true;
     }
 };
+
+

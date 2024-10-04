@@ -8,7 +8,7 @@ import { requisicionesGuard } from './requisiciones-guard.guard';
 import { MisRequisicionesInternasComponent } from './mis-requisiciones-internas/mis-requisiciones-internas.component';
 
 const routes: Routes = [{ path: '', component: RequizicionesComponent },
-  { path: 'externas', data: { breadcrumb: 'externa' }, loadChildren: () => import('./requisiciones-externas/requisiciones-externas.module').then(m => m.RequisicionesExternasModule) },
+  { path: 'externas', data: { breadcrumb: 'externa' }, loadChildren: () => import('./requisiciones-externas/requisiciones-externas.module').then(m => m.RequisicionesExternasModule), canActivate:[requisicionesGuard] },
   {path: 'requisiciones_solicitadas', component: RequisicionesSolicitadasComponent, canActivate:[requisicionesGuard]},
   {path: 'mis-requisiciones', component: MisRequisicionesInternasComponent},
   {path: 'requisicion_Creada', component: PlantillaMensajeComponent},
