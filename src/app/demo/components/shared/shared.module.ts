@@ -23,6 +23,9 @@ import { FormsModule } from '@angular/forms';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FileUploadModule } from 'primeng/fileupload';
+import { DialogModule } from 'primeng/dialog';
+import { TabViewModule } from 'primeng/tabview';
+
 
 
 
@@ -55,7 +58,9 @@ import { FileUploadModule } from 'primeng/fileupload';
     FormsModule,
     ProgressSpinnerModule,
     SkeletonModule,
-    FileUploadModule
+    FileUploadModule,
+    DialogModule,
+    TabViewModule
     
   ]
 })

@@ -5,11 +5,15 @@ import { MaterialesRoutingModule } from './materiales-routing.module';
 import { MaterialesComponent } from './materiales.component';
 import { SharedModule } from '../shared/shared.module';
 import { MessageService } from 'primeng/api';
+import { SolicitudesComponent } from './solicitudes/solicitudes.component';
+import { DetallesComponent } from './solicitudes/detalles/detalles.component';
 
 
 @NgModule({
   declarations: [
-    MaterialesComponent
+    MaterialesComponent,
+    SolicitudesComponent,
+    DetallesComponent
   ],
   imports: [
     CommonModule,

@@ -1,1 +1,390 @@
-<p>solicitudes works!</p>
+
+
+ <h3>Solicitudes Materiales</h3> 
+ <p-tabView>
+  
+
+ 
+
+<!-- Data Loaded State  -->
+<p-tabPanel header="Todos">
+
+  <ng-container *ngIf="isLoading; else dataLoaded"> 
+    <!-- Skeleton Loading State -->
+   <p-table 
+      [value]="[1, 2, 3, 4, 5]" 
+      styleClass="p-datatable-gridlines" 
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rows]="5"
+      [paginator]="false">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th>Fecha Solicitud</th>
+          <th>Nombre</th>
+          <th>Nombre curso</th>
+          <th>IdCurso</th>
+          <th>Categoria</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body">
+        <tr>
+          <td><p-skeleton width="2rem"></p-skeleton></td>
+          <td><p-skeleton width="10rem"></p-skeleton></td>
+          <td><p-skeleton width="12rem"></p-skeleton></td>
+          <td><p-skeleton width="10rem"></p-skeleton></td>
+          <td><p-skeleton width="15rem"></p-skeleton></td>
+          <td><p-skeleton width="15rem"></p-skeleton></td>
+          <td><p-skeleton width="5rem"></p-skeleton></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+ 
+<!-- </p-tabPanel> -->
+<ng-template  #dataLoaded>
+  <p-table 
+    #dt1
+    [value]="solicitudes" 
+    styleClass="p-datatable-gridlines" 
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [globalFilterFields]="['nombre']">
+
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <p-button label="Limpiar" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt1)" />
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Palabra" />
+        </span>
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th pSortableColumn="fecha_solicitud">
+          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+        </th>
+        <th>Nombre</th>
+        <th>Nombre Curso</th>
+        <th>IdCurso</th>
+        <th>Categoria</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-solicitudes2>
+      <tr>
+        <td>{{ solicitudes2?.id }}</td>
+        <td>12/10/22</td>
+        <td>{{ solicitudes2?.nombre }}</td>
+        <td>{{ solicitudes2?.nombre_curso }}</td>
+        <td>{{ solicitudes2?.idCurso }}</td>
+        <td>{{ solicitudes2.categoria }}</td>
+        <td>
+          <button icon="pi pi-eye" class="p-button-success" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)" ></button>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">Sin registros de solicitudes para MATERIALES</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-template>
+</p-tabPanel>
+<p-tabPanel header="Abierto">
+
+  <ng-container *ngIf="isLoading2; else dataLoadedAbiertos"> 
+    <!-- Skeleton Loading State -->
+   <p-table 
+      [value]="[1, 2, 3, 4, 5]" 
+      styleClass="p-datatable-gridlines" 
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rows]="5"
+      [paginator]="false">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th>Fecha Solicitud</th>
+          <th>Nombre</th>
+          <th>Nombre curso</th>
+          <th>IdCurso</th>
+          <th>Categoria</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body">
+        <tr>
+          <td><p-skeleton width="2rem"></p-skeleton></td>
+          <td><p-skeleton width="10rem"></p-skeleton></td>
+          <td><p-skeleton width="12rem"></p-skeleton></td>
+          <td><p-skeleton width="10rem"></p-skeleton></td>
+          <td><p-skeleton width="15rem"></p-skeleton></td>
+          <td><p-skeleton width="15rem"></p-skeleton></td>
+          <td><p-skeleton width="5rem"></p-skeleton></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+ 
+<!-- </p-tabPanel> -->
+<ng-template  #dataLoadedAbiertos>
+  <p-table 
+    #dt2
+    [value]="solicitudesForEstatus('abierto')" 
+    styleClass="p-datatable-gridlines" 
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [globalFilterFields]="['nombre']">
+
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <p-button label="Limpiar" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt2)" />
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Palabra" />
+        </span>
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th pSortableColumn="fecha_solicitud">
+          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+        </th>
+        <th>Nombre</th>
+        <th>Nombre Curso</th>
+        <th>IdCurso</th>
+        <th>Categoria</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-solicitudes2>
+      <tr>
+        <td>{{ solicitudes2?.id }}</td>
+        <td>12/10/22</td>
+        <td>{{ solicitudes2?.nombre }}</td>
+        <td>{{ solicitudes2?.nombre_curso }}</td>
+        <td>{{ solicitudes2?.idCurso }}</td>
+        <td>{{ solicitudes2.categoria }}</td>
+        <td>
+          <button icon="pi pi-eye" class="p-button-success" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)" ></button>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">Sin registros de solicitudes para MATERIALES</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-template>
+</p-tabPanel>
+<p-tabPanel header="Asignados" >
+  <ng-container *ngIf="isLoading3; else dataLoadedAsignados"> 
+    <!-- Skeleton Loading State -->
+   <p-table 
+      [value]="[1, 2, 3, 4, 5]" 
+      styleClass="p-datatable-gridlines" 
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rows]="5"
+      [paginator]="false">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th>Fecha Solicitud</th>
+          <th>Nombre</th>
+          <th>Nombre curso</th>
+          <th>IdCurso</th>
+          <th>Categoria</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body">
+        <tr>
+          <td><p-skeleton width="2rem"></p-skeleton></td>
+          <td><p-skeleton width="10rem"></p-skeleton></td>
+          <td><p-skeleton width="12rem"></p-skeleton></td>
+          <td><p-skeleton width="10rem"></p-skeleton></td>
+          <td><p-skeleton width="15rem"></p-skeleton></td>
+          <td><p-skeleton width="15rem"></p-skeleton></td>
+          <td><p-skeleton width="5rem"></p-skeleton></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+ 
+<!-- </p-tabPanel> -->
+<ng-template  #dataLoadedAsignados>
+  <p-table 
+    #dt3
+    [value]="solicitudesForEstatus('asignados')" 
+    styleClass="p-datatable-gridlines" 
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [globalFilterFields]="['nombre']">
+
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <p-button label="Limpiar" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt3)" />
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt3.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Palabra" />
+        </span>
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th pSortableColumn="fecha_solicitud">
+          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+        </th>
+        <th>Nombre</th>
+        <th>Nombre Curso</th>
+        <th>IdCurso</th>
+        <th>Categoria</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-solicitudes2>
+      <tr>
+        <td>{{ solicitudes2?.id }}</td>
+        <td>12/10/22</td>
+        <td>{{ solicitudes2?.nombre }}</td>
+        <td>{{ solicitudes2?.nombre_curso }}</td>
+        <td>{{ solicitudes2?.idCurso }}</td>
+        <td>{{ solicitudes2.categoria }}</td>
+        <td>
+          <button icon="pi pi-eye" class="p-button-success" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)" ></button>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">Sin registros de solicitudes para MATERIALES</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-template>
+</p-tabPanel>
+<p-tabPanel header="Cerrados" >
+  <ng-container *ngIf="isLoading4; else dataLoadedCerrados"> 
+    <!-- Skeleton Loading State -->
+   <p-table 
+      [value]="[1, 2, 3, 4, 5]" 
+      styleClass="p-datatable-gridlines" 
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rows]="5"
+      [paginator]="false">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th>Fecha Solicitud</th>
+          <th>Nombre</th>
+          <th>Nombre curso</th>
+          <th>IdCurso</th>
+          <th>Categoria</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body">
+        <tr>
+          <td><p-skeleton width="2rem"></p-skeleton></td>
+          <td><p-skeleton width="10rem"></p-skeleton></td>
+          <td><p-skeleton width="12rem"></p-skeleton></td>
+          <td><p-skeleton width="10rem"></p-skeleton></td>
+          <td><p-skeleton width="15rem"></p-skeleton></td>
+          <td><p-skeleton width="15rem"></p-skeleton></td>
+          <td><p-skeleton width="5rem"></p-skeleton></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+ 
+<!-- </p-tabPanel> -->
+<ng-template  #dataLoadedCerrados>
+  <p-table 
+    #dt4
+    [value]="solicitudesForEstatus('cerrado')" 
+    styleClass="p-datatable-gridlines" 
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [globalFilterFields]="['nombre']">
+
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <p-button label="Limpiar" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt4)" />
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt4.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Palabra" />
+        </span>
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th pSortableColumn="fecha_solicitud">
+          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+        </th>
+        <th>Nombre</th>
+        <th>Nombre Curso</th>
+        <th>IdCurso</th>
+        <th>Categoria</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-solicitudes2>
+      <tr>
+        <td>{{ solicitudes2?.id }}</td>
+        <td>12/10/22</td>
+        <td>{{ solicitudes2?.nombre }}</td>
+        <td>{{ solicitudes2?.nombre_curso }}</td>
+        <td>{{ solicitudes2?.idCurso }}</td>
+        <td>{{ solicitudes2.categoria }}</td>
+        <td>
+          <button icon="pi pi-eye" class="p-button-success" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)" ></button>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">Sin registros de solicitudes para MATERIALES</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-template>
+</p-tabPanel>
+
+</p-tabView>
+

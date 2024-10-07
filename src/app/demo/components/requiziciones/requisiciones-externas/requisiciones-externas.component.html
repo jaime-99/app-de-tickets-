@@ -105,6 +105,8 @@
 
 <!-- paso dos  -->
 
+<p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
+
 
         <h5 *ngIf="currentStep>1" >Datos del Instructor</h5>
     <div class="formgrid grid" *ngIf="currentStep>1">
@@ -119,9 +121,9 @@
         <div class="field col-12 md:col-6">
             <label for="state">Sexo</label>
             <select formControlName="sexo" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
-                <option>Hombre</option>
-                <option>Mujer</option>
-                <option>indistinto</option>
+                <option>Masculino</option>
+                <option>Femenino</option>
+                <option>Otro</option>
             </select>
         </div>
         <div class="field col-12 md:col-6">

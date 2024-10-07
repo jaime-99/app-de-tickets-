@@ -1,27 +1,27 @@
 
 <p-card header="Solicitudes para Materiales">
 
-
+<form [formGroup]="solicitudesForm">
 <div class="formgrid grid">
     <div class="field col-12 md:col-6">
         <label for="firstname6">Usuario</label>
-        <input id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <input formControlName="usuario"  id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="field col-12 md:col-6">
         <label for="lastname6">Nombre Completo</label>
-        <input id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <input formControlName="nombre"  id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="field col-12">
         <label for="address">Descripcion</label>
-        <textarea id="address" type="text" rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+        <textarea formControlName="descripcion" id="address" type="text" rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
     </div>
     <div class="field col-12 md:col-6">
-        <label for="city">Nombre del curso </label>
-        <input id="city" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <label  for="city">Nombre del curso </label>
+        <input formControlName="nombre_curso" id="city" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="field col-12 md:col-3">
         <label for="state">Categoria</label>
-        <select id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+        <select formControlName="categoria" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
             <option>Sac</option>
             <option>Materiales</option>
             
@@ -29,17 +29,18 @@
     </div>
     <div class="field col-12 md:col-3">
         <label for="zip">Fecha</label>
-        <input id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <input id="zip" formControlName="fecha" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="field col-12 md:col-3">
         <label for="zip">Id Curso</label>
-        <input id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <input formControlName="idCurso" id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="field col-12 md:col-3">
         <label for="zip">Link</label>
-        <input id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <input formControlName="link" id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
 </div>
+</form>
 
 <p-divider></p-divider>
 
@@ -62,7 +63,7 @@
 
 
         <div>
-            <button  pButton label="Enviar solicitud" icon="pi pi-check"
+            <button type="click" (click)="onSubmit()"  pButton label="Enviar solicitud" icon="pi pi-check"
              style="width: 100%;" class="p-button-block p-button-success"></button>
         </div>
         

@@ -293,7 +293,16 @@ export class AppMenuComponent implements OnInit {
                                 },
 
                             ]
-                            // routerLink: ['/tickets/crearTicket/ticketsTrabajados']
+                        },
+                        {
+                            label: 'Solicitudes Asignadas',
+                            items: [
+                                {
+                                    label: 'Todas',
+                                    routerLink: ['./materiales/Asignadas']
+                                },
+
+                            ]
                         },
 
                     ]

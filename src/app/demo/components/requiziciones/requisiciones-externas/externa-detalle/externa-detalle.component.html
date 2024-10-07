@@ -46,7 +46,9 @@
   <tr>
     <td><strong>Escolaridad:</strong>  {{requisicionDetalle?.escolaridad_minima}} </td>
     <td><strong>Sexo:</strong> {{requisicionDetalle?.sexo}} </td>
-    <td colspan="3"><strong>Requiere dominio de idiomas:</strong> {{requisicionDetalle.requiere_dominio_idiomas}} </td>
+    <td colspan="3"><strong>Requiere dominio de idiomas:
+    </strong>   {{ requisicionDetalle.requiere_dominio_idiomas == 1 ? 'Sí' : 'No' }}
+  </td>
   </tr>
   <tr>
     <td colspan="3"><strong>Anios de experiencia:</strong> {{requisicionDetalle?.anios_experiencia}} </td>
@@ -55,7 +57,7 @@
     <td colspan="3"><strong>Principales temas, conicimientos y habilidades requeridas:</strong>  {{requisicionDetalle?.principales_temas}}  </td>
   </tr>
   <tr>
-    <td colspan="3"><strong>Comentarios adicionales:</strong> 6</td>
+    <td colspan="3"><strong>Comentarios adicionales:</strong> IGNORAR EJEMPLO </td>
   </tr>
 </table>
 

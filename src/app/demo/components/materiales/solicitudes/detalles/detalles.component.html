@@ -1,0 +1,79 @@
+<p-card header="Detalles de la solicitud con el Id # {{this.solicitud?.id}}"  class="custom-card">
+    <div class="formgrid grid p-fluid">
+      
+      <!-- Campo Nombre -->
+      <div class="field col-12 md:col-6">
+        <label for="nombre">Nombre:</label>
+        <strong id="nombre"> {{this.solicitud?.nombre}} </strong>
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="nombre">Enviado por el usuario:</label>
+        <strong id="nombre"> {{this.solicitud?.usuario}} </strong>
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="nombre">Descripcion:</label>
+        <strong id="nombre"> {{this.solicitud?.descripcion}} </strong>
+      </div>
+      <!-- Campo Nombre del Curso -->
+      <div class="field col-12 md:col-6">
+        <label for="nombreCurso">Nombre del Curso:</label>
+        <strong id="nombreCurso"> {{this.solicitud?.nombre_curso}} </strong>
+      </div>
+      
+      <!-- Campo ID del Curso -->
+      <div class="field col-12 md:col-6">
+        <label for="idCurso">ID del Curso:</label>
+        <strong id="idCurso"> {{this.solicitud?.idCurso}} </strong>
+      </div>
+      
+      <!-- Campo Link del Curso -->
+      <div class="field col-12 md:col-6">
+        <label for="linkCurso">Link del Curso:</label>
+        <a> {{this.solicitud?.link}} </a>
+      </div>
+      
+      <!-- Imagen del Curso -->
+      <div class="field col-12 md:col-6">
+        <label>Imagen adjuntada:</label>
+        <img src="https://visualmanagment.com/AppCGP/apis/materiales/imagenes/hsfgfg.png" alt="Imagen del Curso" class="course-image" />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label>Categoria:</label>
+        <strong> {{this.solicitud?.categoria}} </strong>
+      </div>
+  
+      <!-- Botón Asignar -->
+      <div class="field col-12 md:col-6 flex align-items-center justify-content-center">
+        <button pButton type="button" (click)="showDialog()" label="Asignar" icon="pi pi-check" class="p-button-success"></button>
+      </div>
+      <div class="field col-12 md:col-6 flex align-items-center justify-content-center">
+        <button pButton type="button" label="Tomar solicitud" icon="pi pi-check" class="p-button-success"></button>
+      </div>
+    </div>
+  </p-card>
+  
+
+  <p-dialog 
+    header="Asignacion" 
+    [modal]="true"
+    [(visible)]="visible" 
+    [style]="{ width: '50rem' }" 
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+    [maximizable]="true">
+
+    <div class="formgrid grid">
+    <div class="field col-6 md:col-12">
+      <label for="state">Usuario</label>
+      <select id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+          <option>Jackie</option>
+          <option>Ari</option>
+          <option>Yo mismo</option>
+      </select>
+  </div>
+  <div class="field col-6 md:col-12">
+    <button pButton type="button" label="Asignar solicitud" (click)="asignar()"></button>
+</div>
+</div>
+
+        
+</p-dialog>

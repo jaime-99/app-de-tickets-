@@ -13,19 +13,20 @@ export class MisRequisicionesExternasComponent implements OnInit {
   requisicionesExternas: any;
   isLoading = true;
   searchValue:string
+  usuario :any
 
   constructor (private authService:AuthService, private requisicionService:RequizicionesService,
     private router:Router
   ) { }
-  private nombreUsuario = this.authService.getUser()
 
   ngOnInit(): void {
+    this.usuario = this.authService.getUser()
     this.getRequisiciones2ForUsuario()
   }
 
   getRequisiciones2ForUsuario(){
-    this.requisicionService.getRequisicionForUsuarioExterna('usuario123').subscribe((res)=>{
-      console.log(res)
+    this.requisicionService.getRequisicionForUsuarioExterna(this.usuario.usuario).subscribe((res)=>{
+      // console.log(res)
 
       if (Array.isArray(res)) {
         this.requisicionesExternas = res; // Asignar el arreglo directamente

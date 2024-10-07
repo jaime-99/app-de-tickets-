@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { categoriasRequisicionE} from './/interfaces/clases-externas'
 import { RequizicionesService } from '../requiziciones.service';
 import { AuthService } from '../../auth/auth.service';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-requisiciones-externas',
   templateUrl: './requisiciones-externas.component.html',
@@ -21,25 +22,26 @@ export class RequisicionesExternasComponent implements OnInit {
   messageSuccesful: boolean = false;
   usuario: any;
   constructor(private fb: FormBuilder, private requisicionesService:RequizicionesService,
-    private authService:AuthService
+    private authService:AuthService,
+    private messageService: MessageService
   ) {
     this.requisicionForm2 = this.fb.group({
       usuario: [{ value: this.user['usuario'], disabled: true }, Validators.required],
         nombre_del_solicitante: ['Juan Pérez', Validators.required],
-        puesto_del_solicitante: ['Coordinador', Validators.required],
-        region_solicitante: ['Noroeste', Validators.required],
+        puesto_del_solicitante: ['Coord. de ventas', Validators.required],
+        region_solicitante: ['Bajio', Validators.required],
         tematica_solicitada: ['Matemáticas', Validators.required],
         num_vacantes: [2, Validators.required],
-        localidad_impartira: ['Culiacán', Validators.required],
-        num_participantes: [30, Validators.required],
-        horarios_dias_requeridos: ['Lunes a Viernes, 10:00 a 12:00', Validators.required],
+        localidad_impartira: ['Saltillo', Validators.required],
+        num_participantes: ['0-10', Validators.required],
+        horarios_dias_requeridos: ['Aun no especificado', Validators.required],
         motivo_del_requerimiento_cliente: ['', Validators.required],
         honorario_a_ofrecer: ['2000', Validators.required],
         fecha: [this.actualDate()],
-        escolaridad_minima: ['Licenciatura', Validators.required],
+        escolaridad_minima: ['bachillerato', Validators.required],
         sexo: ['Masculino', Validators.required],
         requiere_dominio_idiomas: [true, Validators.required],
-        anios_experiencia: [3, Validators.required],
+        anios_experiencia: ['5-10', Validators.required],
         principales_temas: ['', Validators.required]
     })
   }
@@ -90,15 +92,24 @@ export class RequisicionesExternasComponent implements OnInit {
         principales_temas: formValues.principales_temas
       }
     };
+
+    // console.log(requisicionData)
+    // return;
+
+    if(this.requisicionForm2.valid){
+      this.messageSuccesful = true;
+      // return;
+      this.requisicionesService.postRequisicionExterna(requisicionData).subscribe((res)=>{
+        // console.log(res)
+        
+      })
+
+    }else{
+      this.show()
+    }
     
     // Ahora puedes mandar el objeto requisicionData como lo requieras
 
-    this.messageSuccesful = true;
-    // return;
-    this.requisicionesService.postRequisicionExterna(requisicionData).subscribe((res)=>{
-      // console.log(res)
-      
-    })
 
     
   }
@@ -144,6 +155,12 @@ export class RequisicionesExternasComponent implements OnInit {
     const seconds = String(date.getSeconds()).padStart(2, '0');
     
       return `${year}/${month}/${day}`; // Devuelve en formato DD/MM/YYYY
+}
+
+show(){
+  //mostrar el mensaje de error 
+  this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Faltan algunos datos, revise de nuevo' });
+
 }
 
 }

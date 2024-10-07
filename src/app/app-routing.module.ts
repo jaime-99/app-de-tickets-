@@ -6,6 +6,7 @@ import { generalGuard, generalGuard2 } from './demo/general.guard';
 import { rentaGuard } from './demo/guards/renta.guard';
 import { SinAcceso } from './demo/components/sinAccesso/sinAcceso.component';
 import { requisicionesGuard } from './demo/components/requiziciones/requisiciones-guard.guard';
+import { materialesGuard } from './demo/components/materiales/materiales.guard';
 
 @NgModule({
     imports: [
@@ -29,7 +30,7 @@ import { requisicionesGuard } from './demo/components/requiziciones/requisicione
                         canActivate:[requisicionesGuard]
                      },
                     { path: 'materiales', loadChildren: () => import('./demo/components/materiales/materiales.module').then(m => m.MaterialesModule),
-                        canActivate:[requisicionesGuard]
+                        canActivate:[materialesGuard]
                      },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },

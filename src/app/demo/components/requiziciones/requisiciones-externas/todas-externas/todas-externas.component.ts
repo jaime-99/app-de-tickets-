@@ -18,7 +18,7 @@ export class TodasExternasComponent implements OnInit {
   ) 
   {}
   usuario:any;
-  loading:boolean = false;
+  loading:boolean = true;
   ngOnInit(): void {
     this.usuario = this.authService.getUser();
 
@@ -33,7 +33,8 @@ export class TodasExternasComponent implements OnInit {
 
       if(Array.isArray(res)){
         this.requisicionesExternas = res
-        console.log(res)
+        this.loading = false;
+        // console.log(res)
       }else{
         this.requisicionesExternas = [];
       }
