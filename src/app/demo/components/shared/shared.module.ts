@@ -25,6 +25,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DialogModule } from 'primeng/dialog';
 import { TabViewModule } from 'primeng/tabview';
+import { ImageModule } from 'primeng/image';
 
 
 
@@ -60,7 +61,9 @@ import { TabViewModule } from 'primeng/tabview';
     SkeletonModule,
     FileUploadModule,
     DialogModule,
-    TabViewModule
+    TabViewModule,
+    ImageModule,
+    
     
   ]
 })

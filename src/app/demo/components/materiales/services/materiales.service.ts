@@ -28,4 +28,28 @@ export class MaterialesService {
     let url = `https://visualmanagment.com/AppCGP/apis/materiales/getSolicitudForEstatus.php?estatus=${estatus}&timestamp=${new Date().getTime()}`
     return this.http.get<any>(url);
 } 
+//put para asignar a un usuario la solicitud 
+  putAsignarSolicitud(id:number, asignada_a:string){
+    let url = `https://visualmanagment.com/AppCGP/apis/materiales/putAsignada_a.php`
+    const body  = {
+      id:id,
+      asignada_a:asignada_a
+    }
+    return this.http.put<any>(url,body);
+} 
+//put para cambiar el estatus 
+  putEstatusSolicitud(id:number, estatus:string){
+    let url = `https://visualmanagment.com/AppCGP/apis/materiales/putEstatus.php`
+    const body  = {
+      id:id,
+      estatus:estatus
+    }
+    return this.http.put<any>(url,body);
+}
+
+//obtiene las solicitudes de solo un usuario
+getSolicitudForUsuario(usuario){
+  let url = `https://visualmanagment.com/AppCGP/apis/materiales/getSolicitudForUser.php?usuario=${usuario}&timestamp=${new Date().getTime()}`
+  return this.http.get<any>(url);
+} 
 }

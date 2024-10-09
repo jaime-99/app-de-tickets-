@@ -7,13 +7,15 @@ import { SharedModule } from '../shared/shared.module';
 import { MessageService } from 'primeng/api';
 import { SolicitudesComponent } from './solicitudes/solicitudes.component';
 import { DetallesComponent } from './solicitudes/detalles/detalles.component';
+import { SolicitudesAsignadasComponent } from './solicitudes/solicitudes-asignadas/solicitudes-asignadas.component';
 
 
 @NgModule({
   declarations: [
     MaterialesComponent,
     SolicitudesComponent,
-    DetallesComponent
+    DetallesComponent,
+    SolicitudesAsignadasComponent
   ],
   imports: [
     CommonModule,

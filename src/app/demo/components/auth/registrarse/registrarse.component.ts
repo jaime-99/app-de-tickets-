@@ -18,6 +18,8 @@ areaSeleccionada :any;
 ciudadSeleccionada:any;
 validTemplate: boolean = false;
 messages: { severity: string; detail: string; }[];
+empresas = areasCGP.empresas;
+  empresaSeleccionada: void;
 
   constructor(private fb: FormBuilder,
   private authService:AuthService,
@@ -37,6 +39,7 @@ ngOnInit() {
     correo: ['', [Validators.required, Validators.email, this.emailDomainValidator()]],
     ciudad: [this.ciudadSeleccionada, [Validators.required]],
     contrasenia: ['', [Validators.required, Validators.minLength(5)]],
+    empresa: [this.empresaSeleccionada, Validators.required,],
 });
 
 }
@@ -46,12 +49,18 @@ ngOnInit() {
   updateCiudad(name){
     this.ciudadSeleccionada = name
     }
+    updateEmpresa(name){
+      this.empresaSeleccionada = name
+    }
 
 addUser() {
 
   this.registroForm.get('area').setValue(this.areaSeleccionada);
   this.registroForm.get('ciudad').setValue(this.ciudadSeleccionada);
+  this.registroForm.get('empresa').setValue(this.empresaSeleccionada);
 
+
+  
   // return;
   this.validTemplate = true;
   
@@ -67,9 +76,9 @@ addUser() {
     let userId = response.user_id;
     let area = this.registroForm.get('area').value;
     let ubicacion = this.registroForm.get('ciudad').value;
-    console.log(ubicacion)
+      // console.log(ubicacion)
     // que me regrese el id del usuario
-
+  
     if(area === 'Comercial' && ubicacion ==='Saltillo') {
       // colocar el tipoId en 3 
       this.perfilService.putTipoPerfil(userId,5).subscribe(()=>{

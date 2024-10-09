@@ -16,7 +16,7 @@
         </div>
         <div class="field col-12 md:col-6">
             <label for="lastname6">Nombre del solciitante</label>
-            <input formControlName="nombre_del_solicitante" id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <input formControlName="nombre_del_solicitante" placeholder="" id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
             <p-messages *ngIf="isFieldInvalid('nombre_del_solicitante')" severity="error" >
                 <ng-template pTemplate>
                     <span class="ml-2">Obligatorio nombre del solicitante</span>
@@ -52,7 +52,7 @@
     <div class="formgrid grid" *ngIf="currentStep===1">
         <div class="field col-12 md:col-6">
             <label for="firstname6">Tematica solicitada</label>
-            <input formControlName="tematica_solicitada" id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <input formControlName="tematica_solicitada" placeholder="EJ: Core Tools" id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
         
         <div class="field col-12 md:col-6">
@@ -63,7 +63,7 @@
         </div>
         <div class="field col-12 md:col-6">
             <label for="lastname6">Localidad donde se impartira</label>
-            <input formControlName="localidad_impartira" id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <input formControlName="localidad_impartira" placeholder="EJ: Saltillo" id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
         <div class="field col-12 md:col-6">
             <label for="lastname6">Numero de participantes</label>
@@ -76,6 +76,11 @@
             <select (change)="horarioChange($event)" formControlName="horarios_dias_requeridos" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
                 <option *ngFor="let h of horariosYDias" [value]="h.name">{{h.name}} </option>
             </select>
+            <p-messages *ngIf="isFieldInvalid('horarios_dias_requeridos')" severity="error" >
+                <ng-template pTemplate>
+                    <span class="ml-2">Obligatorio Horarios del cliente</span>
+                </ng-template>
+            </p-messages>
         </div>
         <div class="field col-12 md:col-6" *ngIf="isOtroSelected">
             <label for="customHonorario"></label>
@@ -115,7 +120,7 @@
             <select formControlName="escolaridad_minima" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
                 <option>bachillerato</option>
                 <option>Licenciatura / ingieneria</option>
-                <option>Desgrado</option>
+                <option>Posgrado</option>
             </select>
         </div>
         <div class="field col-12 md:col-6">
@@ -141,8 +146,8 @@
             </select>
         </div>
         <div class="field col-12">
-            <label for="address">Principales temas, conocimientos</label>
-            <textarea placeholder="ejemplo" formControlName="principales_temas"  id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            <label for="address">Principales temas, conocimientos y habilidades requeridas</label>
+            <textarea placeholder="" formControlName="principales_temas"  id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
             <p-messages *ngIf="isFieldInvalid('principales_temas')" severity="error" >
                 <ng-template pTemplate>
                     <span class="ml-2">campo Obligatorio</span>

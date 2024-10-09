@@ -27,12 +27,12 @@ export class RequisicionesExternasComponent implements OnInit {
   ) {
     this.requisicionForm2 = this.fb.group({
       usuario: [{ value: this.user['usuario'], disabled: true }, Validators.required],
-        nombre_del_solicitante: ['Juan Pérez', Validators.required],
+        nombre_del_solicitante: ['', Validators.required],
         puesto_del_solicitante: ['Coord. de ventas', Validators.required],
         region_solicitante: ['Bajio', Validators.required],
-        tematica_solicitada: ['Matemáticas', Validators.required],
+        tematica_solicitada: ['', Validators.required],
         num_vacantes: [2, Validators.required],
-        localidad_impartira: ['Saltillo', Validators.required],
+        localidad_impartira: ['', Validators.required],
         num_participantes: ['0-10', Validators.required],
         horarios_dias_requeridos: ['Aun no especificado', Validators.required],
         motivo_del_requerimiento_cliente: ['', Validators.required],

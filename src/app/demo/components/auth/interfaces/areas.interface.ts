@@ -18,5 +18,10 @@ export class areasCGP {
         { name: 'Sonora', code: 'Opción 3' },
         { name: 'Chihuahua', code: 'Opción 3' }
       ];
+    public static empresas = [
+        { name: 'CGP', code: 'Opción 1' },
+        { name: 'Click to go', code: 'Opción 2' },
+        { name: 'E-group', code: 'Opción 3' },
+      ];
 }
 

@@ -1,4 +1,18 @@
-<p-card header="Detalles de la solicitud con el Id # {{this.solicitud?.id}}"  class="custom-card">
+
+<div *ngIf="!loading" class="flex align-items-center justify-content-center">
+<p-progressSpinner 
+    styleClass="w-4rem h-4rem" 
+    strokeWidth="8" 
+    fill="var(--surface-ground)" 
+    animationDuration=".8s" />
+</div>
+
+<div *ngIf="loading" class="flex align-items-center">
+  <!-- Botón de Volver -->
+  <button pButton icon="pi pi-arrow-left" class="p-button-rounded p-button-text" (click)="volver()" label="Volver"></button>
+</div>
+
+<p-card *ngIf="loading" header="Detalles de la solicitud con el Id # {{this.solicitud?.id}}"  class="custom-card">
     <div class="formgrid grid p-fluid">
       
       <!-- Campo Nombre -->
@@ -31,23 +45,49 @@
         <label for="linkCurso">Link del Curso:</label>
         <a> {{this.solicitud?.link}} </a>
       </div>
+      <!-- <div class="field col-12 md:col-6">
+        <label for="linkCurso">Link del Curso:</label>
+        <a> {{this.solicitud?.link}} </a>
+      </div> -->
       
-      <!-- Imagen del Curso -->
       <div class="field col-12 md:col-6">
-        <label>Imagen adjuntada:</label>
-        <img src="https://visualmanagment.com/AppCGP/apis/materiales/imagenes/hsfgfg.png" alt="Imagen del Curso" class="course-image" />
+        <label>Asignada al usuario :</label>
+        <strong *ngIf="solicitud?.asignada_a; else noAsignado">
+          {{ solicitud?.asignada_a }}
+        </strong>
+      
+        <!-- Mostrar mensaje en rojo si no existe el usuario asignado -->
+        <ng-template #noAsignado>
+          <span style="color: red;">Aún no se ha asignado a ningun usuario esta solicitud</span>
+        </ng-template>
       </div>
       <div class="field col-12 md:col-6">
         <label>Categoria:</label>
         <strong> {{this.solicitud?.categoria}} </strong>
       </div>
+      <div class="field col-12 md:col-6">
+        <label>Estatus:</label>
+        <p-tag  [severity]="severity(this.solicitud?.estatus)" [value]="this.solicitud?.estatus"/>
+        <!-- <strong> {{this.solicitud?.estatus}} </strong> -->
+      </div>
+      <!-- Imagen del Curso -->
+      <div class="field col-12 md:col-12">
+        <label>Imagen adjuntada:</label>
+        <!-- <img src="https://visualmanagment.com/AppCGP/apis/materiales/imagenes/hsfgfg.png" alt="Imagen del Curso" class="course-image" /> -->
+        <p-image 
+        src="https://visualmanagment.com/AppCGP/apis/materiales/imagenes/hsfgfg.png"
+        alt="Image" 
+        width="250" 
+        [preview]="true" />
+      </div>
+      
   
       <!-- Botón Asignar -->
       <div class="field col-12 md:col-6 flex align-items-center justify-content-center">
-        <button pButton type="button" (click)="showDialog()" label="Asignar" icon="pi pi-check" class="p-button-success"></button>
+        <button [disabled]="this.solicitud?.asignada_a" pButton type="button" (click)="showDialog()" label="Asignar" icon="pi pi-check" class="p-button-success"></button>
       </div>
       <div class="field col-12 md:col-6 flex align-items-center justify-content-center">
-        <button pButton type="button" label="Tomar solicitud" icon="pi pi-check" class="p-button-success"></button>
+        <button (click)="tomarSolicitud()" [disabled]="this.solicitud?.asignada_a" pButton type="button" label="Tomar solicitud" icon="pi pi-check" class="p-button-success"></button>
       </div>
     </div>
   </p-card>
@@ -64,16 +104,17 @@
     <div class="formgrid grid">
     <div class="field col-6 md:col-12">
       <label for="state">Usuario</label>
-      <select id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
-          <option>Jackie</option>
-          <option>Ari</option>
-          <option>Yo mismo</option>
+      <select placeholder="Asigna" [(ngModel)]="usuarioSeleccionado" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+          <option *ngFor="let usuario of usuariosMateriales"  [value]="usuario"> {{usuario}} </option>
       </select>
   </div>
   <div class="field col-6 md:col-12">
     <button pButton type="button" label="Asignar solicitud" (click)="asignar()"></button>
 </div>
 </div>
+
+<p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
+
 
         
 </p-dialog>

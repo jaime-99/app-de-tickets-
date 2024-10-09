@@ -217,7 +217,7 @@ export class AppMenuComponent implements OnInit {
                             label: 'Requisiciones',
                             items: [
                                 {
-                                    label: 'interna',
+                                    label: 'Personal Interno',
                                     items:[
                                         {
                                             label: 'crear',
@@ -236,7 +236,7 @@ export class AppMenuComponent implements OnInit {
                                     ]
                                 },
                                 {
-                                    label: 'Externa',
+                                    label: 'Instructores',
                                     items:[
                                         {
                                             label: 'crear',
@@ -300,6 +300,10 @@ export class AppMenuComponent implements OnInit {
                                 {
                                     label: 'Todas',
                                     routerLink: ['./materiales/Asignadas']
+                                },
+                                {
+                                    label: 'Mis Asignaciones',
+                                    routerLink: ['/materiales/mis-solicitudes-asignadas']
                                 },
 
                             ]
