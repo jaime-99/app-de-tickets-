@@ -49,7 +49,7 @@ export class MaterialesService {
 
 //obtiene las solicitudes de solo un usuario
 getSolicitudForUsuario(usuario){
-  let url = `https://visualmanagment.com/AppCGP/apis/materiales/getSolicitudForUser.php?usuario=${usuario}&timestamp=${new Date().getTime()}`
+  let url = `https://visualmanagment.com/AppCGP/apis/materiales/getSolicitudesForUser.php?usuario=${usuario}&timestamp=${new Date().getTime()}`
   return this.http.get<any>(url);
 } 
 }

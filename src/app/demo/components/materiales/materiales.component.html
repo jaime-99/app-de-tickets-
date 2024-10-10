@@ -1,5 +1,5 @@
 
-<p-card header="Solicitudes para Materiales">
+<p-card *ngIf="!visible" header="Solicitudes para Materiales">
 
 <form [formGroup]="solicitudesForm">
 <div class="formgrid grid">
@@ -9,65 +9,118 @@
     </div>
     <div class="field col-12 md:col-6">
         <label for="lastname6">Nombre Completo</label>
-        <input formControlName="nombre"  id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <input [readOnly]="true" formControlName="nombre"  id="lastname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="field col-12">
         <label for="address">Descripcion</label>
         <textarea formControlName="descripcion" id="address" type="text" rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+        <p-messages *ngIf="isFieldInvalid('descripcion')" severity="error" >
+            <ng-template pTemplate>
+                <span class="ml-2">Obligatorio descripcion</span>
+            </ng-template>
+        </p-messages>
     </div>
     <div class="field col-12 md:col-6">
         <label  for="city">Nombre del curso </label>
         <input formControlName="nombre_curso" id="city" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <p-messages *ngIf="isFieldInvalid('nombre_curso')" severity="error" >
+            <ng-template pTemplate>
+                <span class="ml-2">Obligatorio nombre del curso</span>
+            </ng-template>
+        </p-messages>
     </div>
     <div class="field col-12 md:col-3">
         <label for="state">Categoria</label>
         <select formControlName="categoria" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
             <option>Sac</option>
             <option>Materiales</option>
-            
         </select>
+        <p-messages *ngIf="isFieldInvalid('categoria')" severity="error" >
+            <ng-template pTemplate>
+                <span class="ml-2">Obligatorio categoria</span>
+            </ng-template>
+        </p-messages>
+        
     </div>
     <div class="field col-12 md:col-3">
         <label for="zip">Fecha</label>
-        <input id="zip" formControlName="fecha" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <input [readonly]="true" id="zip" formControlName="fecha" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="field col-12 md:col-3">
         <label for="zip">Id Curso</label>
         <input formControlName="idCurso" id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <p-messages *ngIf="isFieldInvalid('idCurso')" severity="error" >
+            <ng-template pTemplate>
+                <span class="ml-2">Obligatorio Id del curso</span>
+            </ng-template>
+        </p-messages>
     </div>
     <div class="field col-12 md:col-3">
         <label for="zip">Link</label>
         <input formControlName="link" id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <p-messages *ngIf="isFieldInvalid('link')" severity="error" >
+            <ng-template pTemplate>
+                <span class="ml-2">Obligatorio el link</span>
+            </ng-template>
+        </p-messages>
     </div>
 </div>
+
 </form>
 
 <p-divider></p-divider>
 
-<div class="card flex justify-content-center">
-    <p-toast />
-    <p-fileUpload 
+<strong>Subir archivo (opcional) </strong>
+<div class="card flex justify-content-between align-items-start">
+    <div>
+      <p-toast></p-toast>
+      <p-fileUpload 
         mode="basic" 
         chooseLabel="Cargar" 
-        chooseIcon="pi pi-upload"
+        chooseIcon=".jpg,.jpeg,.png,.xlsx,.xls,.doc,.docx,.pdf"
         name="demo[]" 
-        accept="image/*" 
+        accept=".jpg,.jpeg,.png,.xlsx,.xls,.doc,.docx,.pdf"
         maxFileSize="1000000" 
         (onSelect)="onSelect($event)"
-        #fileUpload
-         />
-         <button (click)="elimiarArchivo()" class="p-button-danger" pButton label="Eliminar archivo" icon="pi pi-check"></button>
-
-        </div>
-
-
-
-        <div>
-            <button type="click" (click)="onSubmit()"  pButton label="Enviar solicitud" icon="pi pi-check"
-             style="width: 100%;" class="p-button-block p-button-success"></button>
-        </div>
-        
-
-
-
+        #fileUpload>
+      </p-fileUpload>
+    </div>
+  
+    <div>
+      <button 
+        (click)="elimiarArchivo()" 
+        class="p-button-danger" 
+        pButton 
+        label="Eliminar archivo" 
+        icon="pi pi-check">
+      </button>
+    </div>
+  </div>
+  
+  <div>
+    <button 
+      type="click" 
+      (click)="onSubmit()"  
+      pButton 
+      label="Enviar solicitud" 
+      icon="pi pi-check"
+      style="width: 100%;" 
+      class="p-button-block p-button-success">
+    </button>
+  </div>
+  
 </p-card>
+
+
+<div *ngIf="visible" class="grid flex flex-column align-items-center">
+    <div class="flex justify-content-center align-items-center bg-green-500 border-circle" style="height:4rem; width:4rem;">
+        <i class="pi pi-fw pi-check-circle text-3xl text-white"></i>
+    </div>
+  
+    <div class="m-4">
+    <p>Tu Solicitud ha sido exitosa</p>
+    <p>Favor de esperar la confirmacion de Materiales</p>
+    <button pButton pRipple icon="pi pi-arrow-left" label="Ir a mis solicitudes para materiales" class="p-button-text" [routerLink]="['/materiales']"></button>
+  
+    </div>
+  </div>

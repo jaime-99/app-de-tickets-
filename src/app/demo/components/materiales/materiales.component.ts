@@ -18,32 +18,34 @@ export class MaterialesComponent implements OnInit {
   urlArchivo: any;
   files: any;
   ejemplo = true
-  urlSubida = '/home1/visualn4/public_html/AppCGP/apis/materiales/imagenes/'
+  urlSubida = 'https://visualmanagment.com/AppCGP/apis/materiales/imagenes/'
   solicitudesForm2: FormGroup;
   @ViewChild('fileUpload') fileUpload: FileUpload;
   usuario: any;
   // es para cuando se mande la solicitud que coloque un anuncio
   visible = false;
+  nombreCompleto: string;
 
   constructor(private messageService: MessageService,
     private fb:FormBuilder, private http: HttpClient,
-    private authService:AuthService, private materialesService:MaterialesService
+    private authService:AuthService, private materialesService:MaterialesService,
   ) {}
   ngOnInit(): void {
 
     this.usuario = this.authService.getUser()
+    this.nombreCompleto = `${this.usuario.nombre} ${this.usuario.apellido_paterno} ${this.usuario.apellido_materno}`
 
     this.solicitudesForm = this.fb.group({
-      fecha:  [ {value: this.getCurrentDate(), disabled:true}, Validators.required],
+      fecha:  [this.getCurrentDate(), Validators.required],
       usuario: [this.usuario.usuario, [Validators.required, Validators.maxLength(100)]],
-      nombre: ['', [Validators.required, Validators.maxLength(100)]],
+      nombre: [this.nombreCompleto, [Validators.required, Validators.maxLength(100)]],
       nombre_curso: ['', [Validators.required, Validators.maxLength(150)]],
       idCurso: ['', Validators.required],
-      link: ['', [Validators.maxLength(255)]],
+      link: ['', [Validators.maxLength(255), Validators.required]],
       categoria: ['', Validators.maxLength(100)],
-      descripcion: [''],
+      descripcion: ['', Validators.required],
       archivo: ['', [Validators.required, Validators.maxLength(255)]],
-      estatus: ['abierto', [Validators.required, Validators.maxLength(255)]]
+      estatus: ['abierto', []]
     });
 
     this.solicitudesForm2 = this.fb.group({
@@ -63,13 +65,36 @@ export class MaterialesComponent implements OnInit {
 
 
   onSubmit(){ 
+
+
     this.uploadFiles();
 
-    this.materialesService.postSolicitud(this.solicitudesForm.value).subscribe((res)=>{
-      // console.log(res)
-
-    })
+    if(this.solicitudesForm.invalid) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Faltan algunos datos, revise de nuevo' });
+      this.markAllAsTouched()
+      // this.visible = true;
+      
+    }else{
+      this.materialesService.postSolicitud(this.solicitudesForm.value).subscribe((res)=>{
+        // console.log(res)
+      })
+    }
   }
+
+  isFieldInvalid(field: string): boolean {
+    const control = this.solicitudesForm.get(field);
+    return control ? control.invalid && control.touched : false;
+  }
+  markAllAsTouched(): void {
+    Object.keys(this.solicitudesForm.controls).forEach(field => {
+      const control = this.solicitudesForm.get(field);
+      if (control) {
+        control.markAsTouched({ onlySelf: true });
+        control.markAsDirty({ onlySelf: true });
+      }
+    });
+  }
+  
 
 
 //   onUpload(event: any) {
@@ -100,7 +125,7 @@ onError(event: any) {
 onSelect(event: any) {
   // Actualizar el FormControl con el archivo seleccionado
  
-  console.log(event.files[0])
+  // console.log(event.files[0])
   this.solicitudesForm2.patchValue({
     archivo: event.files[0], // Almacena el primer archivo
   });
@@ -116,7 +141,6 @@ uploadFiles() {
     // console.log('Archivo listo para subir:', file);
     const formData = new FormData();
       formData.append('demo[]', file); // Agregar el archivo a FormData
-      console.log(file.name)
       this.solicitudesForm.patchValue({
         archivo: `${this.urlSubida}${file.name}`
       })
@@ -125,7 +149,7 @@ uploadFiles() {
       this.http.post('https://visualmanagment.com/AppCGP/apis/materiales/subidaArchivo.php', formData)
         .subscribe({
           next: (response) => {
-            console.log('Archivo subido con éxito:', response);
+            // console.log('Archivo subido con éxito:', response);
             this.urlArchivo = response['filePath'];
           },
           error: (error) => {
@@ -134,7 +158,7 @@ uploadFiles() {
         });
 
   } else {
-    console.log('No se ha seleccionado ningún archivo.');
+    // console.log('No se ha seleccionado ningún archivo.');
   }
 }
 

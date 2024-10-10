@@ -33,6 +33,7 @@ private router:Router) {}
   getSolicitudes(){
     this.materialesService.getSolicitudes().subscribe((res)=>{
       this.solicitudes = res
+      console.log(this.solicitudes)
       this.isLoading = false;
       this.isLoading2 = false;
       this.isLoading3 = false;

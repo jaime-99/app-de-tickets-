@@ -72,14 +72,14 @@
       </div>
       <!-- Imagen del Curso -->
       <div class="field col-12 md:col-12">
-        <label>Imagen adjuntada:</label>
-        <!-- <img src="https://visualmanagment.com/AppCGP/apis/materiales/imagenes/hsfgfg.png" alt="Imagen del Curso" class="course-image" /> -->
-        <p-image 
-        src="https://visualmanagment.com/AppCGP/apis/materiales/imagenes/hsfgfg.png"
-        alt="Image" 
-        width="250" 
-        [preview]="true" />
+        <label>Archivo adjuntado:</label>
+        <a [href]="this.solicitud?.archivo" 
+           target="_blank" 
+           download>
+          {{ obtenerNombreArchivo(this.solicitud?.archivo) }}
+        </a>
       </div>
+      
       
   
       <!-- Botón Asignar -->

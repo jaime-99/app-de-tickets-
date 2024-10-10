@@ -1,12 +1,10 @@
 
 
-
-<h3>Solicitudes Materiales</h3> 
+<h3>Mis Asignaciones</h3> 
 <p-tabView>
- 
 <!-- Data Loaded State  -->
 
-<p-tabPanel header="Abierto">
+<p-tabPanel header="Asignados">
 
  <ng-container *ngIf="loading; else dataLoadedAbiertos"> 
    <!-- Skeleton Loading State -->
@@ -87,9 +85,20 @@
        <td>{{ solicitudes2?.nombre_curso }}</td>
        <td>{{ solicitudes2?.idCurso }}</td>
        <td>{{ solicitudes2.categoria }}</td>
-       <td>
-         <button icon="pi pi-eye" class="p-button-success" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)" ></button>
-       </td>
+       <div class="button-container">
+          <button icon="pi pi-eye" class="p-button p-button-success small-btn" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)"></button>
+          <!-- <button class="p-button p-button-danger small-btn" pButton label="Cerrar"></button> -->
+          <p-toast />
+          <p-confirmPopup>
+              <ng-template pTemplate="content" let-message>
+                  <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
+                      <i [class]="message.icon" class="text-6xl text-primary-500"></i>
+                      <p>{{ message.message }}</p>
+                  </div>
+              </ng-template>
+          </p-confirmPopup>
+      <button class="p-button p-button-danger small-btn" pButton (click)="confirm($event, solicitudes.id)" label="Cerrar"></button>
+        </div>
      </tr>
    </ng-template>
    
@@ -183,8 +192,22 @@
        <td>{{ solicitudes2?.idCurso }}</td>
        <td>{{ solicitudes2.categoria }}</td>
        <td>
-         <button icon="pi pi-eye" class="p-button-success" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)" ></button>
-       </td>
+        <div class="button-container">
+          <button icon="pi pi-eye" class="p-button p-button-success small-btn" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)"></button>
+          <!-- <button class="p-button p-button-danger small-btn" pButton label="Cerrar"></button> -->
+          <p-toast />
+          <p-confirmPopup>
+              <ng-template pTemplate="content" let-message>
+                  <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
+                      <i [class]="message.icon" class="text-6xl text-primary-500"></i>
+                      <p>{{ message.message }}</p>
+                  </div>
+              </ng-template>
+          </p-confirmPopup>
+      <button class="p-button p-button-danger small-btn" pButton (click)="confirm($event)" label="Cerrar"></button>
+        </div>
+      </td>
+      
      </tr>
    </ng-template>
    

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialesRoutingModule } from './materiales-routing.module';
 import { MaterialesComponent } from './materiales.component';
 import { SharedModule } from '../shared/shared.module';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { SolicitudesComponent } from './solicitudes/solicitudes.component';
 import { DetallesComponent } from './solicitudes/detalles/detalles.component';
 import { SolicitudesAsignadasComponent } from './solicitudes/solicitudes-asignadas/solicitudes-asignadas.component';
@@ -23,7 +23,8 @@ import { SolicitudesAsignadasComponent } from './solicitudes/solicitudes-asignad
     SharedModule
   ],
   providers:[
-    MessageService
+    MessageService,
+    ConfirmationService
   ]
 })
 export class MaterialesModule { }

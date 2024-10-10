@@ -96,8 +96,8 @@ asignar(){
       // console.log('si tiene el usuario seleccionado')
     
     this.materialesService.putAsignarSolicitud(body.id,body.asignada_a).subscribe((res)=>{
-      // window.location.reload();
       this.materialesService.putEstatusSolicitud(body.id,'asignada').subscribe((res)=>{
+        window.location.reload();
         // console.log(res)
       });
     })
@@ -143,4 +143,11 @@ volver(){
   this.location.back();
 
 }
+
+
+
+obtenerNombreArchivo(url: string): string {
+  return url.split('/').pop() || '';
+}
+
 }

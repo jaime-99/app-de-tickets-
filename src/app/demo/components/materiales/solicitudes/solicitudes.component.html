@@ -69,8 +69,8 @@
     <ng-template pTemplate="header">
       <tr>
         <th>#</th>
-        <th pSortableColumn="fecha_solicitud">
-          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+        <th pSortableColumn="fecha">
+          Fecha Solicitud <p-sortIcon field="fecha" />
         </th>
         <th>Nombre</th>
         <th>Nombre Curso</th>
@@ -83,7 +83,7 @@
     <ng-template pTemplate="body" let-solicitudes2>
       <tr>
         <td>{{ solicitudes2?.id }}</td>
-        <td>12/10/22</td>
+        <td> {{solicitudes2?.fecha | date:'dd/MM/yyyy'}} </td>
         <td>{{ solicitudes2?.nombre }}</td>
         <td>{{ solicitudes2?.nombre_curso }}</td>
         <td>{{ solicitudes2?.idCurso }}</td>
@@ -164,8 +164,8 @@
     <ng-template pTemplate="header">
       <tr>
         <th>#</th>
-        <th pSortableColumn="fecha_solicitud">
-          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+        <th pSortableColumn="fecha">
+          Fecha Solicitud <p-sortIcon field="fecha" />
         </th>
         <th>Nombre</th>
         <th>Nombre Curso</th>
@@ -178,7 +178,7 @@
     <ng-template pTemplate="body" let-solicitudes2>
       <tr>
         <td>{{ solicitudes2?.id }}</td>
-        <td>12/10/22</td>
+        <td> {{solicitudes2?.fecha | date:'dd/MM/yyyy'}} </td>
         <td>{{ solicitudes2?.nombre }}</td>
         <td>{{ solicitudes2?.nombre_curso }}</td>
         <td>{{ solicitudes2?.idCurso }}</td>
@@ -215,6 +215,7 @@
           <th>Nombre curso</th>
           <th>IdCurso</th>
           <th>Categoria</th>
+          <th>Asignacion</th>
           <th>Acciones</th>
         </tr>
       </ng-template>
@@ -227,6 +228,7 @@
           <td><p-skeleton width="10rem"></p-skeleton></td>
           <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="15rem"></p-skeleton></td>
+          <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="5rem"></p-skeleton></td>
         </tr>
       </ng-template>
@@ -237,7 +239,7 @@
 <ng-template  #dataLoadedAsignados>
   <p-table 
     #dt3
-    [value]="solicitudesForEstatus('asignados')" 
+    [value]="solicitudesForEstatus('asignada')" 
     styleClass="p-datatable-gridlines" 
     [tableStyle]="{ 'min-width': '50rem' }"
     [paginator]="true"
@@ -258,13 +260,14 @@
     <ng-template pTemplate="header">
       <tr>
         <th>#</th>
-        <th pSortableColumn="fecha_solicitud">
-          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+        <th pSortableColumn="fecha">
+          Fecha Solicitud <p-sortIcon field="fecha" />
         </th>
         <th>Nombre</th>
         <th>Nombre Curso</th>
         <th>IdCurso</th>
         <th>Categoria</th>
+        <th>Asignacion</th>
         <th>Acciones</th>
       </tr>
     </ng-template>
@@ -272,11 +275,12 @@
     <ng-template pTemplate="body" let-solicitudes2>
       <tr>
         <td>{{ solicitudes2?.id }}</td>
-        <td>12/10/22</td>
+        <td> {{solicitudes2?.fecha | date:'dd/MM/yyyy'}} </td>
         <td>{{ solicitudes2?.nombre }}</td>
         <td>{{ solicitudes2?.nombre_curso }}</td>
         <td>{{ solicitudes2?.idCurso }}</td>
-        <td>{{ solicitudes2.categoria }}</td>
+        <td>{{ solicitudes2?.categoria }}</td>
+        <td>{{ solicitudes2?.asignada_a }}</td>
         <td>
           <button icon="pi pi-eye" class="p-button-success" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)" ></button>
         </td>
@@ -366,7 +370,7 @@
     <ng-template pTemplate="body" let-solicitudes2>
       <tr>
         <td>{{ solicitudes2?.id }}</td>
-        <td>12/10/22</td>
+        <td> {{solicitudes2?.fecha}} </td>
         <td>{{ solicitudes2?.nombre }}</td>
         <td>{{ solicitudes2?.nombre_curso }}</td>
         <td>{{ solicitudes2?.idCurso }}</td>
