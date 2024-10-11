@@ -1,22 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RequizicionesService } from '../../requiziciones.service';
 
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { Renderer2 } from '@angular/core';
+
+import { ConfirmationService } from 'primeng/api';
+import { HabilidadesRequeridasComponent } from '../../habilidades-requeridas/habilidades-requeridas.component';
 
 @Component({
   selector: 'app-requisicion-solicitada-detalle',
   templateUrl: './requisicion-solicitada-detalle.component.html',
   styleUrl: './requisicion-solicitada-detalle.component.scss'
 })
-export class RequisicionSolicitadaDetalleComponent implements OnInit {
+export class RequisicionSolicitadaDetalleComponent implements OnInit, AfterViewInit  {
   requisicion: any;
   constructor (private activateRouter:ActivatedRoute,
-    private requisicionesService:RequizicionesService
+    private requisicionesService:RequizicionesService,
+    private confirmationService: ConfirmationService,
+    private renderer: Renderer2
   ) {}
+  ngAfterViewInit(): void {
+
+  }
   requisicionId:any;
   loading:boolean = false;
+
+  @ViewChild('tablaPrincipal', { static: false }) tablaPrincipal: any; // Referencia a la tabla principal
+  @ViewChild(HabilidadesRequeridasComponent, { static: false }) habilidadesRequeridasComponent: HabilidadesRequeridasComponent; // Referencia al componente hijo
 
   ngOnInit(): void {
     
@@ -36,6 +48,8 @@ export class RequisicionSolicitadaDetalleComponent implements OnInit {
   }
 
   downloadPDF() {
+
+   
     window.print();
     return
     const printSection = document.getElementById('print-section');
@@ -65,4 +79,54 @@ export class RequisicionSolicitadaDetalleComponent implements OnInit {
       });
     }
   }
+
+
+  confirm1(event: Event) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Cerrar la requisicion?',
+        header: 'Confirmacion',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon:"none",
+        rejectIcon:"none",
+        acceptLabel:'Si',
+        rejectButtonStyleClass:"p-button-text",
+        accept: () => {
+
+        },
+    });
+}
+
+
+
+
+printSection() {
+  const printContent = this.tablaPrincipal.nativeElement.outerHTML; // Obtener tabla principal
+  const habilidadesContent = this.habilidadesRequeridasComponent 
+    ? this.habilidadesRequeridasComponent.getInnerHTML() // Obtener tabla de habilidades
+    : '<p>No se encontraron habilidades</p>'; // Mensaje si no hay contenido de habilidades
+
+  const windowPrint = window.open('', '', 'width=900,height=650');
+  windowPrint.document.write('<html><head><title>Imprimir Requisición</title>');
+  windowPrint.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/primeicons@4.1.0/primeicons.css">');  // Estilos opcionales
+  windowPrint.document.write('</head><body>');
+  
+  // Incluir el contenido de la tabla principal
+  windowPrint.document.write(printContent);
+
+  // Incluir el contenido de `app-habilidades-requeridas`
+  windowPrint.document.write('<br><h4>Habilidades Requeridas:</h4>');
+  windowPrint.document.write(habilidadesContent);
+
+  windowPrint.document.write('</body></html>');
+  windowPrint.document.close();
+  windowPrint.focus();
+  windowPrint.print();
+}
+
+
+
+
+
+
 }

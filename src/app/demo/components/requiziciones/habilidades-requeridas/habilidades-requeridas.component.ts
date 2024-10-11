@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { requsiciones } from '../interfaces/requisicion.interface';
 
 @Component({
@@ -11,6 +11,9 @@ export class HabilidadesRequeridasComponent implements OnInit {
   @Input() dataHabilidades: requsiciones;
 
 
+  @ViewChild('habilidadesContent', { static: false }) habilidadesContent: ElementRef;
+
+
   constructor () {}
   ngOnInit(): void {
 
@@ -18,4 +21,10 @@ export class HabilidadesRequeridasComponent implements OnInit {
 
   }
 
+
+  getInnerHTML(): string {
+    return this.habilidadesContent
+      ? this.habilidadesContent.nativeElement.innerHTML
+      : '<p>Habilidades no disponibles</p>';
+  }
 }

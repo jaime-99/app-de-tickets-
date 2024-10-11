@@ -91,7 +91,6 @@
             <p-radioButton name="horario" selected formControlName="horario" value="no"  inputId="si" label="L a V 8:30 a 5:30"   (onClick)="onRadioButtonChange('no')"></p-radioButton>
             <p-radioButton name="horario" formControlName="horario" value="si" inputId="no" label="otro"   (onClick)="onRadioButtonChange('si')"></p-radioButton>
             <span *ngIf="otherSelected">Horario   <input type="text" pInputText placeholder="EJ:de 9 a 4pm" formControlName="horariosEstablecidos"/> </span>
-
         </div>
           
     </div>
@@ -136,7 +135,7 @@
     
     <h4 class="col-12 xl:col-12">Habilidades Requeridas</h4>
 
-    <div class="col-3 xl:col-3">
+    <!-- <div class="col-3 xl:col-3">
         <label >Actividades principales</label>
         <textarea  
             rows="3" 
@@ -153,6 +152,28 @@
                 <span class="ml-2">Obligatorio actividades principales</span>
             </ng-template>
         </p-messages>
+    </div> -->
+    <div class="col-6 xl:col-4">
+        <p> Actividades Principales</p>
+        <div class="flex flex-column gap-2">
+            <p-radioButton name="actividadesPrincipales2" selected formControlName="actividadesPrincipales2" value="no"  inputId="si" label="Mismas que en descripcion de puesto"   (onClick)="onRadioButtonChange2('no')"></p-radioButton>
+            <p-radioButton name="actividadesPrincipales2" formControlName="actividadesPrincipales2" value="si" inputId="no" label="otro"   (onClick)="onRadioButtonChange2('si')"></p-radioButton>
+            <span *ngIf="otherSelectedActividades">Actividades principales   
+
+                <textarea  
+            rows="3" 
+            cols="50" 
+            pInputTextarea 
+            formControlName="actividadesPrincipales"
+            placeholder="EJ: crear tablas en excel"
+            wrap="hard"
+            style="resize: none;">
+            >
+        </textarea>
+                
+            </span>
+        </div>
+          
     </div>
     
     <div class="col-3 xl:col-3">
@@ -353,14 +374,14 @@
 
         <div class="field col-12">
             <label for="requerimientos"> Requerimientos adicionales</label>
-            <textarea id="requerimientos" type="text" formControlName="requerimientosAdicionales" rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            <textarea id="requerimientos" placeholder="Opcional" type="text" formControlName="requerimientosAdicionales" rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
     
         
         <p-divider class="col-12 xl:col-12"></p-divider>
         <div class="col-3 xl:col-4">
             <label class=""> <strong> Publicacion Vacante en </strong> </label>
-            <p-dropdown class="" formControlName="publicacionVacante" 
+            <p-dropdown class="" formControlName="publicacionVacante" placeholder="selecciona una publicacion" 
              [options]="publicacionVacante" optionLabel="name" optionValue="value"(onChange)="onDropdownChange($event)">
 
              ></p-dropdown>

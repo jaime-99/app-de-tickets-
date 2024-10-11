@@ -22,7 +22,8 @@ export class SolicitudesAsignadasComponent implements OnInit {
     private materialService:MaterialesService,
     private router:Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    // private location:Location
     
 
   ) {}
@@ -90,10 +91,13 @@ export class SolicitudesAsignadasComponent implements OnInit {
         accept: () => {
           
             this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'has cerrado la solicitud', life: 3000 });
-            if(id) this.materialService.putEstatusSolicitud(id,'cerrado').subscribe()
+            this.materialService.putEstatusSolicitud(id,'cerrado').subscribe(()=>{
+
+              // window.location.reload();
+            })
         },
         reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Rechazado', detail: 'Has rechazado', life: 3000 });
+            // this.messageService.add({ severity: 'error', summary: 'Rechazado', detail: 'Has rechazado', life: 3000 });
             return;
             
         }

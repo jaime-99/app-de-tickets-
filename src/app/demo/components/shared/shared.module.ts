@@ -26,7 +26,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { DialogModule } from 'primeng/dialog';
 import { TabViewModule } from 'primeng/tabview';
 import { ImageModule } from 'primeng/image';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 
@@ -63,6 +63,7 @@ import { ImageModule } from 'primeng/image';
     DialogModule,
     TabViewModule,
     ImageModule,
+    ConfirmDialogModule
     
     
   ]

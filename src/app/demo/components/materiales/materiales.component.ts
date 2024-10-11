@@ -72,7 +72,7 @@ export class MaterialesComponent implements OnInit {
     if(this.solicitudesForm.invalid) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Faltan algunos datos, revise de nuevo' });
       this.markAllAsTouched()
-      // this.visible = true;
+      this.visible = true;
       
     }else{
       this.materialesService.postSolicitud(this.solicitudesForm.value).subscribe((res)=>{

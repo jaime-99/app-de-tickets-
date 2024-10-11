@@ -32,8 +32,10 @@ export class AddRequizicionComponent implements OnInit {
   publicacionVacante = Categorias.publicacionVacante // en donde se publicara
   showOtherField: boolean = false; // para ver si escogio otro o no en la lista de publicacion
   usuario:any; // es del usuario de quien mandara el formulario
-  
+  // es para la opcion extar de horarios
   otherSelected:boolean = false;
+  // es para la opcion extra de actividades Principales
+  otherSelectedActividades:boolean = false;
   ngOnInit(): void {
 
     this.usuario =this.authUser.getUser()
@@ -57,7 +59,7 @@ export class AddRequizicionComponent implements OnInit {
       requiereDominioIdiomas: ['no', [Validators.required,]],
       salario: [8000, [Validators.required,]],
       //parte 3 
-      actividadesPrincipales: ['', [Validators.required,]],
+      actividadesPrincipales: ['mismas que en descripcion de puestos', [Validators.required,]],
       conocimientosPrevios: ['', [Validators.required,]],
       requerimientosAdicionales: ['', [Validators.required,]],
       publicacionVacante: ['', [Validators.required,]],
@@ -93,6 +95,8 @@ export class AddRequizicionComponent implements OnInit {
       
       // es para el horario de la opcion extra 
       horario: ['no'],
+      // es para la opcion extra de actividadesPrincipales
+      actividadesPrincipales2: ['no'],
       // extra 
       otherPublicacionVacante:['']
 
@@ -190,8 +194,17 @@ export class AddRequizicionComponent implements OnInit {
 
     // this.router.navigateByUrl('/requisicion/requisicion_Creada')
 
-    // console.log(payload);
-    // return;
+    console.log(payload);
+    // console.log(this.requisicionForm.controls)
+    Object.keys(this.requisicionForm.controls).forEach(key => {
+      const control = this.requisicionForm.controls[key];
+      if (control.invalid) {
+        console.log(`${key} es inválido`);
+      } else {
+        console.log(`${key} es válido`);
+      }
+    });
+    return;
     if(this.requisicionForm.valid){
       this.requisicionService.postRequisicion(payload)
       .subscribe((res)=>{
@@ -255,8 +268,8 @@ actualDateForm() {
 }
 
 
+  //es para cambiar si selecciona una opcion u la otra en 'horarios establecidos en CGP'
   onRadioButtonChange(value: string): void {
-    // console.log(value)
     this.otherSelected = value === 'si'; // dice que si la variable otherSelected es igual al value si
     if (this.otherSelected) {
       this.requisicionForm.get('horariosEstablecidos').setValue(''); // Limpiar el campo de texto si "otro" no está seleccionado
@@ -266,7 +279,18 @@ actualDateForm() {
 
     }
     this.checkFormStatus();
+  }
+  // es para cambiar si selecciona otra en actividades principales
+  onRadioButtonChange2(value: string): void {
+    this.otherSelectedActividades = value === 'si'; // dice que si la variable otherSelected es igual al value si
+    if (this.otherSelectedActividades) {
+      this.requisicionForm.get('actividadesPrincipales').setValue(''); // Limpiar el campo de texto si "otro" no está seleccionado
+      
+    }else{
+      this.requisicionForm.get('actividadesPrincipales').setValue('misma que en descripcion de puesto'); // Limpiar el campo de texto si "otro" no está seleccionado
 
+    }
+    this.checkFormStatus();
   }
 
   checkFormStatus(){  

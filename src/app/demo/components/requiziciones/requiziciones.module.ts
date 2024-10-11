@@ -9,7 +9,7 @@ import { RequisicionesSolicitadasComponent } from './requisiciones-solicitadas/r
 import { RequisicionSolicitadaDetalleComponent } from './requisiciones-solicitadas/requisicion-solicitada-detalle/requisicion-solicitada-detalle.component';
 import { HabilidadesRequeridasComponent } from './habilidades-requeridas/habilidades-requeridas.component';
 import { PlantillaMensajeComponent } from './plantilla-mensaje/plantilla-mensaje.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MisRequisicionesInternasComponent } from './mis-requisiciones-internas/mis-requisiciones-internas.component';
 
 
@@ -33,7 +33,9 @@ import { MisRequisicionesInternasComponent } from './mis-requisiciones-internas/
     RequizicionesRoutingModule,
   ],
   providers: [
-    MessageService
+    MessageService,
+    ConfirmationService
+    
   ]
 })
 export class RequizicionesModule { }

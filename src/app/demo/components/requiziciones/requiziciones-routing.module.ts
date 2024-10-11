@@ -22,6 +22,6 @@ const routes: Routes = [{ path: '', component: RequizicionesComponent },
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class RequizicionesRoutingModule { }
