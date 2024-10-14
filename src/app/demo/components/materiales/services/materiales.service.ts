@@ -9,9 +9,9 @@ export class MaterialesService {
   constructor(private http:HttpClient) { }
 
   //envio de solicitud
-  postSolicitud(data){
+  postSolicitud(solicitud){
     let url = `https://visualmanagment.com/AppCGP/apis/materiales/addSolicitud.php`;
-    return this.http.post<any>(url, data);
+    return this.http.post<any>(url, solicitud);
 } 
   //obtener todas las solicitudes enviadas
   getSolicitudes(){

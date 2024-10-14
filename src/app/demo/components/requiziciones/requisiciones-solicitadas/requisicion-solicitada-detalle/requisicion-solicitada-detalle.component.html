@@ -5,11 +5,12 @@
 
 <div *ngIf="loading"  class="p-card">
 
-    <div class="flex p-1">
-
-        <button  icon="pi pi-download" class="p-button" pButton (click)="printSection()" label="descargar PDF"></button>
-
+    <div class="flex justify-content-between p-1">
+        <button icon="pi pi-arrow-left" class="p-button" pButton (click)="goBack()" label="Atras"></button>
+        
+        <button icon="pi pi-download" class="p-button" pButton (click)="printSection()" label="Descargar PDF"></button>
     </div>
+    
 
 
     <div class="flex flex-column p-1">

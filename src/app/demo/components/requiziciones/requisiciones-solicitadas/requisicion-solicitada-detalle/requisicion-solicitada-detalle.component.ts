@@ -5,6 +5,8 @@ import { RequizicionesService } from '../../requiziciones.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Renderer2 } from '@angular/core';
+import { Location } from '@angular/common';
+
 
 import { ConfirmationService } from 'primeng/api';
 import { HabilidadesRequeridasComponent } from '../../habilidades-requeridas/habilidades-requeridas.component';
@@ -19,7 +21,8 @@ export class RequisicionSolicitadaDetalleComponent implements OnInit, AfterViewI
   constructor (private activateRouter:ActivatedRoute,
     private requisicionesService:RequizicionesService,
     private confirmationService: ConfirmationService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private location:Location
   ) {}
   ngAfterViewInit(): void {
 
@@ -92,7 +95,7 @@ export class RequisicionSolicitadaDetalleComponent implements OnInit, AfterViewI
         acceptLabel:'Si',
         rejectButtonStyleClass:"p-button-text",
         accept: () => {
-
+          this.putEstatus();
         },
     });
 }
@@ -124,8 +127,20 @@ printSection() {
   windowPrint.print();
 }
 
+goBack(){
+  this.location.back();
+}
 
+putEstatus(){
+  //se cambiara el estatus y se enviara el id y si el estatus debe ser abierto o cerrado
 
+  const id = Number(this.requisicionId)
+
+  this.requisicionesService.putEstatus(id,'cerrado').subscribe((res)=>{
+    // console.log(res)
+    window.location.reload();
+  })
+}
 
 
 

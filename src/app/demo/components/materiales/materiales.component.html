@@ -1,11 +1,12 @@
 
+
 <p-card *ngIf="!visible" header="Solicitudes para Materiales">
 
 <form [formGroup]="solicitudesForm">
 <div class="formgrid grid">
     <div class="field col-12 md:col-6">
         <label for="firstname6">Usuario</label>
-        <input formControlName="usuario"  id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <input [readOnly]="true" formControlName="usuario"  id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
     <div class="field col-12 md:col-6">
         <label for="lastname6">Nombre Completo</label>
@@ -20,7 +21,20 @@
             </ng-template>
         </p-messages>
     </div>
-    <div class="field col-12 md:col-6">
+    <div class="field col-12 md:col-3">
+        <label for="state">Categoria</label>
+        <select (change)="category($event)" formControlName="categoria" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+            <option>Sac</option>
+            <option>Materiales</option>
+        </select>
+        <p-messages *ngIf="isFieldInvalid('categoria')" severity="error" >
+            <ng-template pTemplate>
+                <span class="ml-2">Obligatorio categoria</span>
+            </ng-template>
+        </p-messages>
+        
+    </div>
+    <div *ngIf="!isSacCategory" class="field col-12 md:col-6">
         <label  for="city">Nombre del curso </label>
         <input formControlName="nombre_curso" id="city" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         <p-messages *ngIf="isFieldInvalid('nombre_curso')" severity="error" >
@@ -29,7 +43,7 @@
             </ng-template>
         </p-messages>
     </div>
-    <div class="field col-12 md:col-3">
+    <!-- <div class="field col-12 md:col-3">
         <label for="state">Categoria</label>
         <select formControlName="categoria" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
             <option>Sac</option>
@@ -41,12 +55,12 @@
             </ng-template>
         </p-messages>
         
-    </div>
+    </div> -->
     <div class="field col-12 md:col-3">
         <label for="zip">Fecha</label>
         <input [readonly]="true" id="zip" formControlName="fecha" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
     </div>
-    <div class="field col-12 md:col-3">
+    <div *ngIf="!isSacCategory" class="field col-12 md:col-3">
         <label for="zip">Id Curso</label>
         <input formControlName="idCurso" id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         <p-messages *ngIf="isFieldInvalid('idCurso')" severity="error" >
@@ -55,7 +69,7 @@
             </ng-template>
         </p-messages>
     </div>
-    <div class="field col-12 md:col-3">
+    <div *ngIf="isSacCategory" class="field col-12 md:col-3">
         <label for="zip">Link</label>
         <input formControlName="link" id="zip" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         <p-messages *ngIf="isFieldInvalid('link')" severity="error" >
@@ -70,32 +84,46 @@
 
 <p-divider></p-divider>
 
+<!-- subida del archivo -->
+
 <strong>Subir archivo (opcional) </strong>
-<div class="card flex justify-content-between align-items-start">
-    <div>
-      <p-toast></p-toast>
-      <p-fileUpload 
-        mode="basic" 
-        chooseLabel="Cargar" 
-        chooseIcon=".jpg,.jpeg,.png,.xlsx,.xls,.doc,.docx,.pdf"
-        name="demo[]" 
-        accept=".jpg,.jpeg,.png,.xlsx,.xls,.doc,.docx,.pdf"
-        maxFileSize="1000000" 
-        (onSelect)="onSelect($event)"
-        #fileUpload>
-      </p-fileUpload>
-    </div>
-  
-    <div>
-      <button 
-        (click)="elimiarArchivo()" 
-        class="p-button-danger" 
-        pButton 
-        label="Eliminar archivo" 
-        icon="pi pi-check">
-      </button>
+<div class="grid">
+<div class="col-12">
+    <div class="card">
+        
+    <p-toast></p-toast>
+    <p-fileUpload 
+      mode="advanced" 
+      name="demo[]" 
+      [multiple]="true" 
+      accept=".jpg,.jpeg,.png,.xlsx,.xls,.doc,.docx,.pdf" 
+      [maxFileSize]="1000000"
+      [showUploadButton]="false"
+      [chooseLabel]="'Seleccionar'"
+      (onRemove)="onRemove($event)"
+      [uploadLabel]="'Ignorar'"
+      #fileUpload>
+      <ng-template pTemplate="content">
+        <ul *ngIf="uploadedFiles.length">
+          <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+        </ul>
+      </ng-template>
+      
+    </p-fileUpload>
     </div>
   </div>
+
+  <!-- <div>
+    <button 
+      (click)="eliminarArchivos()" 
+      class="p-button-danger" 
+      pButton 
+      label="Eliminar archivos" 
+      icon="pi pi-check">
+    </button>
+  </div> -->
+</div>
+
   
   <div>
     <button 

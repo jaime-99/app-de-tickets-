@@ -20,8 +20,6 @@ export class RequisicionesSolicitadasComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRequisiciones();
-
-    
   }
 
   getRequisiciones(){
@@ -46,6 +44,14 @@ export class RequisicionesSolicitadasComponent implements OnInit {
 
   filterGlobal(){
 
+  }
+
+
+  get requisicionesAbierto(){
+  return this.requiziciones.filter((r => r.estatus === 'abierto'))
+  }
+  get requisicionesCerrado(){
+  return this.requiziciones.filter((r => r.estatus === 'cerrado'))
   }
 
 }

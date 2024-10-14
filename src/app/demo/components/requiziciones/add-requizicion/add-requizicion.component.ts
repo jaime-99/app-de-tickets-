@@ -63,6 +63,7 @@ export class AddRequizicionComponent implements OnInit {
       conocimientosPrevios: ['', [Validators.required,]],
       requerimientosAdicionales: ['', [Validators.required,]],
       publicacionVacante: ['', [Validators.required,]],
+      estatus: ['abierto', []],
       
       //parte 4, habilidades requeridas(analisis)
       compresion_verbal: [false, []],
@@ -155,6 +156,7 @@ export class AddRequizicionComponent implements OnInit {
         conocimientos_previos: formValues.conocimientosPrevios,
         requerimientos_adicionales: formValues.requerimientosAdicionales,
         publicacion_vacante: formValues.publicacionVacante,
+        estatus: formValues.estatus,
         presupuesto: formValues.presupuesto //eliminar
       },
       habilidades_requeridas: {
