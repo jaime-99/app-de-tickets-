@@ -291,6 +291,10 @@ export class AppMenuComponent implements OnInit {
                                     label: 'Nueva Solicitud',
                                     routerLink: ['./materiales/nueva-solicitud']
                                 },
+                                {
+                                    label: 'Mis Solicitudes',
+                                    routerLink: ['./materiales/mis-solicitudes']
+                                },
 
                             ]
                         },

@@ -38,10 +38,18 @@ export class SolicitudesAsignadasComponent implements OnInit {
 
   getSolicitudes(){
 
-    this.materialService.getSolicitudForUsuario(this.usuario.usuario).subscribe((res)=>{
-      this.solicitudesAsignadas = res
-      this.loading = false;
-      this.loading2 = false;
+    // este serian las solicitudes que digan asiganada_a
+    this.materialService.getSolicitudForAsignada_a(this.usuario.usuario).subscribe((res)=>{
+      if(Array.isArray(res)){
+
+        this.solicitudesAsignadas = res
+        this.loading = false;
+        this.loading2 = false;
+      }else{
+        this.solicitudesAsignadas = [];
+        this.loading = false;
+        this.loading2 = false;
+      }
     })
   }
 
@@ -93,7 +101,7 @@ export class SolicitudesAsignadasComponent implements OnInit {
             this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'has cerrado la solicitud', life: 3000 });
             this.materialService.putEstatusSolicitud(id,'cerrado').subscribe(()=>{
 
-              // window.location.reload();
+              window.location.reload();
             })
         },
         reject: () => {

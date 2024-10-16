@@ -20,8 +20,7 @@
          <th>#</th>
          <th>Fecha Solicitud</th>
          <th>Nombre</th>
-         <th>Nombre curso</th>
-         <th>IdCurso</th>
+        
          <th>Categoria</th>
          <th>Acciones</th>
        </tr>
@@ -30,8 +29,6 @@
      <ng-template pTemplate="body">
        <tr>
          <td><p-skeleton width="2rem"></p-skeleton></td>
-         <td><p-skeleton width="10rem"></p-skeleton></td>
-         <td><p-skeleton width="12rem"></p-skeleton></td>
          <td><p-skeleton width="10rem"></p-skeleton></td>
          <td><p-skeleton width="15rem"></p-skeleton></td>
          <td><p-skeleton width="15rem"></p-skeleton></td>
@@ -51,7 +48,7 @@
    [paginator]="true"
    [rows]="5"
    [rowsPerPageOptions]="[5, 10, 20]"
-   [globalFilterFields]="['nombre']">
+   [globalFilterFields]="['nombre', 'nombre_curso', 'categoria', 'fecha']">
 
    <ng-template pTemplate="caption">
      <div class="flex">
@@ -70,8 +67,6 @@
          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
        </th>
        <th>Nombre</th>
-       <th>Nombre Curso</th>
-       <th>IdCurso</th>
        <th>Categoria</th>
        <th>Acciones</th>
      </tr>
@@ -80,10 +75,8 @@
    <ng-template pTemplate="body" let-solicitudes2>
      <tr>
        <td>{{ solicitudes2?.id }}</td>
-       <td>12/10/22</td>
+       <td> {{solicitudes2?.fecha | date:'dd/MM/yyyy'}} </td>
        <td>{{ solicitudes2?.nombre }}</td>
-       <td>{{ solicitudes2?.nombre_curso }}</td>
-       <td>{{ solicitudes2?.idCurso }}</td>
        <td>{{ solicitudes2.categoria }}</td>
        <div class="button-container">
           <button icon="pi pi-eye" class="p-button p-button-success small-btn" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)"></button>
@@ -104,7 +97,7 @@
    
    <ng-template pTemplate="emptymessage">
      <tr>
-       <td colspan="6">Sin registros de solicitudes para MATERIALES</td>
+       <td colspan="7">Sin registros de solicitudes para MATERIALES</td>
      </tr>
    </ng-template>
  </p-table>
@@ -126,8 +119,6 @@
          <th>#</th>
          <th>Fecha Solicitud</th>
          <th>Nombre</th>
-         <th>Nombre curso</th>
-         <th>IdCurso</th>
          <th>Categoria</th>
          <th>Acciones</th>
        </tr>
@@ -138,8 +129,6 @@
          <td><p-skeleton width="2rem"></p-skeleton></td>
          <td><p-skeleton width="10rem"></p-skeleton></td>
          <td><p-skeleton width="12rem"></p-skeleton></td>
-         <td><p-skeleton width="10rem"></p-skeleton></td>
-         <td><p-skeleton width="15rem"></p-skeleton></td>
          <td><p-skeleton width="15rem"></p-skeleton></td>
          <td><p-skeleton width="5rem"></p-skeleton></td>
        </tr>
@@ -176,8 +165,6 @@
          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
        </th>
        <th>Nombre</th>
-       <th>Nombre Curso</th>
-       <th>IdCurso</th>
        <th>Categoria</th>
        <th>Acciones</th>
      </tr>
@@ -186,10 +173,8 @@
    <ng-template pTemplate="body" let-solicitudes2>
      <tr>
        <td>{{ solicitudes2?.id }}</td>
-       <td>12/10/22</td>
+       <td>  {{solicitudes2?.fecha | date:'dd/MM/yyyy'}} </td>
        <td>{{ solicitudes2?.nombre }}</td>
-       <td>{{ solicitudes2?.nombre_curso }}</td>
-       <td>{{ solicitudes2?.idCurso }}</td>
        <td>{{ solicitudes2.categoria }}</td>
        <td>
         <div class="button-container">
@@ -204,7 +189,7 @@
                   </div>
               </ng-template>
           </p-confirmPopup>
-      <button class="p-button p-button-danger small-btn" pButton (click)="confirm($event)" label="Cerrar"></button>
+      <!-- <button class="p-button p-button-danger small-btn" pButton (click)="confirm($event)" label="Cerrar"></button> -->
         </div>
       </td>
       
@@ -213,7 +198,7 @@
    
    <ng-template pTemplate="emptymessage">
      <tr>
-       <td colspan="6">Sin registros de solicitudes para MATERIALES</td>
+       <td colspan="7">Sin registros de solicitudes para MATERIALES</td>
      </tr>
    </ng-template>
  </p-table>

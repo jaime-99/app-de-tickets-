@@ -8,6 +8,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { SolicitudesComponent } from './solicitudes/solicitudes.component';
 import { DetallesComponent } from './solicitudes/detalles/detalles.component';
 import { SolicitudesAsignadasComponent } from './solicitudes/solicitudes-asignadas/solicitudes-asignadas.component';
+import { MisSolicitudesComponent } from './mis-solicitudes/mis-solicitudes.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SolicitudesAsignadasComponent } from './solicitudes/solicitudes-asignad
     MaterialesComponent,
     SolicitudesComponent,
     DetallesComponent,
-    SolicitudesAsignadasComponent
+    SolicitudesAsignadasComponent,
+    MisSolicitudesComponent
   ],
   imports: [
     CommonModule,

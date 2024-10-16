@@ -95,9 +95,9 @@
 
         <p-divider></p-divider>
 
-        <div>
+        <div *ngIf="flag">
             <p-confirmDialog></p-confirmDialog>
-            <button pButton class="p-button-block p-button-success"  icon="pi pi-check"
+            <button [disabled]="requisicion?.estatus==='cerrado'" pButton class="p-button-block p-button-success"  icon="pi pi-check"
             style="width: 100%;" 
             (click)="confirm1($event)" label="Cerrar Requisicion"></button>
           </div>

@@ -22,6 +22,9 @@ export class DetallesComponent implements OnInit{
   usuario:any
   usuarioSeleccionado: string; // Variable para almacenar el usuario seleccionado
   loading = false;
+  imagenes: any;
+  // el flag es para saber de que componente viene al dar con detalles 
+  flag: boolean;
 
 
   constructor (
@@ -35,6 +38,10 @@ export class DetallesComponent implements OnInit{
     this.activateRouter.params.subscribe((solicitud)=>{
       this.idSolicitud = solicitud['id']
     })
+
+    this.activateRouter.queryParams.subscribe((params)=>{
+      this.flag = params['flag'] ==='true';
+    });
 
   }
 
@@ -61,6 +68,7 @@ export class DetallesComponent implements OnInit{
 
       setTimeout(()=>{
         this.loading = true;
+        this.getArchivosForId()
 
       },1400)
 
@@ -142,6 +150,15 @@ volver(){
 
   this.location.back();
 
+}
+
+getArchivosForId(){
+
+  const urlImagen = Number(this.idSolicitud)
+
+  this.materialesService.getArchivosForId(urlImagen).subscribe((res)=>{
+    this.imagenes = res
+  })
 }
 
 

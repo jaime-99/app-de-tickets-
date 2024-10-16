@@ -268,7 +268,7 @@ category(event:Event){
     this.solicitudesForm.get('idCurso')?.updateValueAndValidity();
     this.solicitudesForm.get('link')?.updateValueAndValidity();
     this.solicitudesForm.get('nombre_curso')?.updateValueAndValidity();
-
+    
   } else {
     this.isSacCategory = false;
     this.solicitudesForm.get('nombre_curso')?.setValidators([Validators.required]);

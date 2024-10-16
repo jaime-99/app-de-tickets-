@@ -34,7 +34,10 @@ export class RequisicionesSolicitadasComponent implements OnInit {
 
   goToDetalles(id){
     
-    this.router.navigateByUrl(`/requisicion/${id}`)
+    // this.router.navigateByUrl(`/requisicion/${id}`)
+
+    this.router.navigate([`/requisicion/${id}`], { queryParams: { flag: 'true' } });
+
   }
 
   clear(table: Table){

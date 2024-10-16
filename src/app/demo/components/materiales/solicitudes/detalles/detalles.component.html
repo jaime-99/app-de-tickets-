@@ -72,21 +72,22 @@
       </div>
       <!-- Imagen del Curso -->
       <div class="field col-12 md:col-12">
-        <label>Archivo adjuntado:</label>
-        <a [href]="this.solicitud?.archivo" 
-           target="_blank" 
-           download>
-          {{ obtenerNombreArchivo(this.solicitud?.archivo) }}
-        </a>
+        <label>Archivos adjuntados:</label>
+        <div *ngFor="let archivo of imagenes">
+          <a [href]="archivo?.url_imagen" target="_blank" download>
+            {{ obtenerNombreArchivo(archivo?.url_imagen) }}
+          </a>
+        </div>
       </div>
+      
       
       
   
       <!-- Botón Asignar -->
-      <div class="field col-12 md:col-6 flex align-items-center justify-content-center">
+      <div *ngIf="flag" class="field col-12 md:col-6 flex align-items-center justify-content-center">
         <button [disabled]="this.solicitud?.asignada_a" pButton type="button" (click)="showDialog()" label="Asignar" icon="pi pi-check" class="p-button-success"></button>
       </div>
-      <div class="field col-12 md:col-6 flex align-items-center justify-content-center">
+      <div *ngIf="flag" class="field col-12 md:col-6 flex align-items-center justify-content-center">
         <button (click)="tomarSolicitud()" [disabled]="this.solicitud?.asignada_a" pButton type="button" label="Tomar solicitud" icon="pi pi-check" class="p-button-success"></button>
       </div>
     </div>
@@ -108,7 +109,7 @@
           <option *ngFor="let usuario of usuariosMateriales"  [value]="usuario"> {{usuario}} </option>
       </select>
   </div>
-  <div class="field col-6 md:col-12">
+  <div *ngIf="flag" class="field col-6 md:col-12">
     <button pButton type="button" label="Asignar solicitud" (click)="asignar()"></button>
 </div>
 </div>

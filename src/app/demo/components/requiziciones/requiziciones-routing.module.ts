@@ -12,6 +12,7 @@ const routes: Routes = [{ path: '', component: RequizicionesComponent },
   {path: 'requisiciones_solicitadas', component: RequisicionesSolicitadasComponent, canActivate:[requisicionesGuard]},
   {path: 'mis-requisiciones', component: MisRequisicionesInternasComponent},
   {path: 'requisicion_Creada', component: PlantillaMensajeComponent},
+  //detales de requisicion externa
   {path: ':id', component: RequisicionSolicitadaDetalleComponent},
 
   //externa

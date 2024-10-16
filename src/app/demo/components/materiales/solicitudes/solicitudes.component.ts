@@ -33,7 +33,7 @@ private router:Router) {}
   getSolicitudes(){
     this.materialesService.getSolicitudes().subscribe((res)=>{
       this.solicitudes = res
-      console.log(this.solicitudes)
+      // console.log(this.solicitudes)
       this.isLoading = false;
       this.isLoading2 = false;
       this.isLoading3 = false;
@@ -46,7 +46,7 @@ private router:Router) {}
   // ir a detalles de las solicitudes
   goToDetalles(id){
 
-    this.router.navigateByUrl(`/materiales/detalle/${id}`)
+    this.router.navigate([`/materiales/detalle/${id}`], {queryParams:{flag:'true'}})
 
   }
 

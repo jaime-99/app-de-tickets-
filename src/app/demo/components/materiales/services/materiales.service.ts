@@ -52,4 +52,14 @@ getSolicitudForUsuario(usuario){
   let url = `https://visualmanagment.com/AppCGP/apis/materiales/getSolicitudesForUser.php?usuario=${usuario}&timestamp=${new Date().getTime()}`
   return this.http.get<any>(url);
 } 
+// obtiene las solicitudes de asignada_a
+getSolicitudForAsignada_a(asignada_a){
+  let url = `https://visualmanagment.com/AppCGP/apis/materiales/getSolicitudesForAsignada_a.php?asignada_a=${asignada_a}&timestamp=${new Date().getTime()}`
+  return this.http.get<any>(url);
+} 
+// obtiene las imagenes asignadas al id de la solicitud 
+getArchivosForId(solicitud_id){
+  let url = `https://visualmanagment.com/AppCGP/apis/materiales/getArchivosForId.php?solicitud_id=${solicitud_id}?&timestamp=${new Date().getTime()}`
+  return this.http.get<any>(url);
+} 
 }

@@ -18,6 +18,7 @@ import { HabilidadesRequeridasComponent } from '../../habilidades-requeridas/hab
 })
 export class RequisicionSolicitadaDetalleComponent implements OnInit, AfterViewInit  {
   requisicion: any;
+  flag: boolean; // es para ver de que componente viene el flag y ver si puede acceder al boton de cerrar requisicion
   constructor (private activateRouter:ActivatedRoute,
     private requisicionesService:RequizicionesService,
     private confirmationService: ConfirmationService,
@@ -37,6 +38,10 @@ export class RequisicionSolicitadaDetalleComponent implements OnInit, AfterViewI
     
     this.activateRouter.paramMap.subscribe(params=>{
       this.requisicionId= params.get('id');
+    });
+    this.activateRouter.queryParams.subscribe(params => {
+      this.flag = params['flag'] === 'true'; // Asegurarse de comparar con el string 'true'
+      console.log(this.flag); // Debería mostrar true o false correctamente
     });
 
     this.getRequisicionForId();

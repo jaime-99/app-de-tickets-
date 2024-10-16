@@ -58,9 +58,10 @@ export class MisRequisicionesInternasComponent implements OnInit {
 
   goToDetalles(id){
     
-    this.router.navigateByUrl(`/requisicion/${id}`)
-    
+    // se enviara el parametro false , ya que se envia desde mis requisiciones
+    // this.router.navigateByUrl(`/requisicion/${id}`)
 
+    this.router.navigate([`/requisicion/${id}`], { queryParams: { flag: 'false' } });
   }
 
 
