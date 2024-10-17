@@ -57,7 +57,6 @@ export class SolicitudesAsignadasComponent implements OnInit {
 
     this.router.navigate([`/materiales/detalle/${id}`], { queryParams: { flag: true } });
 
-
   }
 
   clear(table:Table){

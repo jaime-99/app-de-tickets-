@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';
 import { set } from 'date-fns';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-detalles',
@@ -25,6 +26,7 @@ export class DetallesComponent implements OnInit{
   imagenes: any;
   // el flag es para saber de que componente viene al dar con detalles 
   flag: boolean;
+  formComentarios: FormGroup;
 
 
   constructor (
@@ -32,7 +34,8 @@ export class DetallesComponent implements OnInit{
     private materialesService:MaterialesService,
     private activateRouter:ActivatedRoute,
     private messageService:MessageService,
-    private location:Location
+    private location:Location,
+    private fb:FormBuilder
   ) {
 
     this.activateRouter.params.subscribe((solicitud)=>{
@@ -59,7 +62,13 @@ export class DetallesComponent implements OnInit{
     }
   )
 
-  }
+
+
+  this.formComentarios = this.fb.group({
+    comentarios: [''], 
+  });
+
+}
 
 
   getSolicitud(){

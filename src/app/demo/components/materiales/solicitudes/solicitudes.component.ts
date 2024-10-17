@@ -32,12 +32,23 @@ private router:Router) {}
 
   getSolicitudes(){
     this.materialesService.getSolicitudes().subscribe((res)=>{
-      this.solicitudes = res
       // console.log(this.solicitudes)
-      this.isLoading = false;
-      this.isLoading2 = false;
-      this.isLoading3 = false;
-      this.isLoading4 = false;
+      
+      if(Array.isArray(res)){
+        this.solicitudes = res
+
+        this.isLoading = false;
+        this.isLoading2 = false;
+        this.isLoading3 = false;
+        this.isLoading4 = false;
+      }else{
+
+        this.solicitudes = [];
+        this.isLoading = false;
+        this.isLoading2 = false;
+        this.isLoading3 = false;
+        this.isLoading4 = false;
+      }
       // console.log(res)
     })
   }

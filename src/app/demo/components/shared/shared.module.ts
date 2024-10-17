@@ -27,6 +27,7 @@ import { DialogModule } from 'primeng/dialog';
 import { TabViewModule } from 'primeng/tabview';
 import { ImageModule } from 'primeng/image';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AccordionModule } from 'primeng/accordion';
 
 
 
@@ -63,7 +64,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     DialogModule,
     TabViewModule,
     ImageModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AccordionModule
     
     
   ]

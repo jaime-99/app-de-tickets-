@@ -70,6 +70,21 @@
         <p-tag  [severity]="severity(this.solicitud?.estatus)" [value]="this.solicitud?.estatus"/>
         <!-- <strong> {{this.solicitud?.estatus}} </strong> -->
       </div>
+      <div class="field col-12 md:col-6">
+        <p-accordion [activeIndex]="0">
+          <p-accordionTab header="Comentarios">
+              <p *ngIf="flag">
+                comentarios por parte de <strong>  {{this.solicitud?.nombre}} </strong>
+                : Sin comentarios
+              </p>
+              <div *ngIf="!flag">
+              <textarea placeholder="Agregar comentarios" formControlName="comentarios" id="address" type="text" rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+              <button class="p-button"> Agregar comentario</button>
+              </div>
+
+          </p-accordionTab>
+          </p-accordion>
+      </div>
       <!-- Imagen del Curso -->
       <div class="field col-12 md:col-12">
         <label>Archivos adjuntados:</label>
