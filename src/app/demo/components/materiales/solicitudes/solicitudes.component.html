@@ -23,8 +23,6 @@
           <th>#</th>
           <th>Fecha Solicitud</th>
           <th>Nombre</th>
-          <th>Nombre curso</th>
-          <th>IdCurso</th>
           <th>Categoria</th>
           <th>Acciones</th>
         </tr>
@@ -35,8 +33,6 @@
           <td><p-skeleton width="2rem"></p-skeleton></td>
           <td><p-skeleton width="10rem"></p-skeleton></td>
           <td><p-skeleton width="12rem"></p-skeleton></td>
-          <td><p-skeleton width="10rem"></p-skeleton></td>
-          <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="5rem"></p-skeleton></td>
         </tr>
@@ -73,8 +69,6 @@
           Fecha Solicitud <p-sortIcon field="fecha" />
         </th>
         <th>Nombre</th>
-        <th>Nombre Curso</th>
-        <th>IdCurso</th>
         <th>Categoria</th>
         <th>Acciones</th>
       </tr>
@@ -85,8 +79,6 @@
         <td>{{ solicitudes2?.id }}</td>
         <td> {{solicitudes2?.fecha | date:'dd/MM/yyyy'}} </td>
         <td>{{ solicitudes2?.nombre }}</td>
-        <td>{{ solicitudes2?.nombre_curso }}</td>
-        <td>{{ solicitudes2?.idCurso }}</td>
         <td>{{ solicitudes2.categoria }}</td>
         <td>
           <button icon="pi pi-eye" class="p-button-success" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)" ></button>
@@ -118,8 +110,6 @@
           <th>#</th>
           <th>Fecha Solicitud</th>
           <th>Nombre</th>
-          <th>Nombre curso</th>
-          <th>IdCurso</th>
           <th>Categoria</th>
           <th>Acciones</th>
         </tr>
@@ -130,8 +120,6 @@
           <td><p-skeleton width="2rem"></p-skeleton></td>
           <td><p-skeleton width="10rem"></p-skeleton></td>
           <td><p-skeleton width="12rem"></p-skeleton></td>
-          <td><p-skeleton width="10rem"></p-skeleton></td>
-          <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="5rem"></p-skeleton></td>
         </tr>
@@ -168,8 +156,6 @@
           Fecha Solicitud <p-sortIcon field="fecha" />
         </th>
         <th>Nombre</th>
-        <th>Nombre Curso</th>
-        <th>IdCurso</th>
         <th>Categoria</th>
         <th>Acciones</th>
       </tr>
@@ -180,8 +166,6 @@
         <td>{{ solicitudes2?.id }}</td>
         <td> {{solicitudes2?.fecha | date:'dd/MM/yyyy'}} </td>
         <td>{{ solicitudes2?.nombre }}</td>
-        <td>{{ solicitudes2?.nombre_curso }}</td>
-        <td>{{ solicitudes2?.idCurso }}</td>
         <td>{{ solicitudes2.categoria }}</td>
         <td>
           <button icon="pi pi-eye" class="p-button-success" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)" ></button>
@@ -212,8 +196,6 @@
           <th>#</th>
           <th>Fecha Solicitud</th>
           <th>Nombre</th>
-          <th>Nombre curso</th>
-          <th>IdCurso</th>
           <th>Categoria</th>
           <th>Asignacion</th>
           <th>Acciones</th>
@@ -225,8 +207,6 @@
           <td><p-skeleton width="2rem"></p-skeleton></td>
           <td><p-skeleton width="10rem"></p-skeleton></td>
           <td><p-skeleton width="12rem"></p-skeleton></td>
-          <td><p-skeleton width="10rem"></p-skeleton></td>
-          <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="5rem"></p-skeleton></td>
@@ -264,8 +244,6 @@
           Fecha Solicitud <p-sortIcon field="fecha" />
         </th>
         <th>Nombre</th>
-        <th>Nombre Curso</th>
-        <th>IdCurso</th>
         <th>Categoria</th>
         <th>Asignacion</th>
         <th>Acciones</th>
@@ -277,8 +255,6 @@
         <td>{{ solicitudes2?.id }}</td>
         <td> {{solicitudes2?.fecha | date:'dd/MM/yyyy'}} </td>
         <td>{{ solicitudes2?.nombre }}</td>
-        <td>{{ solicitudes2?.nombre_curso }}</td>
-        <td>{{ solicitudes2?.idCurso }}</td>
         <td>{{ solicitudes2?.categoria }}</td>
         <td>{{ solicitudes2?.asignada_a }}</td>
         <td>
@@ -310,8 +286,6 @@
           <th>#</th>
           <th>Fecha Solicitud</th>
           <th>Nombre</th>
-          <th>Nombre curso</th>
-          <th>IdCurso</th>
           <th>Categoria</th>
           <th>Acciones</th>
         </tr>
@@ -322,8 +296,6 @@
           <td><p-skeleton width="2rem"></p-skeleton></td>
           <td><p-skeleton width="10rem"></p-skeleton></td>
           <td><p-skeleton width="12rem"></p-skeleton></td>
-          <td><p-skeleton width="10rem"></p-skeleton></td>
-          <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="15rem"></p-skeleton></td>
           <td><p-skeleton width="5rem"></p-skeleton></td>
         </tr>
@@ -360,8 +332,6 @@
           Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
         </th>
         <th>Nombre</th>
-        <th>Nombre Curso</th>
-        <th>IdCurso</th>
         <th>Categoria</th>
         <th>Acciones</th>
       </tr>
@@ -370,9 +340,7 @@
     <ng-template pTemplate="body" let-solicitudes2>
       <tr>
         <td>{{ solicitudes2?.id }}</td>
-        <td> {{solicitudes2?.fecha}} </td>
-        <td>{{ solicitudes2?.nombre }}</td>
-        <td>{{ solicitudes2?.nombre_curso }}</td>
+        <td> {{solicitudes2?.fecha | date:'dd/MM/yyyy'}} </td>
         <td>{{ solicitudes2?.idCurso }}</td>
         <td>{{ solicitudes2.categoria }}</td>
         <td>

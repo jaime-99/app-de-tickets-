@@ -78,14 +78,19 @@
         <td>{{ solicitud?.estatus }}</td>
         <td>{{ solicitud?.asignada_a }}</td>
         <td>
-          <button icon="pi pi-eye" class="p-button-success" pButton label="Verr" (click)="goToDetalles(solicitud?.id)" ></button>
+          <div class="flex flex-column gap-2"> 
+            <button icon="pi pi-eye" class="p-button p-button-success p-button-sm" pButton label="Ver" (click)="goToDetalles(solicitud?.id)"></button>
+            <button [disabled]="solicitud?.estatus!=='abierto'"   icon="pi pi-pencil" class="p-button p-button-danger p-button-sm" pButton label="Cancelar" (click)="confirm1($event, solicitud?.id)"></button>
+            <!-- [disabled]="solicitud?.estatus==='cerrado'" -->
+            <p-confirmPopup />
+          </div>
         </td>
       </tr>
     </ng-template>
     
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="6">Sin registros de solicitudes para Materiales</td>
+        <td colspan="7">Sin registros de solicitudes para Materiales</td>
       </tr>
     </ng-template>
   </p-table>

@@ -13,6 +13,10 @@ export class MaterialesService {
     let url = `https://visualmanagment.com/AppCGP/apis/materiales/addSolicitud.php`;
     return this.http.post<any>(url, solicitud);
 } 
+  postSolicitudDetalle(solicitudDetalle){
+    let url = `https://visualmanagment.com/AppCGP/apis/materiales/addSolicitudDetalle.php`;
+    return this.http.post<any>(url, solicitudDetalle);
+} 
   //obtener todas las solicitudes enviadas
   getSolicitudes(){
     let url = `https://visualmanagment.com/AppCGP/apis/materiales/solicitudesEnviadas.php?timestamp=${new Date().getTime()}`

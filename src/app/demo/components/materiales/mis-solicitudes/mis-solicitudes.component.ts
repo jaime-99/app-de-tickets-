@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MaterialesService } from '../services/materiales.service';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -12,7 +13,8 @@ export class MisSolicitudesComponent implements OnInit {
   solicitudes: any;
   isLoading: boolean = true;
   constructor (private materialesService:MaterialesService,
-    private auth:AuthService, private router:Router
+    private auth:AuthService, private router:Router,
+    private confirmationService: ConfirmationService
   ) {
     this.usuario = this.auth.getUser();
   }
@@ -38,10 +40,26 @@ export class MisSolicitudesComponent implements OnInit {
 
       }else{
         this.solicitudes = []
-        this.isLoading = true;
+        this.isLoading = false;
       }
     })
   }
+
+  confirm1(event: Event, id) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'seguro de cancelar la solicitud para materiales?',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel:'Si',
+        accept: () => {
+          // cancelar la solicitud
+          this.cancelSolicitud(id)
+        },
+        reject: () => {
+          return;
+        }
+    });
+}
 
 
   goToDetalles(id){
@@ -50,6 +68,26 @@ export class MisSolicitudesComponent implements OnInit {
   }
 
   
+  cancelSolicitud(id){
+    //cancelar solicitud
+
+    const data = {
+      idSolicitud:id,
+      // fechaCerrado: '',
+      cancelado: true,
+    }
+    const idSolicitud = Number(data.idSolicitud)
+
+    this.materialesService.postSolicitudDetalle(data).subscribe((res)=>{
+
+      this.materialesService.putEstatusSolicitud(idSolicitud,'cancelado').subscribe(()=>{
+        // refrescar la pagina 
+        window.location.reload()
+      })
+      // console.log(res)
+      
+    })
+  }
 
 
 

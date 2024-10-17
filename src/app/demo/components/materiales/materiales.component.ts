@@ -29,7 +29,7 @@ export class MaterialesComponent implements OnInit {
   //guardar los archivos aqui
   uploadedFiles: any[] = [];
   arrayArchivos: string[];
-  isSacCategory: boolean = false;
+  isSacCategory: boolean;
 
 
   constructor(private messageService: MessageService,

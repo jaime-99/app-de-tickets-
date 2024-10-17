@@ -55,7 +55,8 @@ export class SolicitudesAsignadasComponent implements OnInit {
 
   goToDetalles(id){
 
-    this.router.navigateByUrl(`/materiales/detalle/${id}`)
+    this.router.navigate([`/materiales/detalle/${id}`], { queryParams: { flag: true } });
+
 
   }
 
@@ -75,6 +76,9 @@ export class SolicitudesAsignadasComponent implements OnInit {
     }
     if(estatus ==='cerrado'){
       return this.solicitudesAsignadas.filter(a => a.estatus === 'cerrado')
+    }
+    if(estatus ==='cancelado'){
+      return this.solicitudesAsignadas.filter(a => a.estatus === 'cancelado')
     }
     return 'a'
   }

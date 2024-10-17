@@ -204,6 +204,106 @@
  </p-table>
 </ng-template>
 </p-tabPanel>
+<p-tabPanel header="Cancelados" >
+ <ng-container *ngIf="loading2; else dataLoadedCancelados"> 
+   <!-- Skeleton Loading State -->
+  <p-table 
+     [value]="[1, 2, 3, 4, 5]" 
+     styleClass="p-datatable-gridlines" 
+     [tableStyle]="{ 'min-width': '50rem' }"
+     [rows]="5"
+     [paginator]="false">
+     
+     <ng-template pTemplate="header">
+       <tr>
+         <th>#</th>
+         <th>Fecha Solicitud</th>
+         <th>Nombre</th>
+         <th>Categoria</th>
+         <th>Acciones</th>
+       </tr>
+     </ng-template>
+     
+     <ng-template pTemplate="body">
+       <tr>
+         <td><p-skeleton width="2rem"></p-skeleton></td>
+         <td><p-skeleton width="10rem"></p-skeleton></td>
+         <td><p-skeleton width="12rem"></p-skeleton></td>
+         <td><p-skeleton width="15rem"></p-skeleton></td>
+         <td><p-skeleton width="5rem"></p-skeleton></td>
+       </tr>
+     </ng-template>
+   </p-table>
+ </ng-container>
+
+<!-- </p-tabPanel> -->
+<ng-template  #dataLoadedCancelados>
+ <p-table 
+   #dt4
+   [value]="solicitudesForEstatus('cancelado')" 
+   styleClass="p-datatable-gridlines" 
+   [tableStyle]="{ 'min-width': '50rem' }"
+   [paginator]="true"
+   [rows]="5"
+   [rowsPerPageOptions]="[5, 10, 20]"
+   [globalFilterFields]="['nombre']">
+
+   <ng-template pTemplate="caption">
+     <div class="flex">
+       <p-button label="Limpiar" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt4)" />
+       <span class="p-input-icon-left ml-auto">
+         <i class="pi pi-search"></i>
+         <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt4.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Palabra" />
+       </span>
+     </div>
+   </ng-template>
+   
+   <ng-template pTemplate="header">
+     <tr>
+       <th>#</th>
+       <th pSortableColumn="fecha_solicitud">
+         Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+       </th>
+       <th>Nombre</th>
+       <th>Categoria</th>
+       <th>Acciones</th>
+     </tr>
+   </ng-template>
+   
+   <ng-template pTemplate="body" let-solicitudes2>
+     <tr>
+       <td>{{ solicitudes2?.id }}</td>
+       <td>  {{solicitudes2?.fecha | date:'dd/MM/yyyy'}} </td>
+       <td>{{ solicitudes2?.nombre }}</td>
+       <td>{{ solicitudes2.categoria }}</td>
+       <td>
+        <div class="button-container">
+          <button icon="pi pi-eye" class="p-button p-button-success small-btn" pButton label="Ver" (click)="goToDetalles(solicitudes2.id)"></button>
+          <!-- <button class="p-button p-button-danger small-btn" pButton label="Cerrar"></button> -->
+          <p-toast />
+          <p-confirmPopup>
+              <ng-template pTemplate="content" let-message>
+                  <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
+                      <i [class]="message.icon" class="text-6xl text-primary-500"></i>
+                      <p>{{ message.message }}</p>
+                  </div>
+              </ng-template>
+          </p-confirmPopup>
+      <!-- <button class="p-button p-button-danger small-btn" pButton (click)="confirm($event)" label="Cerrar"></button> -->
+        </div>
+      </td>
+      
+     </tr>
+   </ng-template>
+   
+   <ng-template pTemplate="emptymessage">
+     <tr>
+       <td colspan="7">Sin registros de solicitudes para MATERIALES</td>
+     </tr>
+   </ng-template>
+ </p-table>
+</ng-template>
+</p-tabPanel>
 
 </p-tabView>
 
