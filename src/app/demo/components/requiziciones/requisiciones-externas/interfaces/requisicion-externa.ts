@@ -18,4 +18,5 @@ export interface RequisicionExterna {
     requiere_dominio_idiomas: number; // Si es un booleano, cámbialo a boolean
     anios_experiencia: number;
     principales_temas: string;
+    estatus:string
 }

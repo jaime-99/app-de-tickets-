@@ -176,4 +176,10 @@ obtenerNombreArchivo(url: string): string {
   return url.split('/').pop() || '';
 }
 
+
+// agregar comentario por parte del usuario que mando la solicitud solo cuando ya este cerrado 
+addComent(){
+  
+  
+}
 }

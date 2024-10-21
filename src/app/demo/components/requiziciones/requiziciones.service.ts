@@ -60,6 +60,15 @@ getAllExternas(){
   const url = `https://visualmanagment.com/AppCGP/apis/RH/getAllRequisicionesExternas.php?timestamp=${new Date().getTime()}`
   return this.http.get<any>(url)
 }
+//
+putEstatusInstructor(requisicionInstructor_id:number,estatus:string){
+  const url = `https://visualmanagment.com/AppCGP/apis/RH/putEstatusInstructores.php`;
+  const body = {
+    requisicionInstructor_id:requisicionInstructor_id,
+    estatus:estatus
+  }
+  return this.http.put<any>(url,body)
+}
 
 
 

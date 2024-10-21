@@ -116,4 +116,22 @@ export class SolicitudesAsignadasComponent implements OnInit {
 }
 
 
+addDetails(){
+  // es para agregar los detalles de la solicitud por ejeplo la fecha de cierre 
+  const data =  {
+    idSolicitud : '',
+    fechaCerrado: '',
+  }
+
+  this.materialService.postSolicitudDetalle(data).subscribe((res)=>{
+    
+  })
+
+
+  
+
+  
+}
+
+
 }

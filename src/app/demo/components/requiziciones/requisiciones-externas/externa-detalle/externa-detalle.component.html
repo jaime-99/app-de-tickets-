@@ -1,6 +1,8 @@
 <div *ngIf="loading"></div>
-  <div class="flex justify-content-start align-items-start" style="margin-bottom: 1rem;">
+  <div class="flex justify-content-between p-1" style="margin-bottom: 1rem;">
+    <button icon="pi pi-arrow-left" class="p-button" pButton (click)="goBack()" label="Atras"></button>
     <button (click)="downloadPDF()" icon="pi pi-download" pButton type="button" label="PDF"></button>
+
   </div>
 
 <div *ngIf="!loading" class="card flex justify-content-center">
@@ -13,11 +15,14 @@
 
 <div *ngIf="loading">
 
-<h3>Datos de la requisicion Externa con el ID : {{requisicionDetalle?.id}} </h3>
+  <div class="p-d-flex p-flex-column p-ai-center p-m-4">
+<h3 class="p-text-primary p-mb-2">Datos de la requisicion Externa con el ID : {{requisicionDetalle?.id}} </h3>
+</div>
 
-<table id="print-section" border="1" cellspacing="0" cellpadding="8" width="100%">
+
+<table id="print-section" #tablaPrincipal border="1" cellspacing="0" cellpadding="8" width="100%">
     <tr>
-        <td colspan="3"><strong>DATOS DEL SOLICITANTE</strong></td>
+        <td bgcolor="#f0f0f0" colspan="3"  ><strong>DATOS DEL SOLICITANTE</strong></td>
       </tr>
   <tr>
     <td><strong>Nombre del solicitante:</strong> {{requisicionDetalle?.nombre_del_solicitante}} </td>
@@ -25,7 +30,7 @@
     <td><strong>Región solicitante:</strong>  {{requisicionDetalle?.region_solicitante}} </td>
   </tr>
   <tr>
-    <td colspan="3"><strong>DATOS DEL CURSO</strong></td>
+    <td bgcolor="#f0f0f0" colspan="3"><strong>DATOS DEL CURSO</strong></td>
   </tr>
   <tr>
     <td><strong>Tematica solicitada:</strong > {{requisicionDetalle?.tematica_solicitada}} </td>
@@ -41,7 +46,7 @@
     <td colspan="3"><strong>Honorario a ofrecer:</strong>   {{requisicionDetalle.honorario_a_ofrecer}} </td>
   </tr>
   <tr>
-    <td colspan="3"><strong>DATOS DEL INSTRUCTOR</strong></td>
+    <td bgcolor="#f0f0f0" colspan="3"><strong>DATOS DEL INSTRUCTOR</strong></td>
   </tr>
   <tr>
     <td><strong>Escolaridad:</strong>  {{requisicionDetalle?.escolaridad_minima}} </td>
@@ -62,4 +67,13 @@
 </table>
 
 
+</div>
+
+<p-divider></p-divider>
+
+<div *ngIf="flag">
+  <p-confirmDialog></p-confirmDialog>
+  <button [disabled]="requisicionDetalle?.estatus==='cerrado'" pButton class="p-button-block p-button-danger"  icon="pi pi-check"
+  style="width: 100%;" 
+  (click)="confirm1($event)" label="Cerrar Requisicion de instructor"></button>
 </div>

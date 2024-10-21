@@ -79,7 +79,7 @@
               </p>
               <div *ngIf="!flag">
               <textarea placeholder="Agregar comentarios" formControlName="comentarios" id="address" type="text" rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
-              <button class="p-button"> Agregar comentario</button>
+              <button (click)="addComent()" class="p-button"> Agregar comentario</button>
               </div>
 
           </p-accordionTab>

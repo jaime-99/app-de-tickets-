@@ -46,7 +46,8 @@ export class MisRequisicionesExternasComponent implements OnInit {
 
   goToDetalles(idExterna){
 
-    this.router.navigateByUrl(`/requisicion/externas/${idExterna}`)
+    this.router.navigate([`/requisicion/externas/${idExterna}`], {queryParams: {flag:false}});
+
   }
 
   clear(table: Table){
