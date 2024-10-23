@@ -18,7 +18,9 @@ export class RequisicionesExternasComponent implements OnInit {
   numeroDeParticipantes = categoriasRequisicionE.numParticipantes;
   horariosYDias = categoriasRequisicionE.horario;
   numVacantes = categoriasRequisicionE.numVacantes;
+  // es para el horarios y dias requeridos
   isOtroSelected: boolean = false;
+  idiomaSelected: boolean = false;
   messageSuccesful: boolean = false;
   usuario: any;
   constructor(private fb: FormBuilder, private requisicionesService:RequizicionesService,
@@ -40,9 +42,13 @@ export class RequisicionesExternasComponent implements OnInit {
         fecha: [this.actualDate()],
         escolaridad_minima: ['bachillerato', Validators.required],
         sexo: ['Masculino', Validators.required],
-        requiere_dominio_idiomas: [true, Validators.required],
+        requiere_dominio_idiomas: ['No', Validators.required],
         anios_experiencia: ['5-10', Validators.required],
-        principales_temas: ['', Validators.required]
+        principales_temas: ['', Validators.required],
+
+
+        // extras
+        idioma: ['',Validators.required]
     })
   }
   
@@ -68,6 +74,8 @@ export class RequisicionesExternasComponent implements OnInit {
   onSubmit(){
     const formValues = this.requisicionForm2.getRawValue();
 
+
+
     // Estructuramos el objeto como lo necesitas
     const requisicionData = {
       requisicionInstructor: {
@@ -87,14 +95,12 @@ export class RequisicionesExternasComponent implements OnInit {
       requisicionInstructor2: {
         escolaridad_minima: formValues.escolaridad_minima,
         sexo: formValues.sexo,
-        requiere_dominio_idiomas: formValues.requiere_dominio_idiomas,
+        requiere_dominio_idiomas: formValues.idioma || 'No',
         anios_experiencia: formValues.anios_experiencia,
         principales_temas: formValues.principales_temas
       }
     };
 
-    // console.log(requisicionData)
-    // return;
 
     if(this.requisicionForm2.valid){
       this.messageSuccesful = true;
@@ -106,6 +112,7 @@ export class RequisicionesExternasComponent implements OnInit {
 
     }else{
       this.show()
+
     }
     
     // Ahora puedes mandar el objeto requisicionData como lo requieras
@@ -159,8 +166,38 @@ export class RequisicionesExternasComponent implements OnInit {
 
 show(){
   //mostrar el mensaje de error 
-  this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Faltan algunos datos, revise de nuevo' });
 
+  Object.keys(this.requisicionForm2.controls).forEach(field => {
+    const control = this.requisicionForm2.get(field);
+    control?.markAsTouched({ onlySelf: true });
+  });
+  
+  this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Faltan algunos datos, revise de nuevo' });
+}
+
+IdiomaChange(event: any) {
+  const selectedValue = event.target.value;
+
+  const control = this.requisicionForm2.get('idioma');
+  
+  
+  // Si el valor es "Otro", mostrar el textarea
+  if (selectedValue === 'Si') {
+    // console.log('selecciono si')
+    this.idiomaSelected = true;
+    this.requisicionForm2.get('requiere_dominio_idiomas')?.setValue('Si'); // Limpiar el campo si se selecciona 'Si'
+    // agregar validadores
+    control.setValidators([Validators.required]);  // Agregar el validador required
+    control.updateValueAndValidity();
+  } else {
+    this.idiomaSelected = false;
+    this.requisicionForm2.get('requiere_dominio_idiomas')?.setValue(selectedValue); 
+    this.requisicionForm2.get('idioma')?.setValue(''); 
+    
+    // eliminar validadores
+    control.clearValidators();  // Eliminar los validadores
+    control.updateValueAndValidity(); 
+  }
 }
 
 }

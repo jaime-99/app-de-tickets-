@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';
 import { set } from 'date-fns';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-detalles',
@@ -27,6 +27,7 @@ export class DetallesComponent implements OnInit{
   // el flag es para saber de que componente viene al dar con detalles 
   flag: boolean;
   formComentarios: FormGroup;
+  comentarios = null;
 
 
   constructor (
@@ -65,7 +66,7 @@ export class DetallesComponent implements OnInit{
 
 
   this.formComentarios = this.fb.group({
-    comentarios: [''], 
+    comentarios: ['', Validators.required], 
   });
 
 }
@@ -178,8 +179,49 @@ obtenerNombreArchivo(url: string): string {
 
 
 // agregar comentario por parte del usuario que mando la solicitud solo cuando ya este cerrado 
-addComent(){
+// addComent(){
+//   const data = {
+//     idSolicitud: this.idSolicitud,
+//     comentarios1: this.formComentarios.value
+//   }
+
+
+//   let comentarios = this.formComentarios.get('comentarios').value;
+//   let number = Number(data.idSolicitud)
+//   this.materialesService.putComentarios(number,comentarios).subscribe(()=>{
+
+//     this.messageService.add({ severity: 'success', summary: 'Confirmado', detail: 'has enviado los comentarios ', life: 100000 });
+
+//   })
   
   
+// }
+
+
+addComent() {
+  const data = {
+      idSolicitud: this.idSolicitud,
+      comentarios1: this.formComentarios.get('comentarios').value
+  };
+
+  let comentarios = this.formComentarios.get('comentarios').value;
+  let number = Number(data.idSolicitud);
+
+  this.materialesService.putComentarios(number, comentarios).subscribe(() => {
+      // Agregar el comentario localmente para actualizar la vista
+      this.comentarios = comentarios; // Guarda solo el último comentario
+
+    //todo agrear mensaje de que agrego un comentario
+      this.messageService.add({ 
+          severity: 'success', 
+          summary: 'Confirmado', 
+          detail: 'Has enviado los comentarios', 
+          life: 3000 
+      });
+
+      // Limpiar el formulario después de agregar el comentario
+      this.formComentarios.reset();
+  });
 }
+
 }

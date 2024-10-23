@@ -66,4 +66,14 @@ getArchivosForId(solicitud_id){
   let url = `https://visualmanagment.com/AppCGP/apis/materiales/getArchivosForId.php?solicitud_id=${solicitud_id}?&timestamp=${new Date().getTime()}`
   return this.http.get<any>(url);
 } 
+
+// es para actualizar los comentarios 
+putComentarios(idSolicitud:number, comentarios1:string){
+  let url = `https://visualmanagment.com/AppCGP/apis/materiales/putComentarios1.php`
+  const body  = {
+    idSolicitud:idSolicitud,
+    comentarios1:comentarios1
+  }
+  return this.http.put<any>(url,body);
+} 
 }

@@ -196,17 +196,17 @@ export class AddRequizicionComponent implements OnInit {
 
     // this.router.navigateByUrl('/requisicion/requisicion_Creada')
 
-    console.log(payload);
+    // console.log(payload);
     // console.log(this.requisicionForm.controls)
-    Object.keys(this.requisicionForm.controls).forEach(key => {
-      const control = this.requisicionForm.controls[key];
-      if (control.invalid) {
-        console.log(`${key} es inválido`);
-      } else {
-        console.log(`${key} es válido`);
-      }
-    });
-    return;
+    // Object.keys(this.requisicionForm.controls).forEach(key => {
+    //   const control = this.requisicionForm.controls[key];
+    //   if (control.invalid) {
+    //     console.log(`${key} es inválido`);
+    //   } else {
+    //     console.log(`${key} es válido`);
+    //   }
+    // });
+    // return;
     if(this.requisicionForm.valid){
       this.requisicionService.postRequisicion(payload)
       .subscribe((res)=>{

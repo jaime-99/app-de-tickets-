@@ -6,34 +6,58 @@
   <!-- Skeleton Loading State -->
 
   <p-table 
-    [value]="[1, 2, 3, 4, 5]" 
-    styleClass="p-datatable-gridlines" 
-    [tableStyle]="{ 'min-width': '50rem' }"
-    [rows]="5"
-    [paginator]="false">
-    
-    <ng-template pTemplate="header">
-      <tr>
-        <th>#</th>
-        <th>Fecha Solicitud</th>
-        <th>Nombre del solicitante</th>
-        <th>Puesto del Solicitante</th>
-        <th>Region del solicitante</th>
-        <th>Acciones</th>
-      </tr>
-    </ng-template>
-    
-    <ng-template pTemplate="body">
-      <tr>
-        <td><p-skeleton width="2rem"></p-skeleton></td>
-        <td><p-skeleton width="10rem"></p-skeleton></td>
-        <td><p-skeleton width="12rem"></p-skeleton></td>
-        <td><p-skeleton width="10rem"></p-skeleton></td>
-        <td><p-skeleton width="15rem"></p-skeleton></td>
-        <td><p-skeleton width="5rem"></p-skeleton></td>
-      </tr>
-    </ng-template>
-  </p-table>
+  #dt1
+  [value]="requisicionesAbierto" 
+  styleClass="p-datatable-gridlines" 
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [paginator]="true"
+  [rows]="5"
+  [rowsPerPageOptions]="[5, 10, 20]"
+  [globalFilterFields]="['nombre_del_solicitante', 'fecha']"> <!-- Incluye 'fecha' si es necesario -->
+
+  <ng-template pTemplate="caption">
+    <div class="flex">
+      <p-button label="Limpiar" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt1)" />
+      <span class="p-input-icon-left ml-auto">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar Palabra" />
+      </span>
+    </div>
+  </ng-template>
+  
+  <ng-template pTemplate="header">
+    <tr>
+      <th>#</th>
+      <th pSortableColumn="fecha">
+        Fecha Solicitud <p-sortIcon field="fecha"></p-sortIcon>
+      </th>
+      <th>Nombre del solicitante</th>
+      <th>Puesto del Solicitante</th>
+      <th>Region del solicitante</th>
+      <th>Acciones</th>
+    </tr>
+  </ng-template>
+  
+  <ng-template pTemplate="body" let-requisiciones>
+    <tr>
+      <td>{{ requisiciones.id }}</td>
+      <td>{{ requisiciones?.fecha | date:'dd/MM/yyyy' }}</td>
+      <td>{{ requisiciones.nombre_del_solicitante }}</td>
+      <td>{{ requisiciones?.puesto_del_solicitante }}</td>
+      <td>{{ requisiciones.region_solicitante }}</td>
+      <td>
+        <button icon="pi pi-eye" class="p-button-success" pButton label="Ver" (click)="goToDetalles(requisiciones.id)"></button>
+      </td>
+    </tr>
+  </ng-template>
+  
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="6">Sin registros de solicitudes de requisición externas</td>
+    </tr>
+  </ng-template>
+</p-table>
+
 </ng-container>
 
 <!-- Data Loaded State -->
@@ -61,8 +85,8 @@
     <ng-template pTemplate="header">
       <tr>
         <th>#</th>
-        <th pSortableColumn="fecha_solicitud">
-          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+        <th pSortableColumn="fecha">
+          Fecha Solicitud <p-sortIcon field="fecha" />
         </th>
         <th>Nombre del solicitante</th>
         <th>Puesto del Solicitante</th>
@@ -152,8 +176,8 @@
     <ng-template pTemplate="header">
       <tr>
         <th>#</th>
-        <th pSortableColumn="fecha_solicitud">
-          Fecha Solicitud <p-sortIcon field="fecha_solicitud" />
+        <th pSortableColumn="fecha">
+          Fecha Solicitud <p-sortIcon field="fecha" />
         </th>
         <th>Nombre del solicitante</th>
         <th>Puesto del Solicitante</th>

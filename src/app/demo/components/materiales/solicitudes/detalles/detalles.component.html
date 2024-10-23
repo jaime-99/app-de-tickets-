@@ -29,13 +29,13 @@
         <strong id="nombre"> {{this.solicitud?.descripcion}} </strong>
       </div>
       <!-- Campo Nombre del Curso -->
-      <div class="field col-12 md:col-6">
+      <div *ngIf="this.solicitud?.nombre_curso !==undefined || this.solicitud?.nombre_curso !== '' " class="field col-12 md:col-6">
         <label for="nombreCurso">Nombre del Curso:</label>
         <strong id="nombreCurso"> {{this.solicitud?.nombre_curso}} </strong>
       </div>
       
       <!-- Campo ID del Curso -->
-      <div class="field col-12 md:col-6">
+      <div *ngIf="this.solicitud?.idCurso !==0" class="field col-12 md:col-6">
         <label for="idCurso">ID del Curso:</label>
         <strong id="idCurso"> {{this.solicitud?.idCurso}} </strong>
       </div>
@@ -71,19 +71,23 @@
         <!-- <strong> {{this.solicitud?.estatus}} </strong> -->
       </div>
       <div class="field col-12 md:col-6">
-        <p-accordion [activeIndex]="0">
+        <form [formGroup]="formComentarios">
+        <p-accordion [activeIndex]="-1">
           <p-accordionTab header="Comentarios">
-              <p *ngIf="flag">
-                comentarios por parte de <strong>  {{this.solicitud?.nombre}} </strong>
-                : Sin comentarios
+            <p *ngIf="flag || this.solicitud.comentarios1">
+              comentarios por parte de <strong>  {{this.solicitud?.nombre}} </strong>
+                : {{this.comentarios || this.solicitud?.comentarios1}}
               </p>
               <div *ngIf="!flag">
               <textarea placeholder="Agregar comentarios" formControlName="comentarios" id="address" type="text" rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
-              <button (click)="addComent()" class="p-button"> Agregar comentario</button>
+              <button [disabled]="formComentarios.invalid || this.solicitud?.comentarios1" type="click" (click)="addComent()" class="p-button"> Agregar comentario</button>
               </div>
+            
+              <p-messages />
 
           </p-accordionTab>
           </p-accordion>
+          </form>
       </div>
       <!-- Imagen del Curso -->
       <div class="field col-12 md:col-12">

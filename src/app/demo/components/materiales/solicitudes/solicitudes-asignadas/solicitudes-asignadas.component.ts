@@ -104,7 +104,8 @@ export class SolicitudesAsignadasComponent implements OnInit {
             this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'has cerrado la solicitud', life: 3000 });
             this.materialService.putEstatusSolicitud(id,'cerrado').subscribe(()=>{
 
-              window.location.reload();
+              this.addDetails(id)
+              // window.location.reload();
             })
         },
         reject: () => {
@@ -116,21 +117,27 @@ export class SolicitudesAsignadasComponent implements OnInit {
 }
 
 
-addDetails(){
-  // es para agregar los detalles de la solicitud por ejeplo la fecha de cierre 
+// es para agregar los detalles de la solicitud por ejemplo la fecha de cierre 
+addDetails(id){
   const data =  {
-    idSolicitud : '',
-    fechaCerrado: '',
+    idSolicitud : id,
+    fechaCerrado: this.obtenerFechaActual(),
   }
 
   this.materialService.postSolicitudDetalle(data).subscribe((res)=>{
-    
-  })
+    // window.location.reload();
+    //todo enviar mensaje de ticket cerrado a a la persona que se le cerro y a diana
+  })  
+}
 
 
-  
+ obtenerFechaActual() {
+  const fecha = new Date();
+  const anio = fecha.getFullYear(); // Obtiene el año
+  const mes = ('0' + (fecha.getMonth() + 1)).slice(-2); // Obtiene el mes (agrega 1 porque los meses empiezan en 0)
+  const dia = ('0' + fecha.getDate()).slice(-2); // Obtiene el día
 
-  
+  return `${anio}-${mes}-${dia}`; // Formato YYYY-MM-DD
 }
 
 

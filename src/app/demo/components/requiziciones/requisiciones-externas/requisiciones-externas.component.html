@@ -53,6 +53,11 @@
         <div class="field col-12 md:col-6">
             <label for="firstname6">Tematica solicitada</label>
             <input formControlName="tematica_solicitada" placeholder="EJ: Core Tools" id="firstname6" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <p-messages *ngIf="isFieldInvalid('tematica_solicitada')" severity="error" >
+                <ng-template pTemplate>
+                    <span class="ml-2">La tematica Solicitada es obligatoria</span>
+                </ng-template>
+            </p-messages>
         </div>
         
         <div class="field col-12 md:col-6">
@@ -97,8 +102,9 @@
             </p-messages>
         </div>
         <div class="field col-12">
-            <label for="address">Honorario a ofrecer</label>
-            <textarea formControlName="honorario_a_ofrecer"  id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            <!-- <textarea formControlName="honorario_a_ofrecer"  id="address" type="text" rows="3" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea> -->
+            <label for="salario">Honorario a ofrecer</label>
+            <p-inputNumber   mode="currency"currency="USD" id="salario" formControlName="honorario_a_ofrecer" locale="en-US"/>
             <p-messages *ngIf="isFieldInvalid('honorario_a_ofrecer')" severity="error" >
                 <ng-template pTemplate>
                     <span class="ml-2">Obligatorio Honorario</span>
@@ -133,13 +139,22 @@
         </div>
         <div class="field col-12 md:col-6">
             <label for="state">Requiere dominio de idiomas</label>
-            <select formControlName="requiere_dominio_idiomas" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+            <select (change)="IdiomaChange($event)" formControlName="requiere_dominio_idiomas" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
                 <option>No</option>
-                <option>si</option>
+                <option>Si</option>
             </select>
         </div>
+        <div class="field col-12 md:col-12" *ngIf="idiomaSelected">
+            <label for="customHonorario"></label>
+            <textarea placeholder="Escribe el idioma requerido" formControlName="idioma" id="idioma" rows="1" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            <p-messages *ngIf="isFieldInvalid('idioma')" severity="error" >
+                <ng-template pTemplate>
+                    <span class="ml-2">campo Obligatorio</span>
+                </ng-template>
+            </p-messages>
+          </div>
         <div class="field col-12 md:col-6">
-            <label for="state">Anios de experiencia</label>
+            <label for="state">Años de experiencia</label>
             <select formControlName="anios_experiencia" id="state" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
                 <option>5-10</option>
                 <option>10-15</option>
