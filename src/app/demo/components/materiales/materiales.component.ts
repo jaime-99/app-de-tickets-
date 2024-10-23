@@ -192,13 +192,28 @@ uploadFiles() {
     
   }else{
   const formData = new FormData();
+  const archivosSubidos = []; // Nueva variable para almacenar los nombres de los archivos renombrados
+
+  const specialCharPattern = /[^\w\s.-]/g;
 
   // Utilizar los archivos manejados por PrimeNG
   for (let file of this.fileUpload.files) {
-
+    
     if (this.uploadedFiles.length < 3) {
+      let fileToUpload = file;
+      if (specialCharPattern.test(file.name)) {
+        // Generar un nuevo nombre eliminando los caracteres especiales
+        const cleanFileName = file.name.replace(specialCharPattern, '_');
+        fileToUpload = new File([file], cleanFileName, { type: file.type });
+        // console.log(`Archivo renombrado de ${file.name} a ${cleanFileName}`);
+        archivosSubidos.push(cleanFileName);
+
+      }else{
+        archivosSubidos.push(file.name);
+      }
       // this.uploadedFiles.push(file);
-      formData.append('demo[]', file);
+      formData.append('demo[]', fileToUpload);
+
     } else {
       break; // Detener el bucle si ya se alcanzó el límite
     }
@@ -211,16 +226,16 @@ uploadFiles() {
       .subscribe({
         next: (response) => {
 
-          this.arrayArchivos = this.fileUpload.files.map(file => this.urlSubida + file.name);
+          this.arrayArchivos = archivosSubidos.map(file => this.urlSubida + file);
           // console.log(this.arrayArchivos)
-
+          // console.log(this.arrayArchivos)
           const payload = {
             solicitud: this.solicitudesForm.value,
             archivos: this.arrayArchivos
           };
 
           this.materialesService.postSolicitud(payload).subscribe((res)=>{
-            this.visible = true;
+            // this.visible = true;
           })
 
         },

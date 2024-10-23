@@ -70,7 +70,7 @@
         <p-tag  [severity]="severity(this.solicitud?.estatus)" [value]="this.solicitud?.estatus"/>
         <!-- <strong> {{this.solicitud?.estatus}} </strong> -->
       </div>
-      <div class="field col-12 md:col-6">
+      <div *ngIf="this.solicitud.estatus ==='cerrado'" class="field col-12 md:col-6">
         <form [formGroup]="formComentarios">
         <p-accordion [activeIndex]="-1">
           <p-accordionTab header="Comentarios">

@@ -33,10 +33,11 @@ export class RequizicionesService {
     const apiUrl = 'https://visualmanagment.com/AppCGP/apis/emails/send_test_email.php'
     return this.http.post<any>(apiUrl, data, {headers})
   }
+  // es para que cambie el estatuso de requisicion interna
   putEstatus(id:number,estatus:string){
     const url = `https://visualmanagment.com/AppCGP/apis/RH/putEstatus.php`;
     const body = {
-      id:id,
+      puesto_id:id,
       estatus:estatus
     }
     return this.http.put<any>(url,body)

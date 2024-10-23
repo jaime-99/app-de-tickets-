@@ -140,6 +140,7 @@ tomarSolicitud(){
 
 }
 
+// para ver el severity del estatus (el color)
 severity(estatus){
 
   if(estatus ==='abierto'){
